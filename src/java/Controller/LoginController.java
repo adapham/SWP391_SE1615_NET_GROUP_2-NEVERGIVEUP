@@ -343,6 +343,9 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("mess", mess);
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
+            if (service.equals("forgotpass")) {
+                response.sendRedirect("ForgotPass.jsp");
+            }
         }
     }
 
