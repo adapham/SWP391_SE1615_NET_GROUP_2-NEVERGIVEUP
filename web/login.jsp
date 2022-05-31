@@ -8,8 +8,12 @@
 <link href="css/main.css" rel="stylesheet" />
 
      
-            <div class="omb_login" >
-                <h3 class="omb_authTitle">Login or <a href="register">Sign up</a></h3>
+
+                <a href="home">
+                   <img src="http://localhost:8080/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/assets/Image%20about.png" height=" 100px"> 
+                </a>
+                
+                <h3 class="omb_authTitle">Login or <a href="login?do=Register">Sign up</a></h3>
                 <div class="row omb_row-sm-offset-3 omb_socialButtons">            
                     <div class="row omb_row-sm-offset-3">
                         <div class="col-xs-12 col-sm-6">	
