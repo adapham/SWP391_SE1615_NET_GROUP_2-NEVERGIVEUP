@@ -88,10 +88,7 @@ public class HomeController extends HttpServlet {
                 List<Category> listCategory = daoCate.getAllCategory();
                 
                 //Set Data
-                request.setAttribute("cateID", iCateId);
-                request.setAttribute("listCategory", listCategory);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                
             }
             if(service.equals("about")){
                 response.sendRedirect("about.jsp");
