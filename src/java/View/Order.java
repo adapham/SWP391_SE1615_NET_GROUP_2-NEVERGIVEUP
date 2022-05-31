@@ -17,12 +17,12 @@ import lombok.ToString;
 @Setter
 @ToString 
 public class Order {
-    private int OrderID;
-    private int AccountID;
-    private int ShipperID;
-    private Date OrderDate;
-    private String Address;
-    private String Email;
-    private int Status;
-    private String Phone;
+    private int orderID;
+    private int accountID;
+    private int shipperID;
+    private Date orderDate;
+    private String address;
+    private String email;
+    private int status;
+    private String phone;
 }

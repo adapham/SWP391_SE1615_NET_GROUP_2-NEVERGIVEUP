@@ -17,9 +17,9 @@ import lombok.ToString;
 @Setter
 @ToString 
 public class OrderDetails {
-    private int OrderID;
-    private int ProductID;
-    private int Price;
-    private int Quantity;
-    private int Discount;
+    private int orderID;
+    private int productID;
+    private int price;
+    private int quantity;
+    private int discount;
 }

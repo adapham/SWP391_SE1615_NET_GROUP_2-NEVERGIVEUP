@@ -17,8 +17,8 @@ import lombok.ToString;
 @Setter
 @ToString 
 public class Shipper {
-    private int ShipperID;
-    private String ShipperName;
-    private String Address;
-    private String Phone;
+    private int shipperID;
+    private String shipperName;
+    private String address;
+    private String phone;
 }

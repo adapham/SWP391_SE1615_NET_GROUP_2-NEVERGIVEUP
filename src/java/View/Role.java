@@ -16,6 +16,6 @@ import lombok.ToString;
 @Setter
 @ToString 
 public class Role {
-    private int RoleID;
-    private String RoleName;
+    private int roleID;
+    private String roleName;
 }

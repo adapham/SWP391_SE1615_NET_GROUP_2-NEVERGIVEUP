@@ -16,8 +16,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Supplier {
-    private int SupplierID;
-    private String CompanyName;
-    private String Address;
-    private String Phone;
+    private int supplierID;
+    private String companyName;
+    private String address;
+    private String phone;
 }

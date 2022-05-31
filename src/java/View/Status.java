@@ -17,6 +17,6 @@ import lombok.ToString;
 @Setter
 @ToString 
 public class Status {
-    private int StatusID;
-    private String StatusName;
+    private int statusID;
+    private String statusName;
 }
