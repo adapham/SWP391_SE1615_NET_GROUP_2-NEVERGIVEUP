@@ -96,6 +96,9 @@ public class HomeController extends HttpServlet {
             if(service.equals("about")){
                 response.sendRedirect("about.jsp");
             }
+            if(service.equals("Bloglist")) {
+                
+            }
         }
     }
 
