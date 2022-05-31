@@ -1,0 +1,405 @@
+body{
+    background: #ffffff;
+}
+/* Css login */
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
+}
+	
+.omb_login .omb_socialButtons a {
+	color: white;
+	opacity:0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;    	
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+.omb_login .omb_loginOr {
+	position: relative;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}			
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+/* Css Register */
+	
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+		margin-top:10px;
+ 	}		
+}
+.register{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+
+
+/* Css About Us */
+.about-first{
+
+}
+.about-first .left{
+    margin-right: -90px;
+}
+.about-first .right{
+    text-align: left;
+    color: white;
+}
+.about-first .right p{
+    margin-bottom: 3rem;
+}
+.about-first .right p::first-letter{
+    color: #903; 
+    font-family: Georgia;
+    font-size: 40px;
+}
+.about-first .right h2{
+    font-size: 50px;
+    margin-top: 20px;
+    font-family: "Brush Script MT", Times, serif, Arial, Helvetica, sans-serif;
+}
+/* About second */
+.about-second{
+    background-color: #cccccc; /* Used if the image is unavailable */
+    padding-bottom: 12rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-second::after{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: '';
+    display: inline-block;
+    z-index: 1;
+    border-width: 5vw 50vw 0 0;
+    border-color: transparent #fff transparent transparent;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+.about-second::before{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: '';
+    display: inline-block;
+    z-index: 1;
+    border-width: 0 50vw 5vw 0;
+    border-color: transparent transparent #fff transparent;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.about-second .left img{
+    margin-left: 8rem;
+    margin-top: 5rem;
+}
+.about-second .right{
+    margin-top: 25px;
+    text-align: left;
+    margin-bottom: 50px;
+}
+.about-second .right strong{
+    color: #f9b129;
+    font-size: 50px;
+    font-weight: bold;
+}
+.about-second .right p{
+    margin-bottom: 3rem;
+    color: #495057;
+}
+.about-second .right span{
+    color: #495057;
+}
+.about-second .right p::first-letter{
+    color: #903; 
+    font-family: Georgia;
+    font-size: 40px;
+}
+.about-second .right h2{
+    font-size: 50px;
+    margin-top: 20px;
+    font-family: "Brush Script MT", Times, serif, Arial, Helvetica, sans-serif;
+    color: #495057;
+}
+.about-second .right button{
+    margin-top: 50px;
+    background-color: #ec5353;
+    border: none;
+    border-radius: 25px;
+}
+
+/* About Our Story */
+.our-story{
+
+}
+.our-story h1{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.our-story .time-line-date{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    color: #ccc;
+}
+.our-story .left{
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 4rem;
+}
+.our-story .left h5{
+    font-size: 30px;
+}
+.our-story .body-text{
+    margin-top: 5px;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(172, 165, 165);
+}
+.our-story .right{
+    border-left: 1px solid #ccc;
+}
+.our-story .right img{
+    margin-left: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+
+/* Css Our Team */
+.our-team{
+    
+}
+.our-team .title{
+    max-width: 50rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: rgb(150, 144, 144);
+}
+
+/*** Team ***/
+.team-item{
+    height: 410px;
+}
+.team-item .team-text {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    bottom: 100px;
+}
+
+.team-item .team-title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--light);
+    transition: .5s;
+    background: rgba(251,245,235,255);
+}
+
+.team-item:hover .team-title {
+    top: -100px;
+}
+
+.team-item .team-social {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 100px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    transition: .5s;
+}
+
+.team-item .team-social .btn {
+    margin: 0 3px;
+}
+
+.team-item:hover .team-social {
+    top: 0;
+    background: rgba(223,166,57,255);
+}
+.team-text .team-social i{
+    color: white;
+    font-size: 40px;
+}
+.team-text .team-social a{
+    text-decoration: none;
+    padding-top: 10px;
+    cursor: pointer;
+} 
+/*Css Product*/
+/*Css footer*/
+.footer-bg{
+    background-image: url("https://thietbibepauviet.com/wp-content/uploads/2021/07/xu-huong-giao-do-an-1.jpg");
+}
+.footer{
+    background: rgba(0,0,0,0.34);
+    color: white;
+    margin-left: 0;
+    margin-right: 0;
+}
+.footer h3{
+    font-size: 50px;
+    margin-top: 20px;
+    font-family: "Brush Script MT", Times, serif, Arial, Helvetica, sans-serif;
+}
+.footer-icon{
+    font-size: 40px;
+}
+.footer-icon a{
+    text-decoration: none;
+    color: white;
+}
+.contact-image{
+    width: 75%;
+    height: 27%;
+    margin-top: 15px;
+}

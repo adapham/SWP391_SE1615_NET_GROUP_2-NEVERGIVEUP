@@ -1,0 +1,47 @@
+echo "# TestGrouoppppp" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/baonk107/TestGrouoppppp.git
+git push -u origin main
+------------------------------
+git remote add origin https://github.com/baonk107/TestGrouoppppp.git
+git branch -M main
+git push -u origin main
+---------------------------------
+
+
+git clone + link 
+
+--Đẩy lên main
+git add .
+git commit -m "first commit"
+git push
+
+
+-----------Git Group Create Merger
+cd tên dự án 
+code .
+
+git add .
+git commit -am "first commit"
+git push
+
+----Tách main
+git branch  //Xem nhanh
+git checkout -b nhanh_cua_bao main   //Clone nhánh
+Sau đó đẩy lên
+git add . 
+git commit -am "first commit"
+git push --set-upstream origin nhanh_cua_bao
+
+
+--Kéo code từ main về marge vào nhánh hiện tại 
+git merge main
+
+git branch
+git pull
+git merge main
+
+ 
