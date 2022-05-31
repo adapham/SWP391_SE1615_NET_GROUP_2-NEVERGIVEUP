@@ -20,25 +20,25 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/details.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/main.css" rel="stylesheet">
     </head>
-
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <body>
         <%@include file="component/NavbarHome.jsp" %>
         <!-- Product section-->
+
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${pro.imageURL}" alt="..." /></div>
                     <div class="col-md-6">
                         <div class="small mb-1">SKU: BST-498</div>
-                        <h1 class="display-5 fw-bolder">Shop item template</h1>
+                        <h1 class="display-5 fw-bolder">${pro.productName}</h1>
                         <div class="fs-5 mb-5">
-                            <span class="text-decoration-line-through">$45.00</span>
-                            <span>$40.00</span>
+                            <span class="text-decoration-line-through">$200</span>
+                            <span>${pro.unitPrice}</span>
                         </div>
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                        <p class="lead">${pro.description}</p>
                         <div class="d-flex">
                             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
@@ -50,67 +50,64 @@
                 </div>
             </div>
         </section>
-        
+
         <div class="container" class="pull-left" style="background-color: #d3d6d8">
             <div class="row bootstrap snippets bootdeys">
                 <div class="col-md-8 col-sm-12" >
                     <div class="comment-wrapper">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Comment panel
+                                <h3 style="text-align: center">Comment</h3>
                             </div>
                             <div class="panel-body">
-                                <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                                <br>
-                                <button type="button" class="btn btn-info pull-right">Post</button>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <ul class="media-list">
-                                    <li class="media">
-                                        <a href="#" class="pull-left">
-                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="text-muted pull-right">
-                                                <small class="text-muted">30 min ago</small>
-                                            </span>
-                                            <strong class="text-success">@MartinoMont</strong>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#" class="pull-left">
-                                            <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="text-muted pull-right">
-                                                <small class="text-muted">30 min ago</small>
-                                            </span>
-                                            <strong class="text-success">@LaurenceCorreil</strong>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#" class="pull-left">
-                                            <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="text-muted pull-right">
-                                                <small class="text-muted">30 min ago</small>
-                                            </span>
-                                            <strong class="text-success">@JohnNida</strong>
-                                            <p>
-                                                Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <c:choose>
+                                    <c:when test="${sessionScope.Account ==null}">
+                                        <ul class="media-list">
+                                            <c:forEach items="${list}" var="l">
+                                                <li class="media">
+                                                    <a href="#" class="pull-left">
+                                                        <img src="${l.imageURL}" alt="" class="img-circle">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <span class="text-muted pull-right">
+                                                            <small class="text-muted">${l.timeComment}</small>
+                                                        </span>
+                                                        <strong class="text-success">${l.disPlayName}</strong>
+                                                        <p>
+                                                            ${l.feedbackContent} </a>.
+                                                        </p>
+                                                    </div>
+                                                </li>   
+                                            </c:forEach>
+                                        </ul>
+                                    </c:when> <c:otherwise>
+                                        <form action="details?do=postcomment&proID=${proID}&accID=${sessionScope.Account.accountid}" method="post">
+                                            <textarea class="form-control" name="comment" placeholder="write a comment..." rows="3"></textarea>
+                                            <br>
+                                            <button type="submit" name="submit" class="btn btn-info pull-right">Post</button>  
+                                            <div class="clearfix"></div>
+                                            <hr>   
+                                        </form>                                  
+                                        <ul class="media-list">
+                                            <c:forEach items="${list}" var="l">
+                                                <li class="media">
+                                                    <a href="#" class="pull-left">
+                                                        <img src="${l.imageURL}" alt="" class="img-circle">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <span class="text-muted pull-right">
+                                                            <small class="text-muted">${l.timeComment}</small>
+                                                        </span>
+                                                        <strong class="text-success">${l.disPlayName}</strong>
+                                                        <p>
+                                                            ${l.feedbackContent} </a>.
+                                                        </p>
+                                                    </div>
+                                                </li>   
+                                            </c:forEach>
+                                        </ul>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -118,7 +115,7 @@
                 </div>
             </div>
         </div>
-           
+
         <!-- Related items section-->
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
@@ -224,7 +221,10 @@
                     </div>
                 </div>
             </div>
+
         </section>
+
         <%@include file="component/FooterHome.jsp" %>
     </body>
+
 </html>

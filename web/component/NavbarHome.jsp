@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5 d-flex justify-content-center">
         <a class="navbar-brand" href="home?do=home">Foodie</a>
@@ -33,13 +34,29 @@
         </div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
             <li class="nav-item dropdown">
+            <c:if test="${sessionScope.Account ==null}">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png" height="40px" width="70%"/>  
                 </a>
+            </c:if>
+            <c:if test="${sessionScope.Account !=null}">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false"> <img src="${sessionScope.Account.imageURL}" class="rounded-circle" alt="A girl" width="50"/>  
+                </a> ${sessionScope.Account.displayname}  
+            </c:if>
+            <c:if test="${sessionScope.Account ==null}">
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="login?do=login">Login</a></li>
-                    <li><a class="dropdown-item" href="RegisterController">Regsiter</a></li>  
-                </ul>  
+                    <li><a class="dropdown-item" href="login">Login</a></li>
+                    <li><a class="dropdown-item" href="register">Regsiter</a></li>  
+                </ul>   
+            </c:if>
+            <c:if test="${sessionScope.Account !=null}">
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="login?do=logout">Logout</a></li>
+                    <li><a class="dropdown-item" href="login?do=updateprofile">Update Profile</a></li>  
+                </ul>   
+            </c:if>
+
             </li>
         </ul>
     </div>

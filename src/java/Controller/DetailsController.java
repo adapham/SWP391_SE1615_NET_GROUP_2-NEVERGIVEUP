@@ -5,8 +5,16 @@
  */
 package Controller;
 
+import Modal.DAOFeedback;
+import Modal.DAOProduct;
+import View.FeedBack;
+import View.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,13 +42,45 @@ public class DetailsController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            DAOFeedback dao = new DAOFeedback();
+
             String service = request.getParameter("do");
-            if(service == null){
-                service = "homeDetails";
+            if (service == null) {
+                service = "details";
             }
-            if(service.equals("homeDetails")){
+            if (service.equals("details")) {
+                int ProductID = Integer.parseInt(request.getParameter("pid"));
+                List<FeedBack> list = new ArrayList<>();
+                list = dao.ListFeedBackByProductID(ProductID);
+                Product pro = dao.getProductByProductID(ProductID);
+                request.setAttribute("proID", ProductID);
+                request.setAttribute("pro", pro);
+                request.setAttribute("list", list);
                 request.getRequestDispatcher("details.jsp").forward(request, response);
             }
+            if (service.equals("postcomment")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    response.sendRedirect("details");
+                } else {
+                    LocalDateTime myDateObj = LocalDateTime.now();
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    String formattedDate = myDateObj.format(myFormatObj);
+                    String comment = request.getParameter("comment");
+                    int ProductID = Integer.parseInt(request.getParameter("proID"));
+                    int AccountID = Integer.parseInt(request.getParameter("accID"));
+                    FeedBack feedback = FeedBack.builder()
+                            .feedbackContent(comment)
+                            .productID(ProductID)
+                            .accountID(AccountID)
+                            .timeComment(formattedDate)
+                            .build();
+                    dao.InsertFeedBack(feedback);
+                    response.sendRedirect("details?pid="+ProductID);
+                }
+
+            }
+
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package View;
 
+import java.sql.Date;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +17,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class FeedBack {
-    private int FeedbackID;
-    private String FeedbackContent;
-    private int ProductID;
-    private int AccountID;
+    private int feedbackID;
+    private String feedbackContent;
+    private int productID;
+    private int accountID;
+    private String disPlayName;
+    private String imageURL;
+    private String timeComment;
 }

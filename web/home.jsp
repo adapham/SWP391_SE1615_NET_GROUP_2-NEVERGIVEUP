@@ -60,7 +60,7 @@
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                                 <!-- Product image-->
                                 <div class="img-box d-flex justify-content-center" style="height: 100%; width: 80%;margin-left: auto; margin-right: auto; margin-top: 10%; margin-bottom: 10%;">
-                                    <a href="details?do=homeDetails&productID=${pro.productID}">
+                                    <a href="details?pid=${pro.productID}">
                                         <img class="card-img-top" src="${pro.imageURL}" alt="..."/>
                                     </a>
                                 </div>
