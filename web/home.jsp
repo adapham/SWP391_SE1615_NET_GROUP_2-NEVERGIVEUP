@@ -68,7 +68,7 @@
                                 <div class="card-body" style="background: #232831; color: white;">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <a href="details">
+                                        <a href="details?pid=${pro.productID}">
                                             <h5 class="fw-bolder">${pro.productName}</h5>
                                         </a>
                                         <!-- Product reviews-->

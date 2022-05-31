@@ -47,7 +47,7 @@
             <c:if test="${sessionScope.Account ==null}">
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="login">Login</a></li>
-                    <li><a class="dropdown-item" href="register">Regsiter</a></li>  
+                    <li><a class="dropdown-item" href="login?do=Register">Regsiter</a></li>  
                 </ul>   
             </c:if>
             <c:if test="${sessionScope.Account !=null}">
