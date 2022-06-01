@@ -21,8 +21,10 @@ public class Product {
     private int categoryID;
     private int quantity;
     private double unitPrice;
+    private double discount;
     private int unitInStock;
     private String description;
     private String imageURL;
     private int isActive;
+    private double priceAferDiscount;
 }

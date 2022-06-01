@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -87,9 +88,9 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        //request.getRequestDispatcher("home").forward(request, response);
+                        request.getRequestDispatcher("home").forward(request, response);
                     } else if (checkAccount == 2) {
-                       
+
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
@@ -119,7 +120,7 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
 
                     } else {
-                        
+
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
@@ -395,8 +396,72 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("mess", mess);
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
-            if (service.equals("forgotpass")) {
-                response.sendRedirect("ForgotPass.jsp");
+            if (service.equals("forgetpassword")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    response.sendRedirect("forgetpassword.jsp");
+                } else {
+                    String email = request.getParameter("email");
+                    List list = dao.ListAllEmail();
+                    for (Object o : list) {
+                        if (email.equals(o)) {
+                            Account acc = dao.GetAccountByEmail(email);
+                            String pass = dao.SendMail(acc);
+                            request.setAttribute("pass", pass);
+                            request.setAttribute("email", email);
+                            request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                        }
+                    }
+                    String mess = "Email not exis";
+                    request.setAttribute("mess", mess);
+                    request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+                }
+            }
+            if (service.equals("updatepassword")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    response.sendRedirect("resetpassword.jsp");
+                } else {
+                    String email = request.getParameter("email");
+                    String pass = request.getParameter("pass");
+                    String password = request.getParameter("password");
+                    String newpassword = request.getParameter("newpassword");
+                    String confirmpassword = request.getParameter("confirmpassword");
+                    if (!pass.equals(password)) {
+                        String mess = "Wrong Password";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (newpassword == null || newpassword.isEmpty()) {
+                        String mess = "newpassword is not null";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (confirmpassword == null || confirmpassword.isEmpty()) {
+                        String mess = "confirmpassword is not null";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (!newpassword.equals(confirmpassword)) {
+                        String mess = "newpassword not same confirmpassword";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else {
+                        Account acc = Account.builder()
+                                .password(newpassword)
+                                .email(email)
+                                .build();
+                        dao.updatePasswordByEmail(acc);
+                        String mess = "Update Success";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    }
+                }
             }
         }
     }

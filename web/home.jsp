@@ -57,7 +57,9 @@
                         <div class="product col mb-5">
                             <div class="card h-100" style="background: #f1f2f3;">
                                 <!-- Sale badge-->
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                <c:if test="${pro.discount !=0}">
+                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale${pro.discount*100}%</div> 
+                                </c:if>
                                 <!-- Product image-->
                                 <div class="img-box d-flex justify-content-center" style="height: 100%; width: 80%;margin-left: auto; margin-right: auto; margin-top: 10%; margin-bottom: 10%;">
                                     <a href="details?pid=${pro.productID}">
@@ -79,8 +81,10 @@
                                         <div class="d-flex justify-content-between" style="margin-top: 15px;">
                                             <!-- Product price-->
                                             <div class="d-flex align-items-center">
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                ${pro.unitPrice}
+                                                <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
+                                                    <span class="text-muted text-decoration-line-through">${pro.unitPrice}</span>
+                                                </c:if>
+                                                ${pro.priceAferDiscount}
                                             </div>
                                             <!--Cart-->
                                             <a class="btn btn-outline-dark mt-auto rounded-circle" href="#" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
@@ -96,13 +100,13 @@
                     <ul class="pagination">
                         <c:if test="${page > 1}">
                             <li class="page-item" ><a class="page-link" href="home?do=home&page=${page - 1}" >Previous</a></li>
-                         </c:if>
-                        <c:forEach begin="1" end="${totalPage}" var="i">
+                            </c:if>
+                            <c:forEach begin="1" end="${totalPage}" var="i">
                             <li class="page-item ${i == page?" active":""}"><a class="page-link" href="home?do=home&page=${i}">${i}</a></li>
-                        </c:forEach>
-                        <c:if test="${page < totalPage}">
+                            </c:forEach>
+                            <c:if test="${page < totalPage}">
                             <li class="page-item"><a class="page-link" href="home?do=home&page=${page + 1}">Next</a></li>
-                        </c:if>
+                            </c:if>
                     </ul>
                 </nav>
                 <!--<button onclick="loadMore()" class="btn btn-warning rounded-pill d-flex justify-content-center" style="margin-left: auto;margin-right: auto;padding: 10px 50px;">View More</button>-->
@@ -112,25 +116,25 @@
         <%@include file="component/FooterHome.jsp" %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-                    var clicks = 2;
-                    function loadMore() {
-                        clicks += 1;
-                        $.ajax({
-                            url: "/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/load",
-                            type: "get", //send it through get method
-                            data: {
-                                totalPage: clicks //Gửi tới Load Controller
-                            },
-                            success: function (data) {
-                                var row = document.getElementById("content");
-                                row.innerHTML += data;
+            var clicks = 2;
+            function loadMore() {
+                clicks += 1;
+                $.ajax({
+                    url: "/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/load",
+                    type: "get", //send it through get method
+                    data: {
+                        totalPage: clicks //Gửi tới Load Controller
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML += data;
 
-                            },
-                            error: function (xhr) {
-                                //Do Something to handle error
-                            }
-                        });
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
                     }
+                });
+            }
 
         </script>
     </body>

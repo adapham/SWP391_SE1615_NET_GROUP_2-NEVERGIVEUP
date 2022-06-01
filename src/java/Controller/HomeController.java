@@ -50,7 +50,6 @@ public class HomeController extends HttpServlet {
                 String pageStr = request.getParameter("page");
                 //Category
                 List<Category> listCategory = daoCate.getAllCategory();
-
                 //Phân trang
                 int page = 1;
                 final int PAGE_SIZE = 8;

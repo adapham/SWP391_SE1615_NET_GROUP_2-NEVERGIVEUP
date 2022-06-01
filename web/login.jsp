@@ -36,15 +36,12 @@
                             
         </div>
         <div class="row omb_row-sm-offset-3">
-            <div class="col-xs-12 col-sm-3">
-                
-                   
-                
+            <div class="col-xs-12 col-sm-3">   
             </div>
             <div  class="col-xs-12 col-sm-3">
                 <p class="omb_forgotPwd">
-                    <a style="color: black" href="#">Forgot password?</a>
-                </p>
+                    <a style="color: black" href="login?do=forgetpassword">Forgot password?</a>
+                </p>    
             </div>
         </div>	    	
     </div>
