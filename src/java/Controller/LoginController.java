@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,7 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+
             DAOAccount dao = new DAOAccount();
             if (service == null) {
                 service = "login";
@@ -53,12 +55,28 @@ public class LoginController extends HttpServlet {
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-
                     int checkAccount = dao.checkAccount(username, password);
+                    String r = request.getParameter("rem");
                     if (checkAccount == 0) {
                         request.setAttribute("mess", "wrong user or pass");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                     } else if (checkAccount == 1) {
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (cr == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
@@ -69,8 +87,25 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("home").forward(request, response);
+                        //request.getRequestDispatcher("home").forward(request, response);
                     } else if (checkAccount == 2) {
+                       
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (cr == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
@@ -84,6 +119,23 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
 
                     } else {
+                        
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (cr == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
