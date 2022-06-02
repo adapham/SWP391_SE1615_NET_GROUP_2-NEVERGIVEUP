@@ -83,7 +83,7 @@
                                                 ${pro.unitPrice}
                                             </div>
                                             <!--Cart-->
-                                            <a class="btn btn-outline-dark mt-auto rounded-circle" href="#" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
+                                            <a class="btn btn-outline-dark mt-auto rounded-circle" href="AddToCart?pid=${pro.productID}" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>

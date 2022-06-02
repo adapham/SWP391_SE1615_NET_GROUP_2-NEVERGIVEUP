@@ -166,5 +166,32 @@ public class DAOProduct extends ConnectDB {
         }
         return 0;
     }
+    public Product getProductById(String pid) {
+        List<Product> List = new ArrayList<>();
+        try {
+            String sql = "select * from Product where ProductID  = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, pid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .unitInStock(rs.getInt(7))
+                        .description(rs.getString(8))
+                        .imageURL(rs.getString(9))
+                        .isActive(rs.getInt(10))
+                        .build();
+                return pro;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
