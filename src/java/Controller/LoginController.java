@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
-                        if (cr == null) {
+                        if (r == null) {
                             //time life =0
                             cu.setMaxAge(0);
                             pa.setMaxAge(0);
@@ -87,18 +87,19 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        //request.getRequestDispatcher("home").forward(request, response);
+                        out.print(cr.getValue());
+                        request.getRequestDispatcher("home").forward(request, response);
                     } else if (checkAccount == 2) {
                        
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
-                        if (cr == null) {
+                        if (r == null) {
                             //time life =0
                             cu.setMaxAge(0);
                             pa.setMaxAge(0);
                             cr.setMaxAge(0);
-                        } else {
+                        }else {
                             cu.setMaxAge(60 * 60 * 24);
                             pa.setMaxAge(60 * 60 * 24);
                             cr.setMaxAge(60 * 60 * 24);
@@ -123,7 +124,7 @@ public class LoginController extends HttpServlet {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
-                        if (cr == null) {
+                        if (r == null) {
                             //time life =0
                             cu.setMaxAge(0);
                             pa.setMaxAge(0);

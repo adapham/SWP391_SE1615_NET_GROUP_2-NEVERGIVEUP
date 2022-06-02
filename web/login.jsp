@@ -26,20 +26,22 @@
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                         <input  type="password" class="form-control" name="password" placeholder="Password" value="${cookie.pa.value}">
                     </div>
+                    <input type="checkbox" ${ cookie.rem.value eq 'ON' ?"checked":""}
+                           value= "ON" name="rem">Remember Me
+                    
                     <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Login</button>
-                     <input type="checkbox" ${ cookie.rem.value eq 'ON' ?"checked":""}
-                            value= "ON" name="rem">Remember Me 	
+
                 </form>
                 <p class="text-danger">${mess}</p>
             </div>
-            
-                            
+
+
         </div>
         <div class="row omb_row-sm-offset-3">
             <div class="col-xs-12 col-sm-3">
-                
-                   
-                
+
+
+
             </div>
             <div  class="col-xs-12 col-sm-3">
                 <p class="omb_forgotPwd">
