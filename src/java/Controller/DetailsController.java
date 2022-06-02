@@ -73,7 +73,7 @@ public class DetailsController extends HttpServlet {
                 } else {
                     //Lay thoi gian comment
                     LocalDateTime myDateObj = LocalDateTime.now();
-                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = myDateObj.format(myFormatObj);
                     String comment = request.getParameter("comment");
                     int ProductID = Integer.parseInt(request.getParameter("proID"));
