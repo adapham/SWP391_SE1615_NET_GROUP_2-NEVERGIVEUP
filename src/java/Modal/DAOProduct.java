@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author admin
  */
 public class DAOProduct extends ConnectDB {
-
+    
     //Get All Prpduct
     public List<Product> getAllProduct() {
         List<Product> listPro = new ArrayList<>();
@@ -58,10 +58,12 @@ public class DAOProduct extends ConnectDB {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where CategoryID = ?";
         try {
+            DAOProduct dao = new DAOProduct();
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, iCateId);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
                         .productID(rs.getInt(1))
                         .productName(rs.getString(2))
@@ -74,6 +76,7 @@ public class DAOProduct extends ConnectDB {
                         .description(rs.getString(9))
                         .imageURL(rs.getString(10))
                         .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
                         .build();
                 listPro.add(pro);
             }
@@ -168,6 +171,7 @@ public class DAOProduct extends ConnectDB {
         }
         return 0;
     }
+
     //Search By Name
     public List<Product> searchByName(String searchKey) {
         List<Product> listPro = new ArrayList<>();

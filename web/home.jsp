@@ -207,7 +207,7 @@
 
                 var searchKey = param.value;//Get value
                 $.ajax({
-                    url: "/SWP391_FoodOrderOnline/searchLoad",
+                    url: "/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/searchLoad",
                     type: "get", //send it through get method
                     data: {
                         searchKey: searchKey //Gửi tới Load Controller
