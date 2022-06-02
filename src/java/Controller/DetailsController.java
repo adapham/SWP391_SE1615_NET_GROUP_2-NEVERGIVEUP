@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Modal.DAOCategory;
 import Modal.DAOFeedback;
 import Modal.DAOProduct;
 import View.FeedBack;
@@ -43,16 +44,23 @@ public class DetailsController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DAOFeedback dao = new DAOFeedback();
-
+            DAOProduct daoPro = new DAOProduct();
+            DAOCategory daoCate = new DAOCategory();
             String service = request.getParameter("do");
             if (service == null) {
                 service = "details";
             }
             if (service.equals("details")) {
+                //Lay ProductID
                 int ProductID = Integer.parseInt(request.getParameter("pid"));
                 List<FeedBack> list = new ArrayList<>();
+                //Lay danh sach feedBack thong qua ProductID
                 list = dao.ListFeedBackByProductID(ProductID);
-                Product pro = dao.getProductByProductID(ProductID);
+                //Lay thong tin Product thong qua ProductID
+                Product pro = daoPro.getProductByProductID(ProductID);
+                //Lay CategoryName thong qua ProductID
+                String CategoryName =  daoCate.GetCategoryName(pro.getCategoryID());
+                request.setAttribute("categoryName", CategoryName);
                 request.setAttribute("proID", ProductID);
                 request.setAttribute("pro", pro);
                 request.setAttribute("list", list);
@@ -63,18 +71,21 @@ public class DetailsController extends HttpServlet {
                 if (submit == null) {
                     response.sendRedirect("details");
                 } else {
+                    //Lay thoi gian comment
                     LocalDateTime myDateObj = LocalDateTime.now();
-                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = myDateObj.format(myFormatObj);
                     String comment = request.getParameter("comment");
                     int ProductID = Integer.parseInt(request.getParameter("proID"));
                     int AccountID = Integer.parseInt(request.getParameter("accID"));
+                    //Lay cac thong tin comment
                     FeedBack feedback = FeedBack.builder()
                             .feedbackContent(comment)
                             .productID(ProductID)
                             .accountID(AccountID)
                             .timeComment(formattedDate)
                             .build();
+                    //Insert vao database
                     dao.InsertFeedBack(feedback);
                     response.sendRedirect("details?pid="+ProductID);
                 }

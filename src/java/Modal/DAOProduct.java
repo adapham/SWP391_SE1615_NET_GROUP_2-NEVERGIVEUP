@@ -19,15 +19,18 @@ import java.util.logging.Logger;
  * @author admin
  */
 public class DAOProduct extends ConnectDB {
-
+    
     //Get All Prpduct
     public List<Product> getAllProduct() {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product";
+        DAOProduct dao = new DAOProduct();
+
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
                         .productID(rs.getInt(1))
                         .productName(rs.getString(2))
@@ -35,10 +38,12 @@ public class DAOProduct extends ConnectDB {
                         .categoryID(rs.getInt(4))
                         .quantity(rs.getInt(5))
                         .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
                         .build();
                 listPro.add(pro);
             }
@@ -53,10 +58,12 @@ public class DAOProduct extends ConnectDB {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where CategoryID = ?";
         try {
+            DAOProduct dao = new DAOProduct();
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, iCateId);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
                         .productID(rs.getInt(1))
                         .productName(rs.getString(2))
@@ -64,10 +71,12 @@ public class DAOProduct extends ConnectDB {
                         .categoryID(rs.getInt(4))
                         .quantity(rs.getInt(5))
                         .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
                         .build();
                 listPro.add(pro);
             }
@@ -92,10 +101,11 @@ public class DAOProduct extends ConnectDB {
                         .categoryID(rs.getInt(4))
                         .quantity(rs.getInt(5))
                         .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
                         .build();
                 listPro.add(pro);
             }
@@ -112,6 +122,7 @@ public class DAOProduct extends ConnectDB {
                 + " ROW_NUMBER() OVER (ORDER BY ProductID) AS Seq\n"
                 + " FROM Product )t\n"
                 + " WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
+        DAOProduct dao = new DAOProduct();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, page);
@@ -120,6 +131,7 @@ public class DAOProduct extends ConnectDB {
             pre.setInt(4, PAGE_SIZE);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
                         .productID(rs.getInt(1))
                         .productName(rs.getString(2))
@@ -127,10 +139,12 @@ public class DAOProduct extends ConnectDB {
                         .categoryID(rs.getInt(4))
                         .quantity(rs.getInt(5))
                         .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
                         .build();
                 listPro.add(pro);
             }
@@ -138,15 +152,6 @@ public class DAOProduct extends ConnectDB {
             ex.printStackTrace();
         }
         return listPro;
-    }
-
-    //Main
-    public static void main(String[] args) {
-        DAOProduct dao = new DAOProduct();
-        List<Product> list = dao.getProductsByID(1);
-        for (Product category : list) {
-            System.out.println(category);
-        }
     }
 
     public int getTotalProduct() {
@@ -194,4 +199,102 @@ public class DAOProduct extends ConnectDB {
         return null;
     }
 
+    //Search By Name
+    public List<Product> searchByName(String searchKey) {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "select * from Product where ProductName like ?";
+        DAOProduct dao = new DAOProduct();
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + searchKey + "%");
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listPro;
+    }
+
+
+    public Product getProductByProductID(int ProductID) {
+        DAOProduct dao = new DAOProduct();
+        String sql = "select * from Product where ProductID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ProductID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(ProductID);
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                return pro;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public double PriceArterDiscount(int ProductID) {
+        double price = 0;
+        String sql = "select UnitPrice,Discount from Product where ProductID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ProductID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                if (rs.getDouble(2) == 0) {
+                    price = rs.getDouble(1);
+                } else {
+                    price = Math.round((rs.getDouble(1) - rs.getDouble(1) * rs.getDouble(2)) * 100.0 / 100.0);
+                }
+                return price;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    //Main
+    public static void main(String[] args) {
+        DAOProduct dao = new DAOProduct();
+        List list = dao.searchByName("pizza");
+        for (Object object : list) {
+            System.out.println(object);
+        }
+
+    }
 }

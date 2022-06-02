@@ -11,8 +11,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -126,6 +135,7 @@ public class DAOAccount extends ConnectDB {
         }
         return null;
     }
+
     public Account GetPasswordByUsername(String username) {
         String sql = "select Password from Account where UserName =?";
         try {
@@ -151,7 +161,7 @@ public class DAOAccount extends ConnectDB {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, AccountID);
             ResultSet rs = pre.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Account acc = Account.builder()
                         .accountid(rs.getInt(1))
                         .username(rs.getString(2))
@@ -164,15 +174,16 @@ public class DAOAccount extends ConnectDB {
                         .role(rs.getInt(9))
                         .build();
                 list.add(acc);
-                
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return list;
     }
+
     public int updateAccount(Account acc) {
-        int n =0;
+        int n = 0;
         String sql = "update Account set DisplayName=?, Address =?,Email=?, Phone=?,ImageURL=? where AccountID =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -188,12 +199,13 @@ public class DAOAccount extends ConnectDB {
         }
         return n;
     }
+
     public int changePassword(Account acc) {
-        int n =0;
+        int n = 0;
         String sql = "update Account set Password=? where AccountID =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, acc.getPassword());    
+            pre.setString(1, acc.getPassword());
             pre.setInt(2, acc.getAccountid());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -201,13 +213,28 @@ public class DAOAccount extends ConnectDB {
         }
         return n;
     }
+
+    public int updatePasswordByEmail(Account acc) {
+        int n = 0;
+        String sql = "update Account set Password=? where Email =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, acc.getPassword());
+            pre.setString(2, acc.getEmail());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
     public List ListAllUserName() {
         List<String> list = new ArrayList<String>();
         String sql = "select UserName from Account";
         ResultSet rs = getData(sql);
         try {
-            while (rs.next()) {     
-                String username = rs.getString(1);     
+            while (rs.next()) {
+                String username = rs.getString(1);
                 list.add(username);
             }
         } catch (SQLException ex) {
@@ -215,13 +242,14 @@ public class DAOAccount extends ConnectDB {
         }
         return list;
     }
+
     public List ListAllEmail() {
         List<String> list = new ArrayList<String>();
         String sql = "select Email from Account";
         ResultSet rs = getData(sql);
         try {
-            while (rs.next()) {     
-                String Email = rs.getString(1);     
+            while (rs.next()) {
+                String Email = rs.getString(1);
                 list.add(Email);
             }
         } catch (SQLException ex) {
@@ -229,13 +257,14 @@ public class DAOAccount extends ConnectDB {
         }
         return list;
     }
+
     public List ListAllPhone() {
         List<String> list = new ArrayList<String>();
         String sql = "select Phone from Account";
         ResultSet rs = getData(sql);
         try {
-            while (rs.next()) {     
-                String Phone = rs.getString(1);     
+            while (rs.next()) {
+                String Phone = rs.getString(1);
                 list.add(Phone);
             }
         } catch (SQLException ex) {
@@ -243,19 +272,98 @@ public class DAOAccount extends ConnectDB {
         }
         return list;
     }
+
+    public Account GetAccountByEmail(String email) {
+        String sql = "select UserName,Address,Phone from Account where Email =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, email);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .username(rs.getString(1))
+                        .address(rs.getString(2))
+                        .phone(rs.getString(3))
+                        .email(email)
+                        .build();
+                return acc;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void send(String to, String sub,
+            String msg, final String user, final String pass) {
+        //create an instance of Properties Class   
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        //below mentioned mail.smtp.port is optional
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, pass);
+            }
+        });
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(sub);
+            message.setContent(msg, "text/html");
+            /* Transport class is used to deliver the message to the recipients */
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String SendMail(Account acc) {
+        DAOAccount dao = new DAOAccount();
+        String username = acc.getUsername();
+        String Address = acc.getAddress();
+        String phone = acc.getPhone();
+        String email = acc.getEmail();
+        String password = dao.getRandom();
+        String subject = "Forget PassWord.";
+        String message = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "\n"
+                + "<head>\n"
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <h3 style=\"color: blue;\">Forget PassWord.</h3>\n"
+                + "    <div>Full Name :" + username + "</div>"
+                + "    <div>Phone :" + phone + "</div>"
+                + "    <div>address:" + Address + "</div>"
+                + "   <div> Code :" + password + "</div>"
+                + "<h3 style=\"color: blue;\">Thank you very much!</h3>\n"
+                + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        DAOAccount.send(email, subject, message, "khainnhe151295@fpt.edu.vn", "01688219330Khai");
+        return password;
+    }
+
     public void RegisterAccount(Account acc) {
-        
-        String sql = "INSERT INTO [dbo].[Account]" +
-"           ([UserName]" +
-"           ,[Password]" +
-"           ,[DisplayName]" +
-"           ,[Address]" +
-"           ,[Email]" +
-"           ,[Phone]" +
-"           ,[ImageURL]" +
-"           ,[Role])" +
-"     VALUES\n" +
-"           (?,?,?,?,?,?,?,?)";
+
+        String sql = "INSERT INTO [dbo].[Account]"
+                + "           ([UserName]"
+                + "           ,[Password]"
+                + "           ,[DisplayName]"
+                + "           ,[Address]"
+                + "           ,[Email]"
+                + "           ,[Phone]"
+                + "           ,[ImageURL]"
+                + "           ,[Role])"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, acc.getUsername());
@@ -270,24 +378,46 @@ public class DAOAccount extends ConnectDB {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
+    public String getRandom() {
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        return String.format("%06d", number);
+    }
+
     public static void main(String[] args) {
-       
-        DAOAccount dao = new DAOAccount();
-        Account acc = Account.builder()
-                .username("NNK")
-                .password("123")
-                .displayname("K")
-                .address("H")
-                .email("ngockhaia11@gmail.com")
-                .phone("0385264896")
-                .imageURL("")
-                .role(1)
-                .build();
-           // int a =dao.RegisterAccount(acc);
-        //System.out.println(a);
+
+//        DAOAccount dao = new DAOAccount();
+//        Account acc = dao.GetAccountByEmail("tuyennvhe151053@fpt.edu.vn");
+//        System.out.println(acc);
+//        DAOAccount dao = new DAOAccount();
+////        String username = acc.getUsername();
+////        String Address = acc.getAddress();
+////        String phone = acc.getPhone();
+////        String email = acc.getEmail();
+//        String password = dao.getRandom();
+//        String subject = "Forget PassWord.";
+//        String message = "<!DOCTYPE html>\n"
+//                + "<html lang=\"en\">\n"
+//                + "\n"
+//                + "<head>\n"
+//                + "</head>\n"
+//                + "\n"
+//                + "<body>\n"
+//                + "    <h3 style=\"color: blue;\">Forget PassWord.</h3>\n"
+//                + "    <div>Full Name :" 
+//                + "    <div>Phone :" 
+//                + "    <div>address:" 
+//                + "   <div> Code :" + password + "</div>"
+//                + "<h3 style=\"color: blue;\">Thank you very much!</h3>\n"
+//                + "\n"
+//                + "</body>\n"
+//                + "\n"
+//                + "</html>";
+//        DAOAccount.send("nvt04062001@gmail.com", subject, message, "khainnhe151295@fpt.edu.vn", "01688219330Khai");
+//      
 
     }
 

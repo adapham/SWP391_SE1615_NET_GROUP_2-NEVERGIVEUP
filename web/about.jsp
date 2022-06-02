@@ -4,6 +4,8 @@
     Author     : KhacBao
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -121,7 +123,7 @@
                             </div>
                         </div>
                         <!-- button menu -->
-                        <button type="button" class="btn btn-secondary btn-lg">See out menu</button>
+                        <button type="button" class="btn btn-secondary btn-lg"><a href="home" style="text-decoration: none; color: white;">See out menu</a></button>
                     </div>
                 </div>
             </div>

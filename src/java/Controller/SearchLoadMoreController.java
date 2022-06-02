@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author KhacBao
  */
-@WebServlet(name = "LoadMoreController", urlPatterns = {"/load"})
-public class LoadMoreController extends HttpServlet {
+@WebServlet(name = "SearchLoadMoreController", urlPatterns = {"/searchLoad"})
+public class SearchLoadMoreController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,40 +38,50 @@ public class LoadMoreController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            //lấy các phần tiếp theo
-            String page = request.getParameter("totalPage");
-            int iPage = Integer.parseInt(page);
-            int PAGE_SIZE = 4;
+            /* TODO output your page here. You may use following sample code. */
             DAOProduct daoPro = new DAOProduct();
-            List<Product> listPro = daoPro.getProductWithPaging(iPage, PAGE_SIZE);
+            DAOCategory daoCate = new DAOCategory();
 
-            for (Product pro : listPro) {
-                out.println("<div class=\"col mb-5\">\n"
-                        + "                            <div class=\"card h-100\">\n"
-                        + "                                <!-- Sale badge-->\n"
-                        + "                                <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n"
-                        + "                                <!-- Product image-->\n"
-                        + "                                <div class=\"img-box d-flex justify-content-center\" style=\"background: #f1f2f3;\">\n"
-                        + "                                    <img class=\"card-img-top\" src=\""+pro.getImageURL()+"\" alt=\"...\" style=\"max-width: 100%; max-height: 200px;\"/>\n"
+            request.setCharacterEncoding("UTF-8");
+            String searchKey = request.getParameter("searchKey");
+
+            List<Product> listProduct = daoPro.searchByName(searchKey);
+
+            for (Product pro : listProduct) {
+                out.println("<div class=\"product col mb-5\">\n"
+                        + "                            <div class=\"card h-100\" style=\"background: #f1f2f3;\">");
+                if (pro.getDiscount() != 0) {
+                    out.println("<div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale" + pro.getDiscount() * 100 + "%</div> ");
+                }
+                out.println("<!-- Product image-->\n"
+                        + "                                <div class=\"img-box d-flex justify-content-center\" style=\"height: 100%; width: 80%;margin-left: auto; margin-right: auto; margin-top: 10%; margin-bottom: 10%;\">\n"
+                        + "                                    <a href=\"details?pid=" + pro.getProductID() + "\">\n"
+                        + "                                        <img class=\"card-img-top\" src=\"" + pro.getImageURL() + "\" alt=\"...\"/>\n"
+                        + "                                    </a>\n"
                         + "                                </div>\n"
                         + "                                <!-- Product details-->\n"
                         + "                                <div class=\"card-body\" style=\"background: #232831; color: white;\">\n"
                         + "                                    <div class=\"text-center\">\n"
                         + "                                        <!-- Product name-->\n"
-                        + "                                        <h5 class=\"fw-bolder\">"+pro.getProductName()+"</h5>\n"
+                        + "                                        <a href=\"details?pid=" + pro.getProductID() + "\">\n"
+                        + "                                            <h5 class=\"fw-bolder\">" + pro.getProductName() + "</h5>\n"
+                        + "                                        </a>\n"
                         + "                                        <!-- Product reviews-->\n"
                         + "                                        <div class=\"d-flex justify-content-center\" style=\"overflow: hidden; max-height: 75px; margin-top: 5px;\">\n"
-                        + "                                            <span style=\"text-align: left;\">"+pro.getDescription()+"</span>\n"
+                        + "                                            <span style=\"text-align: left;\">" + pro.getDescription() + "</span>\n"
                         + "                                        </div>\n"
-                        + "                                    <!--Cart-->\n"
-                        + "                                    <div class=\"d-flex justify-content-between\" style=\"margin-top: 15px;\">\n"
-                        + "                                        <!-- Product price-->\n"
-                        + "                                        <div class=\"d-flex align-items-center\">\n"
-                        + "                                            <span class=\"text-muted text-decoration-line-through\">$20.00</span>\n"
-                        + "                                            "+pro.getUnitPrice()+"\n"
+                        + "                                        <!--Cart-->\n"
+                        + "                                        <div class=\"d-flex justify-content-between\" style=\"margin-top: 15px;\">\n"
+                        + "                                            <!-- Product price-->\n"
+                        + "                                            <div class=\"d-flex align-items-center\">");
+                if (pro.getDiscount() != pro.getPriceAferDiscount()) {
+                    out.println("<span class=\"text-muted text-decoration-line-through\">" + pro.getUnitPrice() + "</span>");
+                }
+                out.println(" " + pro.getPriceAferDiscount() + "\n"
+                        + "                                            </div>\n"
+                        + "                                            <!--Cart-->\n"
+                        + "                                            <a class=\"btn btn-outline-dark mt-auto rounded-circle\" href=\"#\" style=\"font-size: 20px; background-color: #f4bd36;\"><i class=\"bi bi-cart-plus\"></i></a>\n"
                         + "                                        </div>\n"
-                        + "                                        <a class=\"btn btn-outline-dark mt-auto rounded-circle\" href=\"#\" style=\"font-size: 20px; background-color: #f4bd36;\"><i class=\"bi bi-cart-plus\"></i></a>\n"
-                        + "                                    </div>\n"
                         + "                                    </div>\n"
                         + "                                </div>\n"
                         + "                            </div>\n"

@@ -15,10 +15,12 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -41,6 +43,7 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+
             DAOAccount dao = new DAOAccount();
             if (service == null) {
                 service = "login";
@@ -53,12 +56,28 @@ public class LoginController extends HttpServlet {
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-
                     int checkAccount = dao.checkAccount(username, password);
+                    String r = request.getParameter("rem");
                     if (checkAccount == 0) {
                         request.setAttribute("mess", "wrong user or pass");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                     } else if (checkAccount == 1) {
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (r == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
@@ -71,6 +90,23 @@ public class LoginController extends HttpServlet {
                                 .build());
                         request.getRequestDispatcher("home").forward(request, response);
                     } else if (checkAccount == 2) {
+
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (r == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        }else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
@@ -84,6 +120,23 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
 
                     } else {
+
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (r == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
                         Account DisplayName = dao.GetDisplayNameByUsername(username);
                         Account ImageURL = dao.GetImageURLByUsername(username);
                         Account accountID = dao.GetAccountIDLByUsername(username);
@@ -342,6 +395,73 @@ public class LoginController extends HttpServlet {
                 String mess = "Register success";
                 request.setAttribute("mess", mess);
                 request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if (service.equals("forgetpassword")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    response.sendRedirect("forgetpassword.jsp");
+                } else {
+                    String email = request.getParameter("email");
+                    List list = dao.ListAllEmail();
+                    for (Object o : list) {
+                        if (email.equals(o)) {
+                            Account acc = dao.GetAccountByEmail(email);
+                            String pass = dao.SendMail(acc);
+                            request.setAttribute("pass", pass);
+                            request.setAttribute("email", email);
+                            request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                        }
+                    }
+                    String mess = "Email not exis";
+                    request.setAttribute("mess", mess);
+                    request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+                }
+            }
+            if (service.equals("updatepassword")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    response.sendRedirect("resetpassword.jsp");
+                } else {
+                    String email = request.getParameter("email");
+                    String pass = request.getParameter("pass");
+                    String password = request.getParameter("password");
+                    String newpassword = request.getParameter("newpassword");
+                    String confirmpassword = request.getParameter("confirmpassword");
+                    if (!pass.equals(password)) {
+                        String mess = "Wrong Password";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (newpassword == null || newpassword.isEmpty()) {
+                        String mess = "newpassword is not null";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (confirmpassword == null || confirmpassword.isEmpty()) {
+                        String mess = "confirmpassword is not null";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else if (!newpassword.equals(confirmpassword)) {
+                        String mess = "newpassword not same confirmpassword";
+                        request.setAttribute("pass", pass);
+                        request.setAttribute("email", email);
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    } else {
+                        Account acc = Account.builder()
+                                .password(newpassword)
+                                .email(email)
+                                .build();
+                        dao.updatePasswordByEmail(acc);
+                        String mess = "Update Success";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    }
+                }
             }
         }
     }

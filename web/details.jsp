@@ -20,10 +20,64 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/details.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/main.css" rel="stylesheet">
     </head>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <body>
-        <%@include file="component/NavbarHome.jsp" %>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5 d-flex justify-content-center">
+                <a class="navbar-brand" href="home?do=home">Foodie</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Blog List</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home?do=about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                    </ul>
+                    <!-- Search -->
+
+                    <!--Cart-->
+                    <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+
+                </div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item dropdown">
+                        <c:if test="${sessionScope.Account ==null}">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png" height="40px" width="70%"/>  
+                            </a>
+                        </c:if>
+                        <c:if test="${sessionScope.Account !=null}">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false"> <img src="${sessionScope.Account.imageURL}" class="rounded-circle" alt="A girl" width="50"/>  
+                            </a> ${sessionScope.Account.displayname}  
+                        </c:if>
+                        <c:if test="${sessionScope.Account ==null}">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="login">Login</a></li>
+                                <li><a class="dropdown-item" href="login?do=Register">Regsiter</a></li>  
+                            </ul>   
+                        </c:if>
+                        <c:if test="${sessionScope.Account !=null}">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="login?do=logout">Logout</a></li>
+                                <li><a class="dropdown-item" href="login?do=updateprofile">Update Profile</a></li>  
+                            </ul>   
+                        </c:if>
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <!-- Product section-->
 
         <section class="py-5">
@@ -32,11 +86,13 @@
 
                     <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${pro.imageURL}" alt="..." /></div>
                     <div class="col-md-6">
-                        <div class="small mb-1">SKU: BST-498</div>
+                        <div class="small mb-1">${categoryName}</div> 
                         <h1 class="display-5 fw-bolder">${pro.productName}</h1>
                         <div class="fs-5 mb-5">
-                            <span class="text-decoration-line-through">$200</span>
-                            <span>${pro.unitPrice}</span>
+                            <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
+                                <span class="text-decoration-line-through">${pro.unitPrice}</span>
+                            </c:if>
+                            <span>${pro.priceAferDiscount}</span>
                         </div>
                         <p class="lead">${pro.description}</p>
                         <div class="d-flex">
@@ -87,7 +143,9 @@
                                             <button type="submit" name="submit" class="btn btn-info pull-right">Post</button>  
                                             <div class="clearfix"></div>
                                             <hr>   
-                                        </form>                                  
+                                        </form>
+
+
                                         <ul class="media-list">
                                             <c:forEach items="${list}" var="l">
                                                 <li class="media">
