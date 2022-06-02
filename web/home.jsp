@@ -143,9 +143,9 @@
                                             <!-- Product price-->
                                             <div class="d-flex align-items-center">
                                                 <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
-                                                    <span class="text-muted text-decoration-line-through">${pro.unitPrice}</span>
+                                                    <span class="text-muted text-decoration-line-through">$${pro.unitPrice}</span>
                                                 </c:if>
-                                                ${pro.priceAferDiscount}
+                                                $${pro.priceAferDiscount}
                                             </div>
                                             <!--Cart-->
                                             <a class="btn btn-outline-dark mt-auto rounded-circle" href="#" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
