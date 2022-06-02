@@ -18,33 +18,6 @@ import java.util.List;
  */
 public class DAOFeedback extends ConnectDB {
 
-    public Product getProductByProductID(int ProductID) {
-        String sql = "select * from Product where ProductID =?";
-        try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setInt(1, ProductID);
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
-                Product pro = Product.builder()
-                        .productID(rs.getInt(1))
-                        .productName(rs.getString(2))
-                        .supplierID(rs.getInt(3))
-                        .categoryID(rs.getInt(4))
-                        .quantity(rs.getInt(5))
-                        .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
-                        .build();
-                return pro;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
     public List ListFeedBackByProductID(int productID) {
         List<FeedBack> list = new ArrayList<>();
         String sql = "select Account.DisplayName ,Account.ImageURL,Feedback.FeedbackContent,"
