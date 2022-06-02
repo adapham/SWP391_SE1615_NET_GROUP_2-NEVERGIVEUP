@@ -203,6 +203,7 @@ public class DAOProduct extends ConnectDB {
         return listPro;
     }
 
+
     public Product getProductByProductID(int ProductID) {
         DAOProduct dao = new DAOProduct();
         String sql = "select * from Product where ProductID =?";
@@ -254,6 +255,7 @@ public class DAOProduct extends ConnectDB {
         }
         return 0;
     }
+
 
     //Main
     public static void main(String[] args) {

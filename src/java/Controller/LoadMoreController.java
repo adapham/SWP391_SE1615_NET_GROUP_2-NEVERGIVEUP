@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import Modal.DAOCategory;
 import Modal.DAOProduct;
+import View.Category;
 import View.Product;
 import java.io.IOException;
 import java.io.PrintWriter;

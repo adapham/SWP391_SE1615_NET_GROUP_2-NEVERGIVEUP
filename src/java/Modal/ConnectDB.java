@@ -21,7 +21,7 @@ public class ConnectDB {
             try {
                 //Connection driver
                 conn = DriverManager.getConnection(URL, userName, password);
-                System.out.println("Connected");//In ra để check connected
+               // System.out.println("Connected");//In ra để check connected
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -45,7 +45,7 @@ public class ConnectDB {
         }
         return rs;
     }
-    public static void main(String[] args) {
-        new ConnectDB();
-    }
+//    public static void main(String[] args) {
+//        new ConnectDB();
+//    }
 }

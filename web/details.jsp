@@ -143,7 +143,9 @@
                                             <button type="submit" name="submit" class="btn btn-info pull-right">Post</button>  
                                             <div class="clearfix"></div>
                                             <hr>   
-                                        </form>                                  
+                                        </form>
+
+
                                         <ul class="media-list">
                                             <c:forEach items="${list}" var="l">
                                                 <li class="media">
