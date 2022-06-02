@@ -17,6 +17,62 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/main.css" rel="stylesheet">
+        <style>
+            .search-box{
+                width: fit-content;
+                height: fit-content;
+                position: relative;
+            }
+            .input-search{
+                height: 50px;
+                width: 50px;
+                border-style: none;
+                padding: 10px;
+                font-size: 18px;
+                letter-spacing: 2px;
+                outline: none;
+                border-radius: 25px;
+                transition: all .5s ease-in-out;
+                background-color: #22a6b3;
+                padding-right: 40px;
+                color:#fff;
+            }
+            .input-search::placeholder{
+                color:rgba(255,255,255,.5);
+                font-size: 18px;
+                letter-spacing: 2px;
+                font-weight: 100;
+            }
+            .btn-search{
+                width: 50px;
+                height: 50px;
+                border-style: none;
+                font-size: 20px;
+                font-weight: bold;
+                outline: none;
+                cursor: pointer;
+                border-radius: 50%;
+                position: absolute;
+                right: 0px;
+                color:#ffffff ;
+                background-color: #00aced;
+                pointer-events: painted;  
+            }
+            .btn-search:focus ~ .input-search{
+                width: 300px;
+                border-radius: 30px;
+                background-color: #00aced;
+                border-bottom:1px solid rgba(255,255,255,.5);
+                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+            }
+            .input-search:focus{
+                width: 300px;
+                border-radius: 30px;
+                background-color: #00aced;
+                border-bottom:1px solid rgba(255,255,255,.5);
+                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+            }
+        </style>
     </head>
     <body>
         <!-- Navigation-->
@@ -41,8 +97,8 @@
                             All
                         </a> 
                     </li>
-                    <c:forEach items="${listCategory}" var="listCate">
-                        <li class="list-group-item btn btn-dark ms-lg-1 border border-2 rounded-pill">
+                    <c:forEach items="${sessionScope.listCategory}" var="listCate">
+                        <li class="list-group-item btn btn-dark ms-lg-1 border border-2 rounded-pill ${listCate.categoryID == cateID ?" active":""}">
                             <a href="home?do=fillCategory&categoryID=${listCate.categoryID}" style="text-decoration: none; color: black;">
                                 ${listCate.categoryName}
                             </a> 
@@ -53,6 +109,11 @@
                 <br>
                 <!--List Product-->
                 <div id="content" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <c:choose>
+                        <c:when test="${listProduct == null || listProduct.size() == 0}">
+                            <span class="d-flex justify-content-center" style="color: red; font-weight: bold; font-size: 30px;">Not Founds</span> 
+                        </c:when>
+                        <c:otherwise>
                     <c:forEach items="${listProduct}" var="pro">
                         <div class="product col mb-5">
                             <div class="card h-100" style="background: #f1f2f3;">
@@ -94,9 +155,13 @@
                             </div>
                         </div>
                     </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+
+
                 </div>
                 <!--Paging Home Product-->
-                <nav aria-label="Page navigation example">
+                <nav id="paging" aria-label="Page navigation example">
                     <ul class="pagination">
                         <c:if test="${page > 1}">
                             <li class="page-item" ><a class="page-link" href="home?do=home&page=${page - 1}" >Previous</a></li>
@@ -109,6 +174,7 @@
                             </c:if>
                     </ul>
                 </nav>
+
                 <!--<button onclick="loadMore()" class="btn btn-warning rounded-pill d-flex justify-content-center" style="margin-left: auto;margin-right: auto;padding: 10px 50px;">View More</button>-->
             </div>
         </section>
@@ -136,6 +202,25 @@
                 });
             }
 
+            function searchByName(param) {
+                document.getElementById("paging").style.display = "none";
+
+                var searchKey = param.value;//Get value
+                $.ajax({
+                    url: "/SWP391_FoodOrderOnline/searchLoad",
+                    type: "get", //send it through get method
+                    data: {
+                        searchKey: searchKey //Gửi tới Load Controller
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
         </script>
     </body>
 </html>
