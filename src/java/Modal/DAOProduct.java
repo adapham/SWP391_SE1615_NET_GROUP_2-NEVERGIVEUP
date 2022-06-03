@@ -179,6 +179,8 @@ public class DAOProduct extends ConnectDB {
             ps.setString(1, pid);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+                DAOProduct dao = new DAOProduct();
+                double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
                         .productID(rs.getInt(1))
                         .productName(rs.getString(2))
@@ -186,10 +188,12 @@ public class DAOProduct extends ConnectDB {
                         .categoryID(rs.getInt(4))
                         .quantity(rs.getInt(5))
                         .unitPrice(rs.getDouble(6))
-                        .unitInStock(rs.getInt(7))
-                        .description(rs.getString(8))
-                        .imageURL(rs.getString(9))
-                        .isActive(rs.getInt(10))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
                         .build();
                 return pro;
             }

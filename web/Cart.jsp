@@ -7,7 +7,7 @@
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -70,7 +70,7 @@
         <main class="page">
             <section class="shopping-cart dark" style="min-height: 435px">
                 <div class="container">
-                    <%List<Product> List = (List<Product>) request.getAttribute("listProductCarts");%>
+
                     <div class="block-heading">
                         <h2>List Foods</h2>
                     </div>
@@ -90,20 +90,20 @@
 
 
 
-                    <%for (Product pro : List) {%>
-                        <form method="post" action="updateQuantity">
-                            <tr>
-                            <input hidden="" value="<%=pro.getProductID()%>" name="pid"/>
-                            <td scope="row"><%=pro.getProductID()%></td>
-                            <td><img src="<%=pro.getImageURL()%>"></td>
-                            <td><%=pro.getProductName()%></td>
-                            <td><input onchange="this.form.submit()" type="number" value="<%=pro.getQuantity()%>" name="quantity"></td>
-                            <td><%=pro.getUnitPrice()%></td>
-                            <td><%=Math.ceil(pro.getUnitPrice() * pro.getQuantity())%></td>
-                            <td><a href="delete?pid=<%=pro.getProductID()%>" class="btn btn-outline-danger"><i class="bi bi-trash"></i>Detele</a></td>    
-                            </tr>
-                        </form>
-                    <%}%>
+                            <c:forEach items="${listProductCarts}" var="l">
+                            <form method="post" action="updateQuantity">
+                                <tr>
+                                <input hidden="" value="${l.productID}" name="pid"/>
+                                <td scope="row">${l.productID}</td>
+                                <td><img src="${l.imageURL}"></td>
+                                <td>${l.productName}</td>
+                                <td><input onchange="this.form.submit()" type="number" value="${l.quantity}" name="quantity"></td>
+                                <td>${l.unitPrice}</td>
+                                <td>${Math.round((l.unitPrice * l.quantity)*100)/100}</td>
+                                <td><a href="delete?pid=${l.productID}" class="btn btn-outline-danger"><i class="bi bi-trash"></i>Detele</a></td>    
+                                </tr>
+                            </form>
+                        </c:forEach>
 
 
                         </tbody>                   

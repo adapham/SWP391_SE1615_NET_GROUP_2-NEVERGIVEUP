@@ -45,7 +45,7 @@ public class DetailsController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             DAOFeedback dao = new DAOFeedback();
             DAOProduct daoPro = new DAOProduct();
-            DAOCategory daoCate = new DAOCategory();
+            DAOCategory daoCate = new DAOCategory();            
             String service = request.getParameter("do");
             if (service == null) {
                 service = "details";
@@ -59,7 +59,7 @@ public class DetailsController extends HttpServlet {
                 //Lay thong tin Product thong qua ProductID
                 Product pro = daoPro.getProductByProductID(ProductID);
                 //Lay CategoryName thong qua ProductID
-                String CategoryName =  daoCate.GetCategoryName(pro.getCategoryID());
+                String CategoryName = daoCate.GetCategoryName(pro.getCategoryID());
                 request.setAttribute("categoryName", CategoryName);
                 request.setAttribute("proID", ProductID);
                 request.setAttribute("pro", pro);
@@ -87,9 +87,9 @@ public class DetailsController extends HttpServlet {
                             .build();
                     //Insert vao database
                     dao.InsertFeedBack(feedback);
-                    response.sendRedirect("details?pid="+ProductID);
-                }
-
+                    response.sendRedirect("details?pid=" + ProductID);
+                }                
+                
             }
 
         }

@@ -64,7 +64,7 @@ public class AddToCartController extends HttpServlet {
                         .imageURL(temp.getImageURL())
                         .productName(temp.getProductName())
                         .quantity(1)
-                        .unitPrice(temp.getUnitPrice())
+                        .unitPrice(temp.getPriceAferDiscount())
                         .build();
                 size++;
             } else {

@@ -51,7 +51,7 @@ public class CartController extends HttpServlet {
             int sum=0;
             while(em.hasMoreElements()){
                 String key = em.nextElement().toString();
-                if(!key.equals("urlHistory") && !key.equals("Account")&& !key.equals("size")){
+                if(!key.equals("urlHistory") && !key.equals("Account")&& !key.equals("size") && !key.equals("listCategory")){
                     Product pro = (Product) session.getAttribute(key);
                     sum+=pro.getQuantity();
                     listProductCarts.add(pro);
@@ -70,6 +70,7 @@ public class CartController extends HttpServlet {
                 double total=Math.ceil(totalMoney);
                 total= (double) total/100;
                 totalMoney=total;
+                
                 
             }
             request.setAttribute("totalMoney", totalMoney);
