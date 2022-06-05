@@ -76,7 +76,63 @@
     </head>
     <body>
         <!-- Navigation-->
-        <%@include file="component/NavbarHome.jsp" %>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5 d-flex justify-content-center">
+                <a class="navbar-brand" href="home?do=blogList">Foodie</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="home?do=blogList">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home?do=home">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home?do=about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home?do=contact">Contact</a></li>
+                    </ul>
+                    <!-- Search -->
+                    <form class="d-flex mx-auto" action="home?do=search" method="POST">
+                        <div class="search-box">
+                            <button class="btn-search"><i class="bi bi-search"></i></button>
+                            <input oninput="searchByName(this)" name="searchKey" type="text" class="input-search" placeholder="Type to Search...">
+                        </div>
+                    </form>
+                    <!--Cart-->
+                    <form class="d-flex">
+                        <a class="btn btn-outline-dark" href="cart">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.size}</span>
+                        </a>
+                    </form>
+
+                </div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item dropdown">
+                        <c:if test="${sessionScope.Account ==null}">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png" height="40px" width="70%"/>  
+                            </a>
+                        </c:if>
+                        <c:if test="${sessionScope.Account !=null}">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false"> <img src="${sessionScope.Account.imageURL}" class="rounded-circle" alt="A girl" width="50"/>  
+                            </a> ${sessionScope.Account.displayname}  
+                        </c:if>
+                        <c:if test="${sessionScope.Account ==null}">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="login">Login</a></li>
+                                <li><a class="dropdown-item" href="login?do=Register">Regsiter</a></li>  
+                            </ul>   
+                        </c:if>
+                        <c:if test="${sessionScope.Account !=null}">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="login?do=logout">Logout</a></li>
+                                <li><a class="dropdown-item" href="login?do=updateprofile">Update Profile</a></li>  
+                            </ul>   
+                        </c:if>
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <!-- Header-->
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
@@ -114,47 +170,47 @@
                             <span class="d-flex justify-content-center" style="color: red; font-weight: bold; font-size: 30px;">Not Founds</span> 
                         </c:when>
                         <c:otherwise>
-                    <c:forEach items="${listProduct}" var="pro">
-                        <div class="product col mb-5">
-                            <div class="card h-100" style="background: #f1f2f3;">
-                                <!-- Sale badge-->
-                                <c:if test="${pro.discount !=0}">
-                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale${pro.discount*100}%</div> 
-                                </c:if>
-                                <!-- Product image-->
-                                <div class="img-box d-flex justify-content-center" style="height: 100%; width: 80%;margin-left: auto; margin-right: auto; margin-top: 10%; margin-bottom: 10%;">
-                                    <a href="details?pid=${pro.productID}">
-                                        <img class="card-img-top" src="${pro.imageURL}" alt="..."/>
-                                    </a>
-                                </div>
-                                <!-- Product details-->
-                                <div class="card-body" style="background: #232831; color: white;">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <a href="details?pid=${pro.productID}">
-                                            <h5 class="fw-bolder">${pro.productName}</h5>
-                                        </a>
-                                        <!-- Product reviews-->
-                                        <div class="d-flex justify-content-center" style="overflow: hidden; max-height: 75px; margin-top: 5px;">
-                                            <span style="text-align: left;">${pro.description}</span>
+                            <c:forEach items="${listProduct}" var="pro">
+                                <div class="product col mb-5">
+                                    <div class="card h-100" style="background: #f1f2f3;">
+                                        <!-- Sale badge-->
+                                        <c:if test="${pro.discount !=0}">
+                                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale${pro.discount*100}%</div> 
+                                        </c:if>
+                                        <!-- Product image-->
+                                        <div class="img-box d-flex justify-content-center" style="height: 100%; width: 80%;margin-left: auto; margin-right: auto; margin-top: 10%; margin-bottom: 10%;">
+                                            <a href="details?pid=${pro.productID}">
+                                                <img class="card-img-top" src="${pro.imageURL}" alt="..."/>
+                                            </a>
                                         </div>
-                                        <!--Cart-->
-                                        <div class="d-flex justify-content-between" style="margin-top: 15px;">
-                                            <!-- Product price-->
-                                            <div class="d-flex align-items-center">
-                                                <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
-                                                    <span class="text-muted text-decoration-line-through">$${pro.unitPrice}</span>
-                                                </c:if>
-                                                $${pro.priceAferDiscount}
+                                        <!-- Product details-->
+                                        <div class="card-body" style="background: #232831; color: white;">
+                                            <div class="text-center">
+                                                <!-- Product name-->
+                                                <a href="details?pid=${pro.productID}">
+                                                    <h5 class="fw-bolder">${pro.productName}</h5>
+                                                </a>
+                                                <!-- Product reviews-->
+                                                <div class="d-flex justify-content-center" style="overflow: hidden; max-height: 75px; margin-top: 5px;">
+                                                    <span style="text-align: left;">${pro.description}</span>
+                                                </div>
+                                                <!--Cart-->
+                                                <div class="d-flex justify-content-between" style="margin-top: 15px;">
+                                                    <!-- Product price-->
+                                                    <div class="d-flex align-items-center">
+                                                        <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
+                                                            <span class="text-muted text-decoration-line-through">$${pro.unitPrice}</span>
+                                                        </c:if>
+                                                        $${pro.priceAferDiscount}
+                                                    </div>
+                                                    <!--Cart-->
+                                                    <a class="btn btn-outline-dark mt-auto rounded-circle" href="AddToCart?pid=${pro.productID}" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
+                                                </div>
                                             </div>
-                                            <!--Cart-->
-                                            <a class="btn btn-outline-dark mt-auto rounded-circle" href="AddToCart?pid=${pro.productID}" style="font-size: 20px; background-color: #f4bd36;"><i class="bi bi-cart-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </c:forEach>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
 
