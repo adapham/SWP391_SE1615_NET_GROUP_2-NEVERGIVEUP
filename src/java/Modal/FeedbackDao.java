@@ -5,7 +5,9 @@
  */
 package Modal;
 
+
 import Entity.FeedBack;
+import Entity.Intouch;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -29,11 +31,11 @@ public class FeedbackDao extends ConnectDB {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 FeedBack feedback = FeedBack.builder()
-                        .disPlayName(rs.getString("disPlayName"))
-                        .imageURL(rs.getString("imageURL"))
-                        .feedbackContent(rs.getString("feedbackContent"))
-                        .accountID(rs.getInt("accountID"))
-                        .timeComment(rs.getString("Feedbacktime"))
+                        .disPlayName(rs.getString(1))
+                        .imageURL(rs.getString(2))
+                        .feedbackContent(rs.getString(3))
+                        .accountID(rs.getInt(4))
+                        .timeComment(rs.getString(5))
                         .build();
                 list.add(feedback);
             }
@@ -58,6 +60,27 @@ public class FeedbackDao extends ConnectDB {
             pre.setInt(2, feeback.getProductID());
             pre.setInt(3, feeback.getAccountID());
             pre.setString(4, feeback.getTimeComment());
+            pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void InsertIntouch(Intouch intouch) {
+
+        String sql = "INSERT INTO [dbo].[InTouch]\n"
+                + "           ([Name]\n"
+                + "           ,[Email]\n"
+                + "           ,[Subject]\n"
+                + "           ,[Messeage])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?)";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, intouch.getName());
+            pre.setString(2, intouch.getEmail());
+            pre.setString(3, intouch.getSubject());
+            pre.setString(4, intouch.getMessage());
             pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

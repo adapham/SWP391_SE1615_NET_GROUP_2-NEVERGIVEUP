@@ -21,12 +21,14 @@
                                             <li><a href="home?do=about">about us </a></li>
                                             <li><a href="cart.jsp">cart page</a></li>
                                             <li><a href="checkout.jsp">checkout </a></li>
-                                            <li><a href="my-account.html">my account</a></li>
+                                            <c:if test="${sessionScope.Account !=null}">
+                                                <li><a href="login?do=updateprofile">my account</a></li>
+                                            </c:if>
                                         </ul>
                                     </li>
-                                    <li><a href="blog-no-sidebar.html">BLOG </a>
+                                    <li><a href="blog-no-sidebar.jsp">BLOG </a>
                                     </li>
-                                    <li><a href="contact.html">CONTACT </a></li>
+                                    <li><a href="contact.jsp">CONTACT </a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -46,9 +48,6 @@
                                 </div>
                             </div>
                             <div class="same-style-2">
-                                <a href="login-register.html"><i class="icon-user"></i></a>
-                            </div>
-                            <div class="same-style-2">
                                 <a href="cart">
                                     <c:if test="${sessionScope.size==null}">
                                         <i class="icon-basket-loaded"></i><span class="pro-count red">0</span>
@@ -58,6 +57,32 @@
                                     </c:if>
                                 </a>
                             </div>
+                            <c:if test="${sessionScope.Account ==null}">
+                                <div class="same-style-2">
+                                    <div class="dropdown show">
+                                        <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-user"></i></a>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="login?do=login">Login</a>
+                                            <a class="dropdown-item" href="login?do=Register">Register</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${sessionScope.Account !=null}">
+                                <div class="same-style-2">
+                                    <div class="dropdown show">
+                                        <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="${sessionScope.Account.imageURL}" class="rounded-circle" alt="A girl" height="30" width="30"/> ${sessionScope.Account.displayname} 
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="login?do=logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>       
                         </div>
                     </div>
                 </div>

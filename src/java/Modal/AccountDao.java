@@ -5,6 +5,7 @@
  */
 package Modal;
 
+
 import Entity.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,22 +29,22 @@ import javax.mail.internet.MimeMessage;
  * @author admin
  */
 public class AccountDao extends ConnectDB {
-    
+
     public List ListAllAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
-                int accountid = rs.getInt(1);
-                String username = rs.getString(2);
-                String password = rs.getString(3);
-                String displayname = rs.getString(4);
-                String address = rs.getString(5);
-                String email = rs.getString(6);
-                String phone = rs.getString(7);
-                String imageurl = rs.getString(8);
-                int roll = rs.getInt(9);
+                int accountid = rs.getInt("accountid");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String displayname = rs.getString("displayname");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String imageurl = rs.getString("imageURL");
+                int roll = rs.getInt("role");
                 Account acc = Account.builder()
                         .accountid(accountid)
                         .username(username)
@@ -163,15 +164,15 @@ public class AccountDao extends ConnectDB {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Account acc = Account.builder()
-                        .accountid(rs.getInt(1))
-                        .username(rs.getString(2))
-                        .password(rs.getString(3))
-                        .displayname(rs.getString(4))
-                        .address(rs.getString(5))
-                        .email(rs.getString(6))
-                        .phone(rs.getString(7))
-                        .imageURL(rs.getString(8))
-                        .role(rs.getInt(9))
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
                         .build();
                 list.add(acc);
 
@@ -390,34 +391,10 @@ public class AccountDao extends ConnectDB {
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();
-//        Account acc = dao.GetAccountByEmail("tuyennvhe151053@fpt.edu.vn");
-//        System.out.println(acc);
-//        AccountDao dao = new AccountDao();
-////        String username = acc.getUsername();
-////        String Address = acc.getAddress();
-////        String phone = acc.getPhone();
-////        String email = acc.getEmail();
-//        String password = dao.getRandom();
-//        String subject = "Forget PassWord.";
-//        String message = "<!DOCTYPE html>\n"
-//                + "<html lang=\"en\">\n"
-//                + "\n"
-//                + "<head>\n"
-//                + "</head>\n"
-//                + "\n"
-//                + "<body>\n"
-//                + "    <h3 style=\"color: blue;\">Forget PassWord.</h3>\n"
-//                + "    <div>Full Name :" 
-//                + "    <div>Phone :" 
-//                + "    <div>address:" 
-//                + "   <div> Code :" + password + "</div>"
-//                + "<h3 style=\"color: blue;\">Thank you very much!</h3>\n"
-//                + "\n"
-//                + "</body>\n"
-//                + "\n"
-//                + "</html>";
-//        AccountDao.send("nvt04062001@gmail.com", subject, message, "khainnhe151295@fpt.edu.vn", "01688219330Khai");
-//      
+        List list = dao.ListAllAccount();
+        for (Object object : list) {
+            System.out.println(object);
+        }
 
     }
 
