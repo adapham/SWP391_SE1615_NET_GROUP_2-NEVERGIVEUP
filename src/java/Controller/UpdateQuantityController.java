@@ -1,38 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Controller;
 
 import Entity.Product;
-import Modal.ProductDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class HomeController extends HttpServlet {
+/**
+ *
+ * @author Window 10
+ */
+@WebServlet(name = "UpdateQuantityController", urlPatterns = {"/updateQuantity"})
+public class UpdateQuantityController extends HttpServlet {
 
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            if(service == null){
-                service = "home";
+            /* TODO output your page here. You may use following sample code. */
+            String pid = request.getParameter("pid");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            HttpSession session = request.getSession();
+            Enumeration em = session.getAttributeNames();
+            //session.setAttribute("size", quantity);
+            while (em.hasMoreElements()) {
+                String key = em.nextElement().toString();
+                if (key.contains(pid)) {
+                    Product pro = (Product) session.getAttribute(key);
+                    pro.setQuantity(quantity);
+                    request.setAttribute("listProductCarts", pro);
+                }
             }
-            if(service.equals("home")){
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-                
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-            if (service.equals("about")) {                
-                List<Product> listProduct = daoProduct.getTopNumberProduct(2);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("about.jsp").forward(request, response);
-            }
+            response.sendRedirect("cart");
         }
     }
 

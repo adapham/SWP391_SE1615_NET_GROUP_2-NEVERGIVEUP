@@ -123,7 +123,7 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                                     <div class="single-product-wrap mb-35">
                                                         <div class="product-img product-img-zoom mb-15">
-                                                            <a href="product-details.html">
+                                                            <a href="details?do=details&pid=${pro.productID}">
                                                                 <img src="${pro.imageURL}" alt="" style="min-height: 300px; max-height: 300px;  ">
                                                             </a>
                                                             <c:if test="${pro.discount !=0}">
@@ -134,7 +134,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="product-content-wrap-2 text-center">
-                                                            <h3><a href="product-details.html">${pro.productName}</a></h3>
+                                                            <h3><a href="details?do=details&pid=${pro.productID}">${pro.productName}</a></h3>
                                                             <div class="pro-list-price product-price-2">
                                                                 <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
                                                                     <span class="text-muted old-price">$${pro.unitPrice}</span>
@@ -143,7 +143,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="product-content-wrap-2 product-content-position text-center">
-                                                            <h3><a href="product-details.html">${pro.productName}</a></h3>
+                                                            <h3><a href="details?do=details&pid=${pro.productID}">${pro.productName}</a></h3>
                                                             <div class="pro-list-price product-price-2">
                                                                 <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
                                                                     <span class="text-muted old-price">$${pro.unitPrice}</span>
@@ -151,7 +151,7 @@
                                                                 <spam class="new-price">$${pro.priceAferDiscount}</spam>
                                                             </div>
                                                             <div class="pro-add-to-cart">
-                                                                <button title="Add to Cart">Add To Cart</button>
+                                                                <button  title="Add to Cart"><a href="AddToCart?pid=${pro.productID}" style="text-decoration: none; color: white;">Add To Cart</a></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -186,26 +186,15 @@
                                                                             <div class="pro-details-quality">
                                                                                 <span>Quantity:</span>
                                                                                 <div class="cart-plus-minus">
-                                                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                                                                                    <input class="cart-plus-minus-box" type="number" name="qtybutton" value="1">
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="product-details-meta">
-                                                                                <ul>
-                                                                                    <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a href="#">T-Shirt</a></li>
-                                                                                </ul>
-                                                                            </div>
+                                                                            
                                                                             <div class="pro-details-action-wrap">
                                                                                 <div class="pro-details-add-to-cart">
-                                                                                    <a title="Add to Cart" href="#">Add To Cart </a>
+                                                                                    <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
                                                                                 </div>
-                                                                                <div class="pro-details-action">
-                                                                                    <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
-                                                                                    <div class="product-dec-social">
-                                                                                        <a class="facebook" title="Facebook" href="#"><i class="icon-social-facebook"></i></a>
-                                                                                        <a class="twitter" title="Twitter" href="#"><i class="icon-social-twitter"></i></a>
-                                                                                        <a class="instagram" title="Instagram" href="#"><i class="icon-social-instagram"></i></a>
-                                                                                    </div>
-                                                                                </div>
+                                                                                
                                                                             </div>
                                                                         </div>
                                                                     </div>

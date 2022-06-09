@@ -1,38 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Controller;
 
-import Entity.Product;
-import Modal.ProductDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class HomeController extends HttpServlet {
+/**
+ *
+ * @author Window 10
+ */
+@WebServlet(name = "DeleteController", urlPatterns = {"/delete"})
+public class DeleteController extends HttpServlet {
 
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            if(service == null){
-                service = "home";
+            HttpSession session = request.getSession();
+            String sizeStr;
+            try {
+                sizeStr = session.getAttribute("size").toString();
+            } catch (Exception e) {
+                sizeStr = null;
             }
-            if(service.equals("home")){
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-                
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+            int size = 0;
+            if (sizeStr == null) {
+                size = 0;
+            } else {
+                size = Integer.parseInt(sizeStr);
             }
-            if (service.equals("about")) {                
-                List<Product> listProduct = daoProduct.getTopNumberProduct(2);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("about.jsp").forward(request, response);
+            String pid = request.getParameter("pid");
+
+            if (pid != null) {
+                session.removeAttribute(pid);
+                size--;
+                session.setAttribute("size", size);
+            } else {
+                Enumeration em = session.getAttributeNames();
+                while (em.hasMoreElements()) {
+                    String key = em.nextElement().toString();
+                    if (!key.equals("Account")) {
+                        session.removeAttribute(key);
+                    }
+                }
             }
+            response.sendRedirect("cart");
         }
     }
 

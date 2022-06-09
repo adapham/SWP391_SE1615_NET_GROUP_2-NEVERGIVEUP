@@ -41,9 +41,6 @@
 
         <div class="main-wrapper">
             <%@include file="component/HeaderComponent.jsp" %>
-            <!-- mini cart start -->
-
-            <!-- Mobile menu start -->
             <div class="slider-area bg-gray">
                 <div class="hero-slider-active-1 hero-slider-pt-1 nav-style-1 dot-style-1">
                     <div class="single-hero-slider single-animation-wrap">
@@ -186,7 +183,7 @@
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="single-product-wrap mb-35">
                                             <div class="product-img product-img-zoom mb-20">
-                                                <a href="product-details-fixed-img.html">
+                                                <a href="details?do=details&pid=${pro.productID}">
                                                     <img src="${pro.imageURL}" alt="" style="min-height: 300px;">
                                                 </a>
                                                 <c:if test="${pro.discount !=0}">
@@ -194,7 +191,7 @@
                                                 </c:if>
                                                 <div class="product-action-wrap">
                                                     <div class="product-action-left">
-                                                        <button><i class="icon-basket-loaded"></i>Add to Cart</button>
+                                                        <button><i></i><a href="AddToCart?pid=${pro.productID}">Add To Cart</a></button>
                                                     </div>
                                                     <div class="product-action-right tooltip-style">
                                                         <button data-toggle="modal" data-target="#exampleModal${pro.productID}"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
@@ -203,7 +200,7 @@
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-content-left">
-                                                    <h4><a href="product-details-fixed-img.html">${pro.productName}</a></h4>
+                                                    <h4><a href="details?do=details&pid=${pro.productID}">${pro.productName}</a></h4>
                                                     <div class="pro-list-price product-price-2">
                                                         <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">
                                                             <span class="text-muted old-price">$${pro.unitPrice}</span>
@@ -246,26 +243,15 @@
                                                                 <div class="pro-details-quality">
                                                                     <span>Quantity:</span>
                                                                     <div class="cart-plus-minus">
-                                                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                                                                        <input class="cart-plus-minus-box" type="number" name="qtybutton" value="1">
                                                                     </div>
                                                                 </div>
-                                                                <div class="product-details-meta">
-                                                                    <ul>
-                                                                        <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a href="#">T-Shirt</a></li>
-                                                                    </ul>
-                                                                </div>
+                                                                
                                                                 <div class="pro-details-action-wrap">
                                                                     <div class="pro-details-add-to-cart">
-                                                                        <a title="Add to Cart" href="#">Add To Cart </a>
+                                                                        <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
                                                                     </div>
-                                                                    <div class="pro-details-action">
-                                                                        <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
-                                                                        <div class="product-dec-social">
-                                                                            <a class="facebook" title="Facebook" href="#"><i class="icon-social-facebook"></i></a>
-                                                                            <a class="twitter" title="Twitter" href="#"><i class="icon-social-twitter"></i></a>
-                                                                            <a class="instagram" title="Instagram" href="#"><i class="icon-social-instagram"></i></a>
-                                                                        </div>
-                                                                    </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>

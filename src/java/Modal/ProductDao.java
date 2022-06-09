@@ -21,17 +21,17 @@ public class ProductDao extends ConnectDB {
             while (rs.next()) {
                 double price = dao.PriceArterDiscount(rs.getInt(1));
                 Product pro = Product.builder()
-                        .productID(rs.getInt(1))
-                        .productName(rs.getString(2))
-                        .supplierID(rs.getInt(3))
-                        .categoryID(rs.getInt(4))
-                        .quantity(rs.getInt(5))
-                        .unitPrice(rs.getDouble(6))
-                        .discount(rs.getDouble(7))
-                        .unitInStock(rs.getInt(8))
-                        .description(rs.getString(9))
-                        .imageURL(rs.getString(10))
-                        .isActive(rs.getInt(11))
+                        .productID(rs.getInt("ProductID"))
+                        .productName(rs.getString("ProductName"))
+                        .supplierID(rs.getInt("SupplierID"))
+                        .categoryID(rs.getInt("CategoryID"))
+                        .quantity(rs.getInt("Quantity"))
+                        .unitPrice(rs.getDouble("UnitPrice"))
+                        .discount(rs.getDouble("Discount"))
+                        .unitInStock(rs.getInt("UnitInStock"))
+                        .description(rs.getString("Description"))
+                        .imageURL(rs.getString("ImageURL"))
+                        .isActive(rs.getInt("IsActive"))
                         .priceAferDiscount(price)
                         .build();
                 listPro.add(pro);

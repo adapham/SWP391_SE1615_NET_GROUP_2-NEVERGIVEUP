@@ -18,9 +18,9 @@
                                     </li>
                                     <li><a href="#">PAGES </a>
                                         <ul class="sub-menu-style">
-                                            <li><a href="about-us.html">about us </a></li>
-                                            <li><a href="cart.html">cart page</a></li>
-                                            <li><a href="checkout.html">checkout </a></li>
+                                            <li><a href="home?do=about">about us </a></li>
+                                            <li><a href="cart.jsp">cart page</a></li>
+                                            <li><a href="checkout.jsp">checkout </a></li>
                                             <li><a href="my-account.html">my account</a></li>
                                         </ul>
                                     </li>
@@ -49,7 +49,14 @@
                                 <a href="login-register.html"><i class="icon-user"></i></a>
                             </div>
                             <div class="same-style-2">
-                                <a href="wishlist.html"><i class="icon-basket-loaded"></i><span class="pro-count red">03</span></a>
+                                <a href="cart">
+                                    <c:if test="${sessionScope.size==null}">
+                                        <i class="icon-basket-loaded"></i><span class="pro-count red">0</span>
+                                    </c:if>
+                                    <c:if test="${sessionScope.size!=null}">
+                                        <i class="icon-basket-loaded"></i><span class="pro-count red">${sessionScope.size}</span>
+                                    </c:if>
+                                </a>
                             </div>
                         </div>
                     </div>
