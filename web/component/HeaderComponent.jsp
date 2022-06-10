@@ -27,7 +27,7 @@
                                             </c:if>
                                         </ul>
                                     </li>
-                                    <li><a href="blog-no-sidebar.jsp">BLOG</a>
+                                    <li><a href="blog.jsp">BLOG </a>
                                     </li>
                                     <li><a href="contact.jsp">CONTACT </a></li>
                                 </ul>
