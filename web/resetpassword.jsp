@@ -55,7 +55,7 @@
                                     <div id="lg1" class="tab-pane active">
                                         <div class="login-form-container">
                                             <div class="login-register-form">
-                                                <c:if test="${mess != null}">${mess}</c:if>
+                                                <c:if test="${mess != null}"><h3 style="color: red">${mess}</h3></c:if>
                                                     <form action="login?do=updatepassword" method="post">
                                                         <input type="text" name="email" hidden="" value="${email}" >
                                                     <input type="text" name="code" hidden="" value="${code}" >

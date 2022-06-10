@@ -54,7 +54,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane"></div>
                                        <div class="login-form-container">
-                                            <c:if test="${mess != null}"> ${mess}</c:if>
+                                            <c:if test="${mess != null}"> <h3 style="color: red">${mess}</h3></c:if>
                                                 <div class="login-register-form">
                                                     <form action="login?do=Register" method="post">
                                                     <c:choose>

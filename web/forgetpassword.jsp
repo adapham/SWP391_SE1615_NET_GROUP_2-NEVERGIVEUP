@@ -55,7 +55,7 @@
                                     <div id="lg1" class="tab-pane active">
                                         <div class="login-form-container">
                                             <div class="login-register-form">
-                                                <c:if test="${mess != null}">${mess}</c:if>
+                                                <c:if test="${mess != null}"><h3 style="color: red">${mess}</h3></c:if>
                                                 <form action="login?do=forgetpassword" method="post">
                                                     <input type="email" name="email" placeholder="Enter Email" >
                                                     <small id="emailHelp" class="form-text text-muted">we'll send forget password link on your email.</small>

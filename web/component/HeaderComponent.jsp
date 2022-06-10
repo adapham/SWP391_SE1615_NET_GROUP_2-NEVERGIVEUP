@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="header-area transparent-bar section-padding-1">
     <div class="container-fluid">
         <div class="header-large-device">
@@ -26,7 +27,7 @@
                                             </c:if>
                                         </ul>
                                     </li>
-                                    <li><a href="blog-no-sidebar.jsp">BLOG </a>
+                                    <li><a href="blog-no-sidebar.jsp">BLOG</a>
                                     </li>
                                     <li><a href="contact.jsp">CONTACT </a></li>
                                 </ul>

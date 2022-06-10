@@ -71,10 +71,12 @@ public class DetailsController extends HttpServlet {
                 if (submit == null) {
                     response.sendRedirect("details");
                 } else {
+                    out.print("ok");
                     //Lay thoi gian comment
                     LocalDateTime myDateObj = LocalDateTime.now();
                     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = myDateObj.format(myFormatObj);
+                    System.out.println(formattedDate);
                     String comment = request.getParameter("comment");
                     int ProductID = Integer.parseInt(request.getParameter("proID"));
                     int AccountID = Integer.parseInt(request.getParameter("accID"));
