@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="text-center">
+            <div class="text-center" style="margin-top: 25%;">
                 <h3 class="text-center">Opening Hours</h3>
                 </br>
                 <h4 class="text-center">
@@ -54,7 +54,7 @@
                 <span>10.00 Am - 10.00 Pm</span>
                 </br>
                 <a href="https://www.facebook.com/messages/t/731005607318608">
-                    <img class="contact-image" src="https://cdns.diongame.com/static/messenger-01.svg">
+                    <img style="max-height: 80px;" class="contact-image" src="https://cdns.diongame.com/static/messenger-01.svg">
                 </a>
             </div>
         </div>
