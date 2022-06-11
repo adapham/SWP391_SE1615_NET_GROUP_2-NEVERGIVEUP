@@ -20,8 +20,8 @@
                                     <li><a href="#">PAGES </a>
                                         <ul class="sub-menu-style">
                                             <li><a href="home?do=about">about us </a></li>
-                                            <li><a href="cart.jsp">cart page</a></li>
-                                            <li><a href="checkout.jsp">checkout </a></li>
+                                            <li><a href="cart">cart page</a></li>
+                                            <li><a href="checkOut">checkout </a></li>
                                             <c:if test="${sessionScope.Account !=null}">
                                                 <li><a href="login?do=updateprofile">my account</a></li>
                                             </c:if>

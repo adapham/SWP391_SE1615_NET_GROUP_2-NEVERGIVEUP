@@ -80,14 +80,7 @@
                                     </c:if>
                                     <spam class="new-price"> $${pro.priceAferDiscount}</spam>                               
                                 </div>                            
-                                <div class="pro-details-quality">
-                                    <span>Quantity:</span>
-                                    <form method="post" action="updateQuantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="number" style="text-align: center" name="qtybutton" value="1">
-                                        </div>
-                                    </form>
-                                </div>                            
+                                                            
                                 <div class="pro-details-action-wrap">
                                     <div class="pro-details-add-to-cart">
                                         <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
@@ -99,66 +92,73 @@
                 </div>
             </div>
             <div class="description-review-wrapper pb-110"> 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="dec-review-topbar nav mb-45">
-                                <a data-toggle="tab" href="#des-details4">Reviews and Ratting </a>
-                            </div>
-                            <div class="tab-content dec-review-bottom">
-                                <div id="des-details4" class="tab-pane">
-                                    <div class="review-wrapper">
-                                        <h2>1 review for Sleeve Button Cowl Neck</h2>
-                                        <div class="single-review">
-                                            <div class="review-img">
-                                                <img src="assets/images/product-details/client-1.png" alt="">
-                                            </div>
-                                            <div class="review-content">
-                                                <div class="review-top-wrap">
-                                                    <div class="review-name">
-                                                        <h5><span>John Snow</span> - March 14, 2019</h5>
-                                                    </div>
-                                                    <div class="review-rating">
-                                                        <i class="yellow icon_star"></i>
-                                                        <i class="yellow icon_star"></i>
-                                                        <i class="yellow icon_star"></i>
-                                                        <i class="yellow icon_star"></i>
-                                                        <i class="yellow icon_star"></i>
-                                                    </div>
-                                                </div>
-                                                <p>Donec accumsan auctor iaculis. Sed suscipit arcu ligula, at egestas magna molestie a. Proin ac ex maximus, ultrices justo eget, sodales orci. Aliquam egestas libero ac turpis pharetra, in vehicula lacus scelerisque</p>
-                                            </div>
-                                        </div>
+                <div class="container" class="pull-left" style="background-color: #d3d6d8">
+                    <div class="row bootstrap snippets bootdeys">
+                        <div class="col-md-8 col-sm-12"  >
+                            <div class="comment-wrapper">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 style="text-align: center">Comment</h3>
                                     </div>
-                                    <div class="ratting-form-wrapper">
-
-                                        <div class="ratting-form">
-                                            <form action="#">
-                                                <div class="row">
-
-                                                    <div class="col-lg-12">
-
-                                                        <div class="col-md-12">
-                                                            <div class="rating-form-style mb-20">
-                                                                <label>Your review <span>*</span></label>
-                                                                <textarea name="Your Review"></textarea>
+                                    <div class="panel-body">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.Account ==null}">
+                                                <ul class="media-list">
+                                                    <c:forEach items="${list}" var="l">
+                                                        <li class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <img src="${l.imageURL}" alt="" class="img-circle" >
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <span class="text-muted pull-right">
+                                                                    <small class="text-muted">${l.timeComment}</small>
+                                                                </span>
+                                                                <strong class="text-success">${l.disPlayName}</strong>
+                                                                <p>
+                                                                    ${l.feedbackContent} </a>.
+                                                                </p>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="form-submit">
-                                                                <input type="submit" value="Submit">
+                                                        </li>   
+                                                    </c:forEach>
+                                                </ul>
+                                            </c:when> <c:otherwise>
+                                                <form action="details?do=postcomment&proID=${proID}&accID=${sessionScope.Account.accountid}" method="post">
+                                                    <textarea class="form-control" name="comment" placeholder="write a comment..." rows="3" ></textarea>
+                                                    <br>
+                                                    <button type="submit" name="submit" class="btn btn-info pull-right">Post</button>  
+                                                    <div class="clearfix"></div>
+                                                    <hr>   
+                                                </form>
+                                                <ul class="media-list">
+                                                    <c:forEach items="${list}" var="l">
+                                                        <li class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <img src="${l.imageURL}" alt="" class="img-circle" height="60px">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <span class="text-muted pull-right">
+                                                                    <small class="text-muted">${l.timeComment}</small>
+                                                                </span>
+                                                                <strong class="text-success">${l.disPlayName}</strong>
+                                                                <p>
+                                                                    ${l.feedbackContent} </a>.
+                                                                </p>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                            </form>
-                                        </div>
+                                                        </li> 
+                                                        <br>
+                                                    </c:forEach>
+                                                </ul>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="related-product pb-115">
                 <div class="container">
                     <div class="section-title mb-45 text-center">

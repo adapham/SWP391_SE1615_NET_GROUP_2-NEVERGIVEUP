@@ -67,7 +67,7 @@
                                                     <div class="account-details-form">
                                                         <form action="login?do=updateprofile" method="post">
                                                             <c:forEach items="${list}" var="l">
-                                                                 <c:if test="${mess != null}"> ${mess} </c:if>
+                                                                <c:if test="${mess != null}"><h3 style="color: red">${mess}</h3></c:if>
                                                                 <div class="row">
                                                                    
                                                                         <div class="col-lg-6">
@@ -118,7 +118,7 @@
                                                             <form class="form-horizontal" action="login?do=changepassword" method="post">
                                                                 <fieldset>
                                                                     <legend style="text-align: center">Password change</legend>
-                                                                    <c:if test="${mess1 != null}"> ${mess1} </c:if>
+                                                                    <c:if test="${mess1 != null}"><h3 style="color: red">${mess1}</h3> </c:if>
                                                                         <div class="single-input-item">
                                                                             <label for="current-pwd" class="required">Current Password</label>
                                                                             <input type="password" id="current-pwd" name="password"/>
