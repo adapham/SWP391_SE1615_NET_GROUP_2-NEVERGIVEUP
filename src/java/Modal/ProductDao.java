@@ -42,6 +42,40 @@ public class ProductDao extends ConnectDB {
         return listPro;
     }
 
+    //Trả về danh sách tất cả sản phẩm theo ProductID
+    public List<Product> getAllProductByProductID(int ProductID) {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "select * from Product where ProductID = ?";
+        ProductDao dao = new ProductDao();
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ProductID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt("ProductID"))
+                        .productName(rs.getString("ProductName"))
+                        .supplierID(rs.getInt("SupplierID"))
+                        .categoryID(rs.getInt("CategoryID"))
+                        .quantity(rs.getInt("Quantity"))
+                        .unitPrice(rs.getDouble("UnitPrice"))
+                        .discount(rs.getDouble("Discount"))
+                        .unitInStock(rs.getInt("UnitInStock"))
+                        .description(rs.getString("Description"))
+                        .imageURL(rs.getString("ImageURL"))
+                        .isActive(rs.getInt("IsActive"))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listPro;
+    }
+
     //Trả về danh sách sản phẩm theo categoryID
     public List<Product> getProductsByCateID(int iCateId) {
         List<Product> listPro = new ArrayList<>();
@@ -113,6 +147,7 @@ public class ProductDao extends ConnectDB {
         }
         return listPro;
     }
+
     //Trả về tổng số sản phẩm
     public int getTotalProduct() {
         String sql = "select COUNT(*) from Product";
@@ -131,6 +166,7 @@ public class ProductDao extends ConnectDB {
         }
         return 0;
     }
+
     //Trả về Product theo Product ID
     public Product getProductByProductID(int ProductID) {
         ProductDao dao = new ProductDao();
@@ -195,6 +231,7 @@ public class ProductDao extends ConnectDB {
         }
         return listPro;
     }
+
     //Trả về Giá sau khi discount
     public double PriceArterDiscount(int ProductID) {
         double price = 0;
@@ -216,6 +253,7 @@ public class ProductDao extends ConnectDB {
         }
         return 0;
     }
+
     //Trả về danh sách phần trang theo category
     public List<Product> getAllProductsWithPagingByCateID(int iCateId, int page, int PAGE_SIZE) {
         List<Product> listPro = new ArrayList<>();
@@ -256,6 +294,7 @@ public class ProductDao extends ConnectDB {
         }
         return listPro;
     }
+
     //Trả về tổng sản phẩm theo category
     public int getTotalProductByCate(int iCateId) {
         String sql = "select COUNT(*) from Product where CategoryID = ?";
@@ -274,6 +313,7 @@ public class ProductDao extends ConnectDB {
         }
         return 0;
     }
+
     //Trả về danh sách phần trang theo Search Key
     public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) {
         List<Product> listPro = new ArrayList<>();
@@ -314,6 +354,7 @@ public class ProductDao extends ConnectDB {
         }
         return listPro;
     }
+
     //Trả về tổng sản phẩm theo Search Key
     public int getTotalProductByPName(String keySearch) {
         String sql = "select COUNT(*) from Product where ProductName like ?";
@@ -331,5 +372,42 @@ public class ProductDao extends ConnectDB {
             ex.printStackTrace();
         }
         return 0;
+    }
+    //Update Product
+    public int updateProducts(Product pro) {
+        int n = 0;
+        String sql = "UPDATE [Product]\n"
+                + "   SET [ProductName] = ?\n"
+                + "      ,[SupplierID] = ?\n"
+                + "      ,[CategoryID] = ?\n"
+                + "      ,[Quantity] = ?\n"
+                + "      ,[UnitPrice] = ?\n"
+                + "      ,[Discount] = ?\n"
+                + "      ,[UnitInStock] = ?\n"
+                + "      ,[Description] = ?\n"
+                + "      ,[ImageURL] = ?\n"
+                + "      ,[IsActive] = ?\n"
+                + " WHERE ProductID = ?";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            pre.setString(1, pro.getProductName());
+            pre.setInt(2, pro.getSupplierID());
+            pre.setInt(3, pro.getCategoryID());
+            pre.setInt(4, pro.getQuantity());
+            pre.setDouble(5, pro.getUnitPrice());
+            pre.setDouble(6, pro.getDiscount());
+            pre.setInt(7, pro.getUnitInStock());
+            pre.setString(8, pro.getDescription());
+            pre.setString(9, pro.getImageURL());
+            pre.setInt(10, pro.getIsActive());
+            pre.setInt(11, pro.getProductID());
+            
+            n = pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
     }
 }
