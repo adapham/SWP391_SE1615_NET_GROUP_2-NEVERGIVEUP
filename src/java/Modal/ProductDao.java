@@ -164,7 +164,7 @@ public class ProductDao extends ConnectDB {
     }
 
     //Trả về danh sách tất cả sản phẩm theo sản phầm theo số nhập vào
-    public List<Product> getTopNumberProduct(int number) {
+    public List<Product> getTopNumberProduct(int number) throws  SQLException{
         List<Product> listPro = new ArrayList<>();
         String sql = "select top(?) * from Product where Quantity > 5";
         ProductDao dao = new ProductDao();
@@ -191,7 +191,7 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+                throw ex;
         }
         return listPro;
     }

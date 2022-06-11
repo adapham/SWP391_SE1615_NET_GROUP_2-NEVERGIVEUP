@@ -32,7 +32,7 @@ public class AccountDao extends ConnectDB {
 
     public List ListAllAccount() {
         List<Account> list = new ArrayList<>();
-        String sql = "select * from Account";
+        String sql = "select * from Account1";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
@@ -60,7 +60,8 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+             return null;
         }
         return list;
     }
