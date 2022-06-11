@@ -5,7 +5,6 @@
  */
 package Modal;
 
-
 import Entity.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,6 +81,32 @@ public class AccountDao extends ConnectDB {
         }
         return 0;
     }
+    //Get Account By User Name
+    public Account GetDisplayAccountByUsername(String username) {
+        String sql = "select * from Account where UserName =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, username);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .build();
+                return acc;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public Account GetDisplayNameByUsername(String username) {
         String sql = "select DisplayName from Account where UserName =?";
@@ -127,7 +152,7 @@ public class AccountDao extends ConnectDB {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Account acc = Account.builder()
-                        .accountid(rs.getInt(1))
+                        .accountid(rs.getInt("accountid"))
                         .build();
                 return acc;
             }
@@ -391,6 +416,18 @@ public class AccountDao extends ConnectDB {
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();
+        Account acc = Account.builder()
+                .accountid(1)
+                .displayname("KhacBao")
+                .address("Thanh Hoai")
+                .email("bao@gmail.com")
+                .phone("0353890456")
+                .imageURL("http://dummyimage.com/112x117.png/dddddd/000000")
+                .build();
+        int n = dao.updateAccount(acc);
+        if(n > 0){
+            System.out.println("Update suc");
+        }
         List list = dao.ListAllAccount();
         for (Object object : list) {
             System.out.println(object);
