@@ -182,6 +182,32 @@ public class AccountDao extends ConnectDB {
         }
         return list;
     }
+    public Account getAccountByAccountID(int id){
+        String sql = "select * from Account where AccountID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .build();
+                return acc;
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public int updateAccount(Account acc) {
         int n = 0;
@@ -387,7 +413,27 @@ public class AccountDao extends ConnectDB {
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
     }
-
+    
+    public Account infoAccount(String user, String pass){
+        String sql = "select * from Account where UserName = '?' and Password = '?'";
+        Account ac;
+        try {
+            PreparedStatement pre= conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return ac = Account.builder()
+                        .accountid(rs.getInt("AccountID"))
+                        .address(rs.getString("Address"))
+                        .email(rs.getString("Email"))
+                        .phone(rs.getString("Phone"))
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();

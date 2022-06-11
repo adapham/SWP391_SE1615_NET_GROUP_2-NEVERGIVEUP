@@ -80,14 +80,7 @@
                                     </c:if>
                                     <spam class="new-price"> $${pro.priceAferDiscount}</spam>                               
                                 </div>                            
-                                <div class="pro-details-quality">
-                                    <span>Quantity:</span>
-                                    <form method="post" action="updateQuantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="number" style="text-align: center" name="qtybutton" value="1">
-                                        </div>
-                                    </form>
-                                </div>                            
+                                                          
                                 <div class="pro-details-action-wrap">
                                     <div class="pro-details-add-to-cart">
                                         <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>

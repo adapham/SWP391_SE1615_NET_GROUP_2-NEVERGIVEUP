@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -45,7 +46,7 @@
                 <div class="breadcrumb-content text-center">
                     <ul>
                         <li>
-                            <a href="index.jsp">Home</a>
+                            <a href="home">Home</a>
                         </li>
                         <li class="active">Blog no sidebar </li>
                     </ul>
