@@ -40,6 +40,8 @@ public class AddToCartController extends HttpServlet {
             String pid = request.getParameter("pid");
             int iPID = Integer.parseInt(pid);
             ProductDao dao = new ProductDao();
+            String amout = request.getParameter("amount");
+            System.out.println(amout);
             Product temp = dao.getProductByProductID(iPID);
             HttpSession session = request.getSession();
             Product pro = (Product) session.getAttribute(pid);

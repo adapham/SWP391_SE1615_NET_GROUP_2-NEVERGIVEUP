@@ -38,6 +38,8 @@ public class UpdateQuantityController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String pid = request.getParameter("pid");
+            String amount = request.getParameter("amount");
+            System.out.println(amount);
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             HttpSession session = request.getSession();
             Enumeration em = session.getAttributeNames();
