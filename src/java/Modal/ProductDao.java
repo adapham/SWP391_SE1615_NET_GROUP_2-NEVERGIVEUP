@@ -108,6 +108,37 @@ public class ProductDao extends ConnectDB {
         }
         return listPro;
     }
+    public List<Product> getProductsByCateIDTop4(int iCateId) {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "select top 4 * from Product where CategoryID = ? and Quantity >=2";
+        try {
+            ProductDao dao = new ProductDao();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, iCateId);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listPro;
+    }
 
     //Trả về 1 danh sách phần trang theo kích thước
     public List<Product> getProductWithPaging(int page, int PAGE_SIZE) {

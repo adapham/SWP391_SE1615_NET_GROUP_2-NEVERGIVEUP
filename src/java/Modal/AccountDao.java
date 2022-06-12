@@ -31,7 +31,7 @@ public class AccountDao extends ConnectDB {
 
     public List ListAllAccount() {
         List<Account> list = new ArrayList<>();
-        String sql = "select * from Account1";
+        String sql = "select * from Account";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
