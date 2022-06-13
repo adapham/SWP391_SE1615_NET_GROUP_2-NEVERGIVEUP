@@ -33,13 +33,12 @@
                 <div class="d-flex justify-content-between" style="background-color: #ccc; padding:10px 0;">
                     <div class="same-style-2 header-search-1">
                         <!-- Topbar Search -->
-                        <form
-                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <form action="adminProduct?do=searchProduct" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-2 small" placeholder="Search product name..."
+                                <input name="searchKey" type="text" class="form-control bg-light border-2 small" placeholder="Search product name..."
                                        aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
+                                    <button name="submit" class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
@@ -47,13 +46,19 @@
                         </form>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-success"><i class="fas fa-plus"></i> Add new Product</button>
+                        <button type="button" class="btn btn-outline-success"><a href="adminProduct?do=createProduct" style="text-decoration: none;"><i class="fas fa-plus"></i> Add new Product</a></button>
                     </div>
                 </div>
+                <c:if test="${mess != null}"> 
+                    <br>
+                    <div class="alert alert-danger" role="alert">
+                        ${mess}
+                    </div> 
+                </c:if>
                 <!-- Main Content -->
-                <div class="col-md-12">
+                <div class="col col-md-12">
                     <table class="border table table-striped table-hover table-bordered border-primary text-center" style="margin-top: 10px">
-                        <thead class="bg-info" style="position: -webkit-sticky; position: sticky; top: 0;">
+                        <thead class="bg-info" >
                             <tr>
                                 <th>ProductID<i class="fas fa-sort-numeric-down"></i></th>
                                 <th>Product Name<i class="fas fa-sort-alpha-down"></i></th>
@@ -92,11 +97,84 @@
                                         </c:if>
                                     </td>
                                     <td><a href="adminProduct?do=updateProduct&pID=${l.productID}"><i class="fas fa-edit"></i></a></td>
-                                    <td><a href="#"><i class="fas fa-trash"></i></a></td>
+                                    <td>
+                                        <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.productID}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+
+                                        <!-- The Modal -->
+                                        <div class="modal" id="myModal${l.productID}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete product</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete the product?
+                                                    </div>
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminProduct?do=deleteProduct&pID=${l.productID}">Confirm</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
+                    <!--Paging-->
+                    <!--Paging Product-->
+                    <c:if test="${sessionScope.backToUrl eq \"adminProduct\"}">
+                        <c:choose>
+                            <c:when test="${listProduct == null || listProduct.size() == 0}">
+                                Not FOUND
+                            </c:when>
+                            <c:otherwise>
+                                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                                    <ul class="pagination">
+                                        <c:if test="${page > 1}">
+                                            <li class="page-item"><a class="page-link" href="adminProduct?do=ProductHome&page=${page - 1}">Previous</a></li>
+                                            </c:if>
+                                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                            <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminProduct?do=ProductHome&page=${i}">${i}</a></li>
+                                            </c:forEach>
+                                            <c:if test="${page < totalPage}">
+                                            <li class="page-item"><a class="page-link" href="adminProduct?do=ProductHome&page=${page + 1}">Next</a></li>
+                                            </c:if>
+                                    </ul>
+                                </nav>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <!--Paging Search-->
+                    <c:if test="${sessionScope.backToUrl eq \"adminProduct?do=searchProduct\"}">
+                        <c:choose>
+                            <c:when test="${listProduct == null || listProduct.size() == 0}">
+                                Not FOUND
+                            </c:when>
+                            <c:otherwise>
+                                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                                    <ul class="pagination">
+                                        <c:if test="${page > 1}">
+                                            <li class="page-item"><a class="page-link" href="adminProduct?do=searchProduct&page=${page - 1}&searchKey=${keySearch}">Previous</a></li>
+                                            </c:if>
+                                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                            <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminProduct?do=searchProduct&page=${i}&searchKey=${keySearch}">${i}</a></li>
+                                            </c:forEach>
+                                            <c:if test="${page < totalPage}">
+                                            <li class="page-item"><a class="page-link" href="adminProduct?do=searchProduct&page=${page + 1}&searchKey=${keySearch}">Next</a></li>
+                                            </c:if>
+                                    </ul>
+                                </nav>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
                 </div>
                 <!-- End of Main Content -->
                 <!-- Footer -->
@@ -128,6 +206,12 @@
                 </div>
             </div>
         </div>
+
+
+        <!--Scrip Jquery modal-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

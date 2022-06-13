@@ -373,6 +373,7 @@ public class ProductDao extends ConnectDB {
         }
         return 0;
     }
+
     //Update Product
     public int updateProducts(Product pro) {
         int n = 0;
@@ -403,7 +404,71 @@ public class ProductDao extends ConnectDB {
             pre.setString(9, pro.getImageURL());
             pre.setInt(10, pro.getIsActive());
             pre.setInt(11, pro.getProductID());
-            
+
+            n = pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int createProduct(Product pro) {
+        int n = 0;
+        String sql = "INSERT INTO [Product]\n"
+                + "           ([ProductName]\n"
+                + "           ,[SupplierID]\n"
+                + "           ,[CategoryID]\n"
+                + "           ,[Quantity]\n"
+                + "           ,[UnitPrice]\n"
+                + "           ,[Discount]\n"
+                + "           ,[UnitInStock]\n"
+                + "           ,[Description]\n"
+                + "           ,[ImageURL]\n"
+                + "           ,[IsActive])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            pre.setString(1, pro.getProductName());
+            pre.setInt(2, pro.getSupplierID());
+            pre.setInt(3, pro.getCategoryID());
+            pre.setInt(4, pro.getQuantity());
+            pre.setDouble(5, pro.getUnitPrice());
+            pre.setDouble(6, pro.getDiscount());
+            pre.setInt(7, pro.getUnitInStock());
+            pre.setString(8, pro.getDescription());
+            pre.setString(9, pro.getImageURL());
+            pre.setInt(10, pro.getIsActive());
+
+            n = pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+    public static void main(String[] args) {
+        ProductDao dao = new ProductDao();
+        int n = dao.deleteProduct(4);
+        if(n > 0){
+            System.out.println("OK");
+        }else{
+            System.out.println("Not OK");
+        }
+    }
+
+    public int deleteProduct(int pID) {
+        int n = 0;
+        String sql = "delete from Product where ProductID = ?";
+        FeedbackDao daoFeedback = new FeedbackDao();
+        OrderDetailsDao daoOdDetail = new OrderDetailsDao();
+        daoFeedback.deleteFeedbackByProductID(pID);
+        daoOdDetail.deleteOrderDetailByProductID(pID);
+        
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, pID);
             n = pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

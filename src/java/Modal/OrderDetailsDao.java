@@ -13,18 +13,18 @@ import java.util.List;
  *
  * @author Window 10
  */
-public class OrderDetailsDao extends ConnectDB{
+public class OrderDetailsDao extends ConnectDB {
 
     public void saveCart(int orderID, List<Product> listProductCarts) {
         try {
             String sql = "INSERT INTO [FoodOrderOnline].[dbo].[Order Details]\n"
-                + "           ([OrderID]\n"
-                + "           ,[ProductID]\n"
-                + "           ,[Price]\n"
-                + "           ,[Quantity]\n"
-                + "           ,[Discount])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?)";
+                    + "           ([OrderID]\n"
+                    + "           ,[ProductID]\n"
+                    + "           ,[Price]\n"
+                    + "           ,[Quantity]\n"
+                    + "           ,[Discount])\n"
+                    + "     VALUES\n"
+                    + "           (?,?,?,?,?)";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, orderID);
             for (Product list : listProductCarts) {
@@ -35,7 +35,18 @@ public class OrderDetailsDao extends ConnectDB{
                 pre.executeUpdate();
             }
         } catch (Exception e) {
-        }       
+        }
+    }
+
+    public void deleteOrderDetailByProductID(int pID) {
+        String sql = "delete from [Order Details] where ProductID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, pID);
+            pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

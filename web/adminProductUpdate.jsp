@@ -110,12 +110,12 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="quantity">Quantity</label>
-                                                        <input  name="quantity" class="form-control" id="quantity" type="text" placeholder="Enter your quantity..." value="${l.quantity}">
+                                                        <input min="0"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="unitPrice">Unit Price</label>
-                                                        <input name="unitPrice" class="form-control" id="unitPrice" type="text" placeholder="Enter your price..." value="${l.unitPrice}">
+                                                        <input min="0" step=any name="unitPrice" class="form-control" id="unitPrice" type="number" placeholder="Enter your price..." value="${l.unitPrice}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -123,12 +123,12 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="discount">Discount</label>
-                                                        <input  name="discount" class="form-control" id="discount" type="text" placeholder="Enter your Phone..." value="${l.discount}">
+                                                        <input step="0.01" min="0" max="1" name="discount" class="form-control" id="discount" type="number" placeholder="Enter your Phone..." value="${l.discount}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="unitInStock">Unit In Stock</label>
-                                                        <input name="unitInStock" class="form-control" id="unitInStock" type="text" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
+                                                        <input min="0" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -136,7 +136,7 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="description">Description</label>
-                                                        <textarea  style="height: 100px;" name="description" class="form-control" id="description" type="text" placeholder="Enter your Description..." value="">${l.description}</textarea>
+                                                        <textarea maxlength="100"  style="height: 100px;" name="description" class="form-control" id="description" type="text" placeholder="Enter your Description..." value="">${l.description}</textarea>
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
@@ -153,7 +153,7 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-12">
                                                         <label class="small mb-1" for="imageURL">Images URL</label>
-                                                        <input  name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
+                                                        <input name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
                                                     </div>
                                                 </div>
                                                 <!-- Save changes button-->
