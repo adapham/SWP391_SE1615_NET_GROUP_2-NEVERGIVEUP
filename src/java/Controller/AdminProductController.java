@@ -108,7 +108,6 @@ public class AdminProductController extends HttpServlet {
                     List<Product> listProduct = new ArrayList<>();
                     listProduct.add(productBefore);
 
-//                    List<Product> listProduct = daoProduct.getAllProductByProductID(pID);
                     List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
                     List<Category> listCategories = daoCategory.getAllCategory();
                     request.setAttribute("list", listProduct);
@@ -223,8 +222,7 @@ public class AdminProductController extends HttpServlet {
                             .imageURL(images.trim())
                             .isActive(isActive)
                             .build();
-                    System.out.println("Check");
-                    System.out.println(pro);
+
                     int createProduct = daoProduct.createProduct(pro);
                     if (createProduct > 0) {
                         mess = "Create successfull";
@@ -259,7 +257,7 @@ public class AdminProductController extends HttpServlet {
                     }
 
                     mess = "Delete Successfull!";
-                    
+
                     session.setAttribute("backToUrl", "adminProduct");
                     request.setAttribute("totalProduct", totalProduct);
                     request.setAttribute("page", page);
@@ -272,12 +270,11 @@ public class AdminProductController extends HttpServlet {
                     out.println("500");
                 }
             }
-            if (service.equals("searchProduct")) {
+            if (service.equals("searchProduct")) {//Search Product By Name
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
 
                 String keySearch = request.getParameter("searchKey");
-                System.out.println("Check search");
                 if (keySearch.isEmpty()) {
                     response.sendRedirect("adminProduct");
                     return;
@@ -300,6 +297,103 @@ public class AdminProductController extends HttpServlet {
 
                 session.setAttribute("backToUrl", "adminProduct?do=searchProduct");
                 request.setAttribute("keySearch", keySearch);
+                request.setAttribute("totalProduct", totalProduct);
+                request.setAttribute("page", page);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("listProduct", listProduct);
+                request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
+            }
+            if (service.equals("sort")) {//Sort Product
+                String type = request.getParameter("type");//Get tpye
+                String col = request.getParameter("col");//get column
+                String pageStr = request.getParameter("page");//Get page
+                //Phân trang
+                int page = 1;
+                final int PAGE_SIZE = 10;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+
+                int totalProduct = daoProduct.getTotalProduct();//Get total All Product
+                int totalPage = totalProduct / PAGE_SIZE;
+                if (totalProduct % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+                List<Product> listProduct = null;
+                if (col.equalsIgnoreCase("ProductID")) {//Sort By Product ID
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePid", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePid", "up");
+                    }
+                } else if (col.equalsIgnoreCase("ProductName")) {//Sort By Product Name
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePname", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePname", "up");
+                    }
+                } else if (col.equalsIgnoreCase("SupplierID")) {//Sort By SupplierID
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeSup", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeSup", "up");
+                    }
+                } else if (col.equalsIgnoreCase("CategoryID")) {//Sort By Category ID
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeCate", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeCate", "up");
+                    }
+                } else if (col.equalsIgnoreCase("UnitPrice")) {//Sort By Unit Price
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePrice", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typePrice", "up");
+                    }
+                } else if (col.equalsIgnoreCase("Discount")) {//Sort By Discount
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeDis", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeDis", "up");
+                    }
+                }else if (col.equalsIgnoreCase("UnitInStock")) {//Sort By UnitInStock
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeStock", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeStock", "up");
+                    }
+                }else if (col.equalsIgnoreCase("IsActive")) {//Sort By Is Active
+                    if (type.equalsIgnoreCase("asc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeActive", "down");
+                    }
+                    if (type.equalsIgnoreCase("desc")) {
+                        listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
+                        request.setAttribute("typeActive", "up");
+                    }
+                }
+
                 request.setAttribute("totalProduct", totalProduct);
                 request.setAttribute("page", page);
                 request.setAttribute("totalPage", totalPage);

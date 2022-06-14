@@ -18,6 +18,8 @@
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/mains.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -60,17 +62,105 @@
                     <table class="border table table-striped table-hover table-bordered border-primary text-center" style="margin-top: 10px">
                         <thead class="bg-info" >
                             <tr>
-                                <th>ProductID<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>Product Name<i class="fas fa-sort-alpha-down"></i></th>
-                                <th>SupplierID<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>CategoryID<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>Quantity<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>UnitPrice<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>Discount<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>UnitInStock<i class="fas fa-sort-numeric-down"></i></th>
-                                <th>Description<i class="fas fa-sort-alpha-down"></i></th>
+                                <th>ProductID 
+                                    <c:if test="${typePid == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=ProductID&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typePid != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=ProductID&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>Product Name
+                                    <c:if test="${typePname == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=ProductName&type=asc&page=${page}">
+                                            <i class="fas fa-sort-alpha-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typePname != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=ProductName&type=desc&page=${page}">
+                                            <i class="fas fa-sort-alpha-down"></i>
+                                        </a>
+                                    </c:if>   
+                                </th>
+                                <th>SupplierID
+                                    <c:if test="${typeSup == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=SupplierID&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typeSup != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=SupplierID&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>CategoryID
+                                    <c:if test="${typeCate == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=CategoryID&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typeCate != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=CategoryID&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>Quantity</th>
+                                <th>Price
+                                    <c:if test="${typePrice == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=UnitPrice&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typePrice != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=UnitPrice&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>Discount
+                                    <c:if test="${typeDis == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=Discount&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typeDis != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=Discount&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>UnitInStock
+                                    <c:if test="${typeStock == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=UnitInStock&type=asc&page=${page}">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typeStock != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=UnitInStock&type=desc&page=${page}">
+                                            <i class="fas fa-sort-numeric-down"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
+                                <th>Description</th>
                                 <th>Images</th>
-                                <th>IsActive</th>
+                                <th>IsActive
+                                    <c:if test="${typeActive == \"up\"}">
+                                        <a href="adminProduct?do=sort&col=IsActive&type=asc&page=${page}">
+                                            <i class="fas fa-sort"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${typeActive != \"up\"}">
+                                        <a href="adminProduct?do=sort&col=IsActive&type=desc&page=${page}">
+                                            <i class="fas fa-sort"></i>
+                                        </a>
+                                    </c:if>
+                                </th>
                                 <th>Edit</th>
                                 <th>Delete</th>    
                             </tr>
@@ -83,7 +173,7 @@
                                     <td>${l.supplierID}</td>
                                     <td>${l.categoryID}</td>
                                     <td>${l.quantity}</td>
-                                    <td>${l.unitPrice}</td>
+                                    <td>${l.unitPrice}$</td>
                                     <td>${l.discount}</td>
                                     <td>${l.unitInStock}</td>
                                     <td>${l.description}</td>

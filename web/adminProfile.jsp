@@ -162,7 +162,7 @@
                 </div>
                 <!-- End of Main Content -->
                 <!-- Footer -->
-                <%@include file="component/FooterComponent.jsp" %>
+                <%@include file="component/AdminFooterComponent.jsp" %>
                 <!-- End of Footer -->
             </div>
             <!-- End of Content Wrapper -->

@@ -148,6 +148,46 @@ public class ProductDao extends ConnectDB {
         return listPro;
     }
 
+    //Trả về 1 danh sách phân trang theo tăng dần, giảm dần
+    public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
+                + "                              OVER (ORDER BY ProductID) AS Seq FROM Product \n"
+                + "                              )t \n"
+                + "                              WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?\n"
+                + "                              order by "+col+ " " + type;
+        ProductDao dao = new ProductDao();
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, page);
+            pre.setInt(2, PAGE_SIZE);
+            pre.setInt(3, page);
+            pre.setInt(4, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listPro;
+    }
+
     //Trả về tổng số sản phẩm
     public int getTotalProduct() {
         String sql = "select COUNT(*) from Product";
@@ -448,12 +488,13 @@ public class ProductDao extends ConnectDB {
         }
         return n;
     }
+
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
         int n = dao.deleteProduct(4);
-        if(n > 0){
+        if (n > 0) {
             System.out.println("OK");
-        }else{
+        } else {
             System.out.println("Not OK");
         }
     }
@@ -465,7 +506,7 @@ public class ProductDao extends ConnectDB {
         OrderDetailsDao daoOdDetail = new OrderDetailsDao();
         daoFeedback.deleteFeedbackByProductID(pID);
         daoOdDetail.deleteOrderDetailByProductID(pID);
-        
+
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, pID);
