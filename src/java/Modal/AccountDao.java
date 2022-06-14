@@ -5,7 +5,6 @@
  */
 package Modal;
 
-
 import Entity.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -173,6 +172,7 @@ public class AccountDao extends ConnectDB {
                         .phone(rs.getString("phone"))
                         .imageURL(rs.getString("imageURL"))
                         .role(rs.getInt("role"))
+                        .gender(rs.getInt("gender"))
                         .build();
                 list.add(acc);
 
@@ -185,7 +185,7 @@ public class AccountDao extends ConnectDB {
 
     public int updateAccount(Account acc) {
         int n = 0;
-        String sql = "update Account set DisplayName=?, Address =?,Email=?, Phone=?,ImageURL=? where AccountID =?";
+        String sql = "update Account set DisplayName=?, Address =?,Email=?, Phone=?,ImageURL=?,Gender=? where AccountID =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, acc.getDisplayname());
@@ -193,7 +193,8 @@ public class AccountDao extends ConnectDB {
             pre.setString(3, acc.getEmail());
             pre.setString(4, acc.getPhone());
             pre.setString(5, acc.getImageURL());
-            pre.setInt(6, acc.getAccountid());
+            pre.setInt(6, acc.getGender());
+            pre.setInt(7, acc.getAccountid());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -362,9 +363,10 @@ public class AccountDao extends ConnectDB {
                 + "           ,[Email]"
                 + "           ,[Phone]"
                 + "           ,[ImageURL]"
-                + "           ,[Role])"
+                + "           ,[Role]"
+                + "           ,[Gender])"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, acc.getUsername());
@@ -375,6 +377,7 @@ public class AccountDao extends ConnectDB {
             pre.setString(6, acc.getPhone());
             pre.setString(7, acc.getImageURL());
             pre.setInt(8, acc.getRole());
+            pre.setInt(9, acc.getGender());
             pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -388,14 +391,356 @@ public class AccountDao extends ConnectDB {
         return String.format("%06d", number);
     }
 
+    public List ListAccountOfCustomer() {
+        List<Account> list = new ArrayList<>();
+        String sql = "select * from Account where Role =1";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                int accountid = rs.getInt("accountid");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String displayname = rs.getString("displayname");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String imageurl = rs.getString("imageURL");
+                int roll = rs.getInt("role");
+                Account acc = Account.builder()
+                        .accountid(accountid)
+                        .username(username)
+                        .password(password)
+                        .displayname(displayname)
+                        .address(address)
+                        .email(email)
+                        .phone(phone)
+                        .imageURL(imageurl)
+                        .role(roll)
+                        .build();
+
+                list.add(acc);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public int updateEmailCustomerByEmail(String email) {
+        int n = 0;
+        String sql = "update Account set Email = '' where Email = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            n = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int updatePhoneCustomerByPhone(String Phone) {
+        int n = 0;
+        String sql = "update Account set Phone = '' where Phone = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Phone);
+            n = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int deleteAccountById(String accid) {
+        int n = 0;
+        String sql = "delete from Account where AccountID =?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, accid);
+            n = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public List ListAccountOfCustomerWithPagging(int page, int PAGE_SIZE) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=1\n"
+                + "order by AccountID\n"
+                + "offset (?-1)*? row fetch next ? rows only";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, page);
+            pre.setInt(2, PAGE_SIZE);
+            pre.setInt(3, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List ListAccountOfEmployeeWithPagging(int page, int PAGE_SIZE) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=2\n"
+                + "order by AccountID\n"
+                + "offset (?-1)*? row fetch next ? rows only";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, page);
+            pre.setInt(2, PAGE_SIZE);
+            pre.setInt(3, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+    public List ListAccountOfShipperWithPagging(int page, int PAGE_SIZE) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=4\n"
+                + "order by AccountID\n"
+                + "offset (?-1)*? row fetch next ? rows only";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, page);
+            pre.setInt(2, PAGE_SIZE);
+            pre.setInt(3, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public int TotalAccountOfCustomer() {
+        String sql = "select count(AccountID) from Account where Role =1";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int TotalAccountOfEmployee() {
+        String sql = "select count(AccountID) from Account where Role =2";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+     public int TotalAccountOfShipper() {
+        String sql = "select count(AccountID) from Account where Role =4";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int TotalAccountOfCustomerByUserName(String keysearch) {
+        String sql = "select count(AccountID) from Account where Role =1 and UserName like ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + keysearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List ListAccountOfCustomerWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=1 and UserName like ?\n"
+                + "                order by AccountID\n"
+                + "                offset (?-1)*? row fetch next ? rows only";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keysearch + "%");
+            pre.setInt(2, page);
+            pre.setInt(3, PAGE_SIZE);
+            pre.setInt(4, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List ListAccountOfEmployeeWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=2 and UserName like ?\n"
+                + "                order by AccountID\n"
+                + "                offset (?-1)*? row fetch next ? rows only";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keysearch + "%");
+            pre.setInt(2, page);
+            pre.setInt(3, PAGE_SIZE);
+            pre.setInt(4, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+     public List ListAccountOfShipperWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+        List list = new ArrayList();
+        String sql = "select * from Account where Role=4 and UserName like ?\n"
+                + "                order by AccountID\n"
+                + "                offset (?-1)*? row fetch next ? rows only";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keysearch + "%");
+            pre.setInt(2, page);
+            pre.setInt(3, PAGE_SIZE);
+            pre.setInt(4, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayname(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .imageURL(rs.getString(8))
+                        .role(rs.getInt(9))
+                        .build();
+                list.add(acc);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();
-        List list = dao.ListAllAccount();
-        for (Object object : list) {
-            System.out.println(object);
-        }
+        List list = dao.ListAccountOfCustomerWithPagging(1, 6);
+        Account acc = Account.builder()
+                .username("Tuyen")
+                .password("123")
+                .displayname("tuyenoccho")
+                .address("lung")
+                .email("tuyen@gmail.com")
+                .phone("0345821695")
+                .imageURL("pexels-ray-bilcliff-7520329.jpg")
+                .role(4)
+                .gender(1)
+                .build();
+        dao.RegisterAccount(acc);
 
     }
-
 }

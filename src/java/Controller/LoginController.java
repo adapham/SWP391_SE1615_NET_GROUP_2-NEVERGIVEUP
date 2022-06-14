@@ -287,6 +287,7 @@ public class LoginController extends HttpServlet {
                     String Email = request.getParameter("email");
                     String Phone = request.getParameter("phone");
                     String ImageURL = request.getParameter("imageURL");
+                    String gender = request.getParameter("gender");
 
                     request.setAttribute("username", username);
                     request.setAttribute("password", password);
@@ -409,6 +410,7 @@ public class LoginController extends HttpServlet {
                             .build();
 
                     daoAccount.RegisterAccount(acc);
+                    System.out.println(acc);
                     String mess = "Register success";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("register.jsp").forward(request, response);
