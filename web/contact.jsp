@@ -44,7 +44,7 @@
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="index.jsp">Home</a>
+                                <a href="home">Home</a>
                             </li>
                             <li class="active">Contact us </li>
                         </ul>

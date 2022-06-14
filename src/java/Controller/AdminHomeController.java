@@ -1,52 +1,26 @@
 package Controller;
 
-import Entity.Product;
-import Modal.ProductDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomeController extends HttpServlet {
+@WebServlet(name = "AdminHomeController", urlPatterns = {"/adminHome"})
+public class AdminHomeController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            if (service == null) {
+            if(service == null){
                 service = "home";
             }
-            if (service.equals("home")) {
-                List<Product> listProduct=null;
-                try {
-                    listProduct = daoProduct.getTopNumberProduct(4);
-                } catch (SQLException ex) {
-                   response.sendRedirect("error404.jsp");
-                }
-                if(listProduct!=null){
-                    request.setAttribute("listProduct", listProduct);
-                    request.getRequestDispatcher("about.jsp").forward(request, response); 
-                }
-            }
-            if (service.equals("about")) {
-                List<Product> listProduct=null;
-                try {
-                     listProduct = daoProduct.getTopNumberProduct(2);
-                } catch ( SQLException e) {
-                    response.sendRedirect("error404.jsp");
-                }
-                if(listProduct!=null){
-                    request.setAttribute("listProduct", listProduct);
-                    request.getRequestDispatcher("about.jsp").forward(request, response); 
-                }
+            if(service.equals("home")){
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
         }
     }

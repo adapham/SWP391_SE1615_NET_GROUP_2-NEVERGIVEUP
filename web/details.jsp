@@ -80,14 +80,7 @@
                                     </c:if>
                                     <spam class="new-price"> $${pro.priceAferDiscount}</spam>                               
                                 </div>                            
-                                <div class="pro-details-quality">
-                                    <span>Quantity:</span>
-                                    <form method="post" action="updateQuantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="number" style="text-align: center" name="amount" value="1" >
-                                        </div>
-                                    </form>
-                                </div>                            
+
                                 <div class="pro-details-action-wrap">
                                     <div class="pro-details-add-to-cart">
                                         <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
@@ -172,378 +165,63 @@
                         <h2>Related Product</h2>
                     </div>
                     <div class="related-product-active">
-                        <div class="product-plr-1">
-                            <div class="single-product-wrap">
-                                <div class="product-img product-img-zoom mb-15">
-                                    <a href="product-details.html">
-                                        <img src="assets/images/product/product-13.jpg" alt="">
-                                    </a>
-                                    <div class="product-action-2 tooltip-style-2">
-                                        <button title="Wishlist"><i class="icon-heart"></i></button>
-                                        <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
-                                        <button title="Compare"><i class="icon-refresh"></i></button>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                        <c:forEach items="${listrelated}" var="rel">
+                            <div class="product-plr-1">
+                                <div class="single-product-wrap">
+                                    <div class="product-img product-img-zoom mb-15">
+                                        <a href="product-details.html">
+                                            <img src="${rel.imageURL}" alt="">
+                                        </a>
+                                        <div class="product-action-2 tooltip-style-2">
                                         </div>
-                                        <span>(2)</span>
                                     </div>
-                                    <h3><a href="product-details.html">Basic Joggin Shorts</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$20.50</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 product-content-position text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                                    <div class="product-content-wrap-2 text-center">
+                                        <div class="product-rating-wrap">
+                                            <div class="product-rating">
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star gray"></i>
+                                            </div>
+                                            <span>(2)</span>
                                         </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Basic Joggin Shorts</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$20.50</span>
-                                    </div>
-                                    <div class="pro-add-to-cart">
-                                        <button title="Add to Cart">Add To Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-plr-1">
-                            <div class="single-product-wrap">
-                                <div class="product-img product-img-zoom mb-15">
-                                    <a href="product-details.html">
-                                        <img src="assets/images/product/product-14.jpg" alt="">
-                                    </a>
-                                    <span class="pro-badge left bg-red">-20%</span>
-                                    <div class="product-action-2 tooltip-style-2">
-                                        <button title="Wishlist"><i class="icon-heart"></i></button>
-                                        <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
-                                        <button title="Compare"><i class="icon-refresh"></i></button>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                                        <h3><a href="details?do=details&pid=${rel.productID}">${rel.productName}</a></h3>
+                                        <div class="product-price-2">
+                                            <span>$${rel.unitPrice}</span>
                                         </div>
-                                        <span>(2)</span>
                                     </div>
-                                    <h3><a href="product-details.html">Make Thing Happen T-Shirt</a></h3>
-                                    <div class="product-price-2">
-                                        <span class="new-price">$35.45</span>
-                                        <span class="old-price">$45.80</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 product-content-position text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                                    <div class="product-content-wrap-2 product-content-position text-center">
+                                        <div class="product-rating-wrap">
+                                            <div class="product-rating">
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star"></i>
+                                                <i class="icon_star gray"></i>
+                                            </div>
+                                            <span>(2)</span>
                                         </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Make Thing Happen T-Shirt</a></h3>
-                                    <div class="product-price-2">
-                                        <span class="new-price">$35.45</span>
-                                        <span class="old-price">$45.80</span>
-                                    </div>
-                                    <div class="pro-add-to-cart">
-                                        <button title="Add to Cart">Add To Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-plr-1">
-                            <div class="single-product-wrap">
-                                <div class="product-img product-img-zoom mb-15">
-                                    <a href="product-details.html">
-                                        <img src="assets/images/product/product-15.jpg" alt="">
-                                    </a>
-                                    <div class="product-action-2 tooltip-style-2">
-                                        <button title="Wishlist"><i class="icon-heart"></i></button>
-                                        <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
-                                        <button title="Compare"><i class="icon-refresh"></i></button>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                                        <h3><a href="product-details.html">${rel.productName}</a></h3>
+                                        <div class="product-price-2">
+                                            <span>$${rel.unitPrice}</span>
                                         </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Basic White Simple Sneaker</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$35.45</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 product-content-position text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
+                                        <div class="pro-add-to-cart">
+                                            <button title="Add to Cart"><a href="AddToCart?pid=${rel.productID}">Add To Cart</button>
                                         </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Basic White Simple Sneaker</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$35.45</span>
-                                    </div>
-                                    <div class="pro-add-to-cart">
-                                        <button title="Add to Cart">Add To Cart</button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="product-plr-1">
-                            <div class="single-product-wrap">
-                                <div class="product-img product-img-zoom mb-15">
-                                    <a href="product-details.html">
-                                        <img src="assets/images/product/product-18.jpg" alt="">
-                                    </a>
-                                    <div class="product-action-2 tooltip-style-2">
-                                        <button title="Wishlist"><i class="icon-heart"></i></button>
-                                        <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
-                                        <button title="Compare"><i class="icon-refresh"></i></button>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
-                                        </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Tie-up Sute Sandals</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$55.50</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 product-content-position text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
-                                        </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Tie-up Sute Sandals</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$55.50</span>
-                                    </div>
-                                    <div class="pro-add-to-cart">
-                                        <button title="Add to Cart">Add To Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-plr-1">
-                            <div class="single-product-wrap">
-                                <div class="product-img product-img-zoom mb-15">
-                                    <a href="product-details.html">
-                                        <img src="assets/images/product/product-19.jpg" alt="">
-                                    </a>
-                                    <div class="product-action-2 tooltip-style-2">
-                                        <button title="Wishlist"><i class="icon-heart"></i></button>
-                                        <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
-                                        <button title="Compare"><i class="icon-refresh"></i></button>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
-                                        </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Faded Grey T-Shirt</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$65.50</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap-2 product-content-position text-center">
-                                    <div class="product-rating-wrap">
-                                        <div class="product-rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star gray"></i>
-                                        </div>
-                                        <span>(2)</span>
-                                    </div>
-                                    <h3><a href="product-details.html">Faded Grey T-Shirt</a></h3>
-                                    <div class="product-price-2">
-                                        <span>$65.50</span>
-                                    </div>
-                                    <div class="pro-add-to-cart">
-                                        <button title="Add to Cart">Add To Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            </div> 
+                        </c:forEach>
+
+
                     </div>
                 </div>
             </div>
 
             <%@include file="component/FooterComponent.jsp" %>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-5 col-md-6 col-12 col-sm-12">
-                                    <div class="tab-content quickview-big-img">
-                                        <div id="pro-1" class="tab-pane fade show active">
-                                            <img src="assets/images/product/product-1.jpg" alt="">
-                                        </div>
-                                        <div id="pro-2" class="tab-pane fade">
-                                            <img src="assets/images/product/product-3.jpg" alt="">
-                                        </div>
-                                        <div id="pro-3" class="tab-pane fade">
-                                            <img src="assets/images/product/product-6.jpg" alt="">
-                                        </div>
-                                        <div id="pro-4" class="tab-pane fade">
-                                            <img src="assets/images/product/product-3.jpg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="quickview-wrap mt-15">
-                                        <div class="quickview-slide-active nav-style-6">
-                                            <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/images/product/quickview-s1.jpg" alt=""></a>
-                                            <a data-toggle="tab" href="#pro-2"><img src="assets/images/product/quickview-s2.jpg" alt=""></a>
-                                            <a data-toggle="tab" href="#pro-3"><img src="assets/images/product/quickview-s3.jpg" alt=""></a>
-                                            <a data-toggle="tab" href="#pro-4"><img src="assets/images/product/quickview-s2.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-7 col-md-6 col-12 col-sm-12">
-                                    <div class="product-details-content quickview-content">
-                                        <h2>Simple Black T-Shirt</h2>
-                                        <div class="product-ratting-review-wrap">
-                                            <div class="product-ratting-digit-wrap">
-                                                <div class="product-ratting">
-                                                    <i class="icon_star"></i>
-                                                    <i class="icon_star"></i>
-                                                    <i class="icon_star"></i>
-                                                    <i class="icon_star"></i>
-                                                    <i class="icon_star"></i>
-                                                </div>
-                                                <div class="product-digit">
-                                                    <span>5.0</span>
-                                                </div>
-                                            </div>
-                                            <div class="product-review-order">
-                                                <span>62 Reviews</span>
-                                                <span>242 orders</span>
-                                            </div>
-                                        </div>
-                                        <p>Seamlessly predominate enterprise metrics without performance based process improvements.</p>
-                                        <div class="pro-details-price">
-                                            <span class="new-price">$75.72</span>
-                                            <span class="old-price">$95.72</span>
-                                        </div>
-                                        <div class="pro-details-color-wrap">
-                                            <span>Color:</span>
-                                            <div class="pro-details-color-content">
-                                                <ul>
-                                                    <li><a class="dolly" href="#">dolly</a></li>
-                                                    <li><a class="white" href="#">white</a></li>
-                                                    <li><a class="azalea" href="#">azalea</a></li>
-                                                    <li><a class="peach-orange" href="#">Orange</a></li>
-                                                    <li><a class="mona-lisa active" href="#">lisa</a></li>
-                                                    <li><a class="cupid" href="#">cupid</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="pro-details-size">
-                                            <span>Size:</span>
-                                            <div class="pro-details-size-content">
-                                                <ul>
-                                                    <li><a href="#">XS</a></li>
-                                                    <li><a href="#">S</a></li>
-                                                    <li><a href="#">M</a></li>
-                                                    <li><a href="#">L</a></li>
-                                                    <li><a href="#">XL</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="pro-details-quality">
-                                            <span>Quantity:</span>
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                            </div>
-                                        </div>
-                                        <div class="product-details-meta">
-                                            <ul>
-                                                <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a href="#">T-Shirt</a></li>
-                                                <li><span>Tag: </span> <a href="#">Fashion,</a> <a href="#">Mentone</a> , <a href="#">Texas</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pro-details-action-wrap">
-                                            <div class="pro-details-add-to-cart">
-                                                <a title="Add to Cart" href="#">Add To Cart </a>
-                                            </div>
-                                            <div class="pro-details-action">
-                                                <a title="Add to Wishlist" href="#"><i class="icon-heart"></i></a>
-                                                <a title="Add to Compare" href="#"><i class="icon-refresh"></i></a>
-                                                <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
-                                                <div class="product-dec-social">
-                                                    <a class="facebook" title="Facebook" href="#"><i class="icon-social-facebook"></i></a>
-                                                    <a class="twitter" title="Twitter" href="#"><i class="icon-social-twitter"></i></a>
-                                                    <a class="instagram" title="Instagram" href="#"><i class="icon-social-instagram"></i></a>
-                                                    <a class="pinterest" title="Pinterest" href="#"><i class="icon-social-pinterest"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- Modal end -->
         </div>
 

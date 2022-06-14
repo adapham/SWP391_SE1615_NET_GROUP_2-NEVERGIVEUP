@@ -183,12 +183,7 @@
                                                                                 </c:if>
                                                                                 <spam class="new-price">$${pro.priceAferDiscount}</spam>
                                                                             </div>
-                                                                            <div class="pro-details-quality">
-                                                                                <span>Quantity:</span>
-                                                                                <div class="cart-plus-minus">
-                                                                                    <input class="cart-plus-minus-box" type="number" name="qtybutton" value="1">
-                                                                                </div>
-                                                                            </div>
+                                                                            
                                                                             
                                                                             <div class="pro-details-action-wrap">
                                                                                 <div class="pro-details-add-to-cart">

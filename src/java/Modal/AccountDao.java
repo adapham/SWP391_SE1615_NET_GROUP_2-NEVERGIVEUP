@@ -59,7 +59,8 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+             return null;
         }
         return list;
     }
@@ -80,6 +81,32 @@ public class AccountDao extends ConnectDB {
 
         }
         return 0;
+    }
+    //Get Account By User Name
+    public Account GetDisplayAccountByUsername(String username) {
+        String sql = "select * from Account where UserName =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, username);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .build();
+                return acc;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public Account GetDisplayNameByUsername(String username) {
@@ -126,7 +153,7 @@ public class AccountDao extends ConnectDB {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Account acc = Account.builder()
-                        .accountid(rs.getInt(1))
+                        .accountid(rs.getInt("accountid"))
                         .build();
                 return acc;
             }
@@ -181,6 +208,32 @@ public class AccountDao extends ConnectDB {
             ex.printStackTrace();
         }
         return list;
+    }
+    public Account getAccountByAccountID(int id){
+        String sql = "select * from Account where AccountID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Account acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .build();
+                return acc;
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public int updateAccount(Account acc) {
@@ -741,6 +794,26 @@ public class AccountDao extends ConnectDB {
                 .gender(1)
                 .build();
         dao.RegisterAccount(acc);
-
     }
+    public Account infoAccount(String user, String pass){
+        String sql = "select * from Account where UserName = '?' and Password = '?'";
+        Account ac;
+        try {
+            PreparedStatement pre= conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return ac = Account.builder()
+                        .accountid(rs.getInt("AccountID"))
+                        .address(rs.getString("Address"))
+                        .email(rs.getString("Email"))
+                        .phone(rs.getString("Phone"))
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    
 }

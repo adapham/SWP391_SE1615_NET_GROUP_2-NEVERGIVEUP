@@ -76,10 +76,34 @@
                                             </td>
                                             <td class="product-name">${pro.productName}</td>
                                             <td class="product-price-cart"><span class="amount">$${pro.unitPrice}</span></td>                                                       
-                                            <td><input onchange="this.form.submit()" type="number" value="${pro.quantity}" name="quantity"></td>   
+                                            <td><input onchange="this.form.submit()" type="number" value="${pro.quantity}" min="1" name="quantity" oninput="this.value = Math.abs(this.value)"></td>
                                             <td class="product-subtotal">$${Math.round((pro.unitPrice * pro.quantity)*100)/100}</td>
-                                            <td class="product-remove">
-                                                <a href="delete?pid=${pro.productID}"><i class="icon_close"></i></a>
+                                            <td class="product-remove">                                                
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${pro.productID}">
+                                                    <i class="icon_close"></i>
+                                                </button>
+
+                                                <!-- The Modal -->
+                                                <div class="modal" id="myModal${pro.productID}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Delete product</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete the product?
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-danger"><a href="delete?pid=${pro.productID}">Confirm</a></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             </tr>
                                         </form>
@@ -95,8 +119,38 @@
                                             <a href="menu">Continue Shopping</a>
                                         </div>
                                         <div class="cart-clear">
-                                            <a href="checkout.jsp">Checkout</a>
-                                            <a href="delete">Clear Cart</a>
+                                            <c:if test="${sessionScope.Account !=null}">
+                                                <a href="checkOut">Check Out</a>
+                                            </c:if>
+                                            <c:if test="${sessionScope.Account ==null}">
+                                                <a href="login">Check Out</a>
+                                            </c:if>
+                                            
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalall">
+                                                <a style="color: black">Clear Cart</a>
+                                            </button>
+
+                                            <!-- The Modal -->
+                                            <div class="modal" id="myModalall">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Delete all products</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete all of the product?
+                                                        </div>
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" ><a href="delete">Confirm</a></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -127,6 +181,9 @@
         <script src="assets/js/plugins/easyzoom.js"></script>
         <script src="assets/js/plugins/scrollup.js"></script>
         <script src="assets/js/plugins/ajax-mail.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
         <!-- Use the minified version files listed below for better performance and remove the files listed above  
     <script src="assets/js/vendor/vendor.min.js"></script>

@@ -120,7 +120,6 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
 
                     } else {
-
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
@@ -137,16 +136,19 @@ public class LoginController extends HttpServlet {
                         response.addCookie(cu);
                         response.addCookie(pa);
                         response.addCookie(cr);
-                        Account DisplayName = daoAccount.GetDisplayNameByUsername(username);
-                        Account ImageURL = daoAccount.GetImageURLByUsername(username);
-                        Account accountID = daoAccount.GetAccountIDLByUsername(username);
+                        Account acc = daoAccount.GetDisplayAccountByUsername(username);
                         session.setAttribute("Account", Account.builder()
-                                .accountid(accountID.getAccountid())
+                                .accountid(acc.getAccountid())
                                 .username(username)
                                 .password(password)
-                                .displayname(DisplayName.getDisplayname())
-                                .imageURL(ImageURL.getImageURL())
+                                .displayname(acc.getDisplayname())
+                                .imageURL(acc.getImageURL())
+                                .address(acc.getAddress())
+                                .email(acc.getEmail())
+                                .phone(acc.getPhone())
+                                .role(acc.getRole())
                                 .build());
+
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
                     }
                 }
