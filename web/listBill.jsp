@@ -1,10 +1,11 @@
 <%-- 
-    Document   : admin
-    Created on : Jun 10, 2022, 10:22:03 PM
-    Author     : KhacBao
+    Document   : listBill
+    Created on : Jun 12, 2022, 12:09:19 AM
+    Author     : Window 10
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,7 +43,46 @@
                     <!-- End of Topbar -->
 
                     <!-- Begin Page Content -->
-
+                    <p><h3 style="color: black"><b>List bills</b></h3></p> 
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Account ID</th>
+                                <th scope="col">Shipper ID</th>
+                                <th scope="col">Order date</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${list}" var="l">
+                                <tr>
+                                    <th scope="row">${l.orderID}</th>
+                                    <td>${l.accountID}</td>
+                                    <td>${l.shipperID}</td>
+                                    <td>${l.orderDate}</td>
+                                    <td>${l.address}</td>
+                                    <td>${l.email}</td>
+                                    <td>
+                                        <form action="billManager?do=updateStatus" method="POST">
+                                            <input type="hidden" name="odId" value="${l.orderID}">
+                                            <select name="status" onchange="this.form.submit()">
+                                                <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
+                                                <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
+                                                <option value="3" ${l.status == 3 ? " selected" : ""}>Done</option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td>${l.phone}</td>
+                                    <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                     <!-- /.container-fluid -->
 
                 </div>

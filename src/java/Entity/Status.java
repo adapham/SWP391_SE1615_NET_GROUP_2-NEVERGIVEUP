@@ -5,18 +5,17 @@
  */
 package Entity;
 
-import java.util.Date;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Builder
 @Getter
 @Setter
-@ToString 
+@ToString
 public class Status {
+
     private int statusID;
     private String statusName;
 }

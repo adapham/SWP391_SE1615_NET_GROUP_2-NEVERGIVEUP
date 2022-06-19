@@ -5,25 +5,25 @@
  */
 package Controller;
 
-import Entity.Product;
+import Entity.Order;
+import Entity.OrderDetails;
+import Modal.OrderDao;
+import Modal.OrderDetailsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author Window 10
  */
-@WebServlet(name = "CartController", urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+@WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
+public class billManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,43 +38,46 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            List<Product> listProductCarts = new ArrayList<>();
-            HttpSession session = request.getSession();
-//            Product prod = Product.builder()
-//                    .productName("alo")
-//                    .quantity(123)
-//                    .build();
-//            listProductCarts.add(prod);
-
-            Enumeration em = session.getAttributeNames();
-            int sum = 0;
-            while (em.hasMoreElements()) {
-                String key = em.nextElement().toString();
-                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("Account") && !key.equals("size") && !key.equals("listCategory")) {
-                    Product pro = (Product) session.getAttribute(key);
-                    sum += pro.getQuantity();
-                    listProductCarts.add(pro);
-                    session.setAttribute(key, pro);
-                }
+            String service = request.getParameter("do");
+            if (service == null) {
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
-
-//            for(Product list : listProductCarts){
-//                out.print(list);
-//            }
-            //session.setAttribute("size", sum);
-            double totalMoney = 0;
-            for (Product list : listProductCarts) {
-                totalMoney += list.getUnitPrice() * list.getQuantity();
-                totalMoney *= 100;
-                double total = Math.ceil(totalMoney);
-                total = (double) total / 100;
-                totalMoney = total;
+            if (service.equals("bill")) {
+                OrderDao dao = new OrderDao();
+                List<Order> list = dao.listAllOrders();
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("listBill.jsp").forward(request, response);
+            }
+            if (service.equals("updateStatus")) {
+                OrderDao dao = new OrderDao();
+                String id = request.getParameter("odId");
+                //Convert
+                int odID = Integer.parseInt(id);
+                int Status = Integer.parseInt(request.getParameter("status"));
+                int n = dao.updateStatus(Status, odID);
+                response.sendRedirect("billManager?do=bill");
 
             }
-            request.setAttribute("totalMoney", totalMoney);
-            request.setAttribute("listProductCarts", listProductCarts);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            if (service.equals("details")) {
+                OrderDetailsDao dao = new OrderDetailsDao();
+                String odID = request.getParameter("odID");
+                int oID = Integer.parseInt(odID);
+                List<OrderDetails> list = dao.getDetailsBill(oID);
+                OrderDetails info = dao.getInfoBill(oID);
+                request.setAttribute("info", info);
+                request.setAttribute("list", list);
+                request.setAttribute("orderID", oID);
+                request.getRequestDispatcher("detailsBill.jsp").forward(request, response);
+            }
+            if (service.equals("updateStatusDetails")) {
+                OrderDao dao = new OrderDao();
+                String id = request.getParameter("odId");
+                //Convert
+                int odID = Integer.parseInt(id);
+                int Status = Integer.parseInt(request.getParameter("status"));
+                int n = dao.updateStatus(Status, odID);
+                request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
+            }
         }
     }
 
