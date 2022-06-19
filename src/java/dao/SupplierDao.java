@@ -1,6 +1,5 @@
-package Modal;
+package dao;
 
-import Entity.Product;
 import Entity.Supplier;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

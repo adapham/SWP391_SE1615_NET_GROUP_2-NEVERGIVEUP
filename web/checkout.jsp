@@ -50,7 +50,7 @@
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="index.html">Home</a>
+                                <a href="home">Home</a>
                             </li>
                             <li class="active">Cart Page </li>
                         </ul>
@@ -113,34 +113,34 @@
                                         </div>
                                         <div class="tax-wrapper">
                                             <p>Enter your information</p>
-                                            <form method="post" action="checkOut">
+                                            <form method="post" action="confirm">
                                                 <div class="tax-select-wrapper">
 
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Account ID
+                                                            * Display name of customer
                                                         </label>
-                                                        <input type="text" maxlength="50" value="${account.accountid}" name="accountid" readonly="">
+                                                        <input type="text" maxlength="50" value="${account.displayname}" name="accountid" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
                                                             * Email
                                                         </label>
-                                                        <input type="text" maxlength="50" value="${account.email}" name="email">
+                                                        <input type="text" maxlength="50" value="${account.email}" name="email" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
                                                             * Address
                                                         </label>
-                                                        <input type="text" maxlength="50" value="${account.address}" name="address">
+                                                        <input type="text" maxlength="50" id="address" name="address">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
                                                             * Phone
                                                         </label>
-                                                        <input type="text" maxlength="15" value="${account.phone}" name="phone">
+                                                        <input type="text" maxlength="15" id="phone" name="phone">
                                                     </div>   
-
+                                                    <button type="submit" name="confirm" class="btn btn-primary"><i style="font-style: normal">Proceed to Checkout</i></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -152,38 +152,6 @@
                                             <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                         </div>
                                         <h5>Total Amount<span>$${totalMoney}</span></h5>
-
-                                        
-                                            
-                                            <button type="botton" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                                <i style="font-style: normal">Proceed to Checkout</i>
-                                            </button>
-
-                                            <!-- The Modal -->
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Order success</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            Thank you for your order.
-                                                        </div>
-                                                        <!-- Modal footer -->
-                                                        <form method="post" action="checkOut?accountID=${account.accountid}&address=${account.address}&email=${account.email}&phone=${account.phone}">
-                                                        <div class="modal-footer">
-                                                            <button value="1" name="temp" type="submit" class="btn btn-danger">Continue shopping</button>
-                                                            <button value="2" name="temp" type="submit" class="btn btn-danger">Logout</button>
-                                                        </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        
-
                                     </div>
                                 </div>
 

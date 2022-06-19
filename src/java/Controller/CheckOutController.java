@@ -8,16 +8,14 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import Modal.AccountDao;
-import Modal.OrderDao;
-import Modal.OrderDetailsDao;
+import dao.AccountDao;
+import dao.OrderDao;
+import dao.OrderDetailsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +54,7 @@ public class CheckOutController extends HttpServlet {
             Enumeration em = session.getAttributeNames();
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();
-                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
+                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
                     Product pro = (Product) session.getAttribute(key);
                     if (pro == null) {
                         listProductCarts = new ArrayList<>();
@@ -112,18 +110,18 @@ public class CheckOutController extends HttpServlet {
         PrintWriter out = response.getWriter();
         OrderDao daoOrder = new OrderDao();
         OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
-        String accountID = request.getParameter("accountID");        
+        String accountID = request.getParameter("accountID");
         String address = request.getParameter("address");
-        String email = request.getParameter("email");        
+        String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String temp = request.getParameter("temp");
-        //out.print(temp);
+        //out.print(temp);        
         List<Product> listProductCarts = new ArrayList<Product>();
         HttpSession session = request.getSession();
         Enumeration em = session.getAttributeNames();
         while (em.hasMoreElements()) {
             String key = em.nextElement().toString();
-            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
+            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
                 Product pro = (Product) session.getAttribute(key);
                 if (pro == null) {
                     listProductCarts = new ArrayList<>();
@@ -140,28 +138,29 @@ public class CheckOutController extends HttpServlet {
             total = (double) total / 100;
             totalMoney = total;
         }
-        
+
         Order order = Order.builder()
                 .accountID(Integer.parseInt(accountID))
                 .shipperID(1)
-                .address(address)
+                .address(address.trim())
                 .email(email)
                 .status(1)
-                .phone(phone)
+                .phone(phone.trim())
                 .build();
-        int orderID = new OrderDao().returnOrderID(order);
+        int orderID = new OrderDao().insertOrderID(order);
         new OrderDetailsDao().saveCart(orderID, listProductCarts);
-        
-        while(em.hasMoreElements()){
+
+        while (em.hasMoreElements()) {
             String key = em.nextElement().toString();
-            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")){
+            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
                 session.removeAttribute(key);
             }
         }
-        if(Integer.parseInt(temp)==1){
-            request.getRequestDispatcher("menu").forward(request, response);
-        }
-        request.getRequestDispatcher("login?do=logout").forward(request, response);
+        request.getRequestDispatcher("confirm").forward(request, response);
+//        if(Integer.parseInt(temp)==1){
+//            request.getRequestDispatcher("menu").forward(request, response);
+//        }
+//        request.getRequestDispatcher("login?do=logout").forward(request, response);
     }
 
     /**

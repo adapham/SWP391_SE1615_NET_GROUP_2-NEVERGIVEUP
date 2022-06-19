@@ -42,9 +42,11 @@
         <div id="collapseProduct" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Product Manager Crud:</h6>
-                <a class="collapse-item" href="adminProduct">Products</a>
-                <a class="collapse-item" href="#">Categories</a>
-                <a class="collapse-item" href="#">Suppliers</a>
+                <a class="collapse-item" href="adminProduct"> Products</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
+                <a class="collapse-item" href="adminCategory"> Categories</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminCategory?do=createCategory"><i class="fas fa-plus"></i> Create Category</a>
+                <a class="collapse-item" href="#"> Suppliers</a>
             </div>
         </div>
     </li>
@@ -90,8 +92,8 @@
         </a>
         <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Account Manager CRUD:</h6>
-                <a class="collapse-item" href="#">Orders</a>
+                <h6 class="collapse-header">Bill Manager</h6>
+                <a class="collapse-item" href="billManager?do=bill">Bills</a>
             </div>
         </div>
     </li>

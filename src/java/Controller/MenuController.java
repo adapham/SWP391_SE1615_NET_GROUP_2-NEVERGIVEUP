@@ -2,10 +2,9 @@ package Controller;
 
 import Entity.Category;
 import Entity.Product;
-import Modal.CategoryDao;
-import Modal.ProductDao;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ProductDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +17,10 @@ public class MenuController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            CategoryDao daoCategory = new CategoryDao();
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             HttpSession session = request.getSession();
 
             if (service == null) {
@@ -32,6 +31,8 @@ public class MenuController extends HttpServlet {
                 String pageStr = request.getParameter("page");
                 //Category
                 List<Category> listCategory = daoCategory.getAllCategory();
+                System.out.println("Check list Cate");
+                System.out.println(listCategory);
                 session.setAttribute("listCategory", listCategory);
                 //Phân trang
                 String viewPage = request.getParameter("viewPage");
@@ -49,6 +50,8 @@ public class MenuController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
+                System.out.println("Check listProduct");
+                System.out.println(listProduct);
                 //Set Data For JSP
                 request.setAttribute("PAGE_SIZE", PAGE_SIZE);
                 session.setAttribute("backToUrl", "menu");
@@ -133,6 +136,9 @@ public class MenuController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
+        }catch(Exception ex){
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 
