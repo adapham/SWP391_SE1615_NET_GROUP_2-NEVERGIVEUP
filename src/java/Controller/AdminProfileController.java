@@ -19,7 +19,7 @@ public class AdminProfileController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             AccountDao daoAccount = new AccountDao();
 
             String service = request.getParameter("do");
@@ -67,7 +67,7 @@ public class AdminProfileController extends HttpServlet {
                             .build();
                     List<Account> ListAccount = new ArrayList<>();
                     ListAccount.add(accupdateBefore);
-                    
+
                     request.setAttribute("list", ListAccount);
                     if (DisplayName == null || DisplayName.isEmpty()) {//Tên không được null
                         String mess = "DisplayName is not null";
@@ -111,7 +111,7 @@ public class AdminProfileController extends HttpServlet {
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
                             + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
                     if (!Phone.matches(reg)) {
@@ -237,6 +237,8 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                 }
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

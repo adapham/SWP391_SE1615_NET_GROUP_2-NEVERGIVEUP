@@ -222,7 +222,7 @@ public class AdminCategoryController extends HttpServlet {
                 request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

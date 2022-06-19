@@ -114,11 +114,12 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return listPro;
     }
-    public List<Product> getProductsByCateIDTop4(int iCateId) {
+    //Lấy ra 4 sản phẩm đầu tiên theo CateID
+    public List<Product> getProductsByCateIDTop4(int iCateId) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select top 4 * from Product where CategoryID = ? and Quantity >=2";
         try {
-            ProductDao dao = new ProductDao();
+            ProductDAOImpl dao = new ProductDAOImpl();
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, iCateId);
             ResultSet rs = pre.executeQuery();
@@ -141,7 +142,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }

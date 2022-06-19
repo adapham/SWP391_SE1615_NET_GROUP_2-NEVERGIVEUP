@@ -6,7 +6,7 @@
 package Controller;
 
 import Entity.Account;
-import Modal.AccountDao;
+import dao.AccountDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

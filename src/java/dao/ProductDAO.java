@@ -22,6 +22,8 @@ public interface ProductDAO {
     //Trả về Product theo Product ID
     public Product getProductByProductID(int ProductID) throws Exception;
 
+    public List<Product> getProductsByCateIDTop4(int iCateId) throws Exception;
+
     //Trả về danh sách tất cả sản phẩm theo sản phầm theo số nhập vào
     public List<Product> getTopNumberProduct(int number) throws Exception;
 

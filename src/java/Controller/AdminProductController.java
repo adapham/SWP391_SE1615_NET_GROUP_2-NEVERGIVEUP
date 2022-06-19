@@ -398,7 +398,7 @@ public class AdminProductController extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 
