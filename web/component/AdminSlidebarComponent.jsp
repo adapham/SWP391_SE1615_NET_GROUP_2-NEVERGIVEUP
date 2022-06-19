@@ -68,9 +68,10 @@
         <div id="collapseAccount" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Account Manager CRUD:</h6>
-                <a class="collapse-item" href="#">Customers</a>
-                <a class="collapse-item" href="#">Employees</a>
-                <a class="collapse-item" href="#">Shippers</a>
+                <a class="collapse-item" href="accountmanager">Customers</a>
+                <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
+                <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
+                <a class="collapse-item" href="adminCreateAccount.jsp">Create Account</a>
             </div>
         </div>
     </li>

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +43,8 @@ public class DetailsController extends HttpServlet {
                 Product pro = daoPro.getProductByProductID(ProductID);
                 //Lay CategoryName thong qua ProductID
                 String CategoryName = daoCate.GetCategoryName(pro.getCategoryID());
+                List<Product> listrelated = daoPro.getProductsByCateIDTop4(pro.getCategoryID());
+                request.setAttribute("listrelated", listrelated);
                 request.setAttribute("categoryName", CategoryName);
                 request.setAttribute("proID", ProductID);
                 request.setAttribute("pro", pro);
