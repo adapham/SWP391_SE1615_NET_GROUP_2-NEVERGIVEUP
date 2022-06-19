@@ -1,9 +1,10 @@
 package Controller;
 
 import Entity.Account;
-import Modal.AccountDao;
+import dao.AccountDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +38,7 @@ public class AdminProfileController extends HttpServlet {
                     Account acc = (Account) session.getAttribute("Account");
                     int AccountID = acc.getAccountid();
                     List ListAccount = daoAccount.getAccountByID(AccountID);
-                    
+
                     request.setAttribute("list", ListAccount);
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                 } else {
@@ -53,93 +54,7 @@ public class AdminProfileController extends HttpServlet {
                     String Phone = request.getParameter("phone");
                     String ImageURL = request.getParameter("imageURL");
 
-                    if (DisplayName == null || DisplayName.isEmpty()) {//Check displayName valid
-                        String mess = "DisplayName is not null";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (DisplayName != DisplayName.trim()) {//Check blank valid
-                        String mess = "DisplayName invalid";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (DisplayName.length() >= 50) {//Check displayName must <= 50 char
-                        String mess = "DisplayName can must <=50 character";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (Address == null || Address.isEmpty()) {
-                        String mess = "Address is not null";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (Address.length() > 50) {
-                        String mess = "Address can must <=50 character";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    
-                    String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
-                            + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
-                    if (!Phone.matches(reg)) {
-                        String mess = "Phone invalid";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";//Format mail
-                    if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email invalid";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (Email != Email.trim()) {
-                        String mess = "Email invalid";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (ImageURL != ImageURL.trim()) {
-                        String mess = "ImageURL invalid";
-                        List ListAccount = daoAccount.getAccountByID(AccountID);
-
-                        request.setAttribute("mess", mess);
-                        request.setAttribute("list", ListAccount);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    Account accupdate = Account.builder()
+                    Account accupdateBefore = Account.builder()
                             .accountid(AccountID)
                             .displayname(DisplayName)
                             .address(Address)
@@ -150,11 +65,108 @@ public class AdminProfileController extends HttpServlet {
                             .imageURL(ImageURL)
                             .role(role)
                             .build();
-               
+                    List<Account> ListAccount = new ArrayList<>();
+                    ListAccount.add(accupdateBefore);
+                    
+                    request.setAttribute("list", ListAccount);
+                    if (DisplayName == null || DisplayName.isEmpty()) {//Tên không được null
+                        String mess = "DisplayName is not null";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (DisplayName != DisplayName.trim()) {//Tên không được để trống 2 đầu
+                        String mess = "DisplayName invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (DisplayName.length() >= 50) {//Tên không được vượt quá 50 kí tự
+                        String mess = "DisplayName can must <=50 character";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (Address == null || Address.isEmpty()) {//Địa chỉ không được null
+                        String mess = "Address is not null";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (Address.length() > 50) {//Địa chỉ không được vượt quá 50 kí tự
+                        String mess = "Address can must <=50 character";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (Address != Address.trim()) {//Địa chỉ không được để trống 2 đầu
+                        String mess = "Address invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    
+                    String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
+                            + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
+                    if (!Phone.matches(reg)) {
+                        String mess = "Phone invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";//Format mail
+                    if (!Email.matches(EMAIL_PATTERN)) {//Email không đúng format
+                        String mess = "Email invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (Email == null || Email.isEmpty()) {//Email không được null
+                        String mess = "Email is not null";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (Email != Email.trim()) {//Email không được để trống 2 đầu
+                        String mess = "Email invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    if (ImageURL != ImageURL.trim()) {//Ảnh không được để trống 2 đầu
+                        String mess = "ImageURL invalid";
+
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        return;
+                    }
+                    Account accupdate = Account.builder()
+                            .accountid(AccountID)
+                            .displayname(DisplayName.trim())
+                            .address(Address.trim())
+                            .email(Email.trim())
+                            .phone(Phone.trim())
+                            .username(username.trim())
+                            .password(password.trim())
+                            .imageURL(ImageURL.trim())
+                            .role(role)
+                            .build();
+
                     session.setAttribute("Account", accupdate);
                     int n = daoAccount.updateAccount(accupdate);
                     String mess = "Update Success";
-                    List ListAccount = daoAccount.getAccountByID(AccountID);
+                    ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess", mess);
                     request.setAttribute("list", ListAccount);
@@ -216,7 +228,7 @@ public class AdminProfileController extends HttpServlet {
                             .build();
                     session.setAttribute("Account", accChangePass);
                     int n = daoAccount.changePassword(accChangePass);
-                    
+
                     String mess1 = "Change Password Success!";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
 

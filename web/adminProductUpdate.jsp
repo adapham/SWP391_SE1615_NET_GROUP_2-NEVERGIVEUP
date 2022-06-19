@@ -62,7 +62,7 @@
                                 <div class="col-xl-8">
                                     <!-- Account details card-->
                                     <div class="card mb-4">
-                                        <div class="card-header">Update Product</div>
+                                        <div class="card-header"><a href="adminProduct">Product </a>/ Update Product</div>
                                         <c:if test="${mess != null}"> 
                                             <br>
                                             <div class="alert alert-danger" role="alert">

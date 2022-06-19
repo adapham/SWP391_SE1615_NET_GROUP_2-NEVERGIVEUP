@@ -107,7 +107,7 @@
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="ImageURL">ImageURL</label>
-                                                        <input name="imageURL" class="form-control" id="ImageURL" type="text" placeholder="Enter your url image..." value="${l.imageURL}">
+                                                        <input maxlength="10000" name="imageURL" class="form-control" id="ImageURL" type="text" placeholder="Enter your url image..." value="${l.imageURL}">
                                                     </div>
                                                 </div>
                                                 <!-- Save changes button-->
@@ -131,7 +131,7 @@
                                                     <!-- Form Group (first name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="oldPassword">Old Password</label>
-                                                        <input name="oldPassword" class="form-control" id="oldPassword" type="password" placeholder="Enter your old password" value="">
+                                                        <input maxlength="50" name="oldPassword" class="form-control" id="oldPassword" type="password" placeholder="Enter your old password" value="">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -139,7 +139,7 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="newPassword">New Password</label>
-                                                        <input name="newPassword" class="form-control" id="newPassword" type="password" placeholder="Enter your new password" value="">
+                                                        <input maxlength="50" name="newPassword" class="form-control" id="newPassword" type="password" placeholder="Enter your new password" value="">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -147,7 +147,7 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="comfirmPassword">Comfirm Password</label>
-                                                        <input name="comfirmPassword" class="form-control" id="comfirmPassword" type="password" placeholder="Enter your password comfirm" value="">
+                                                        <input maxlength="50" name="comfirmPassword" class="form-control" id="comfirmPassword" type="password" placeholder="Enter your password comfirm" value="">
                                                     </div>
                                                 </div>
                                                 <!-- Save changes button-->

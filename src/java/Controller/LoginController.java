@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Account;
-import Modal.AccountDao;
+import dao.AccountDao;
+import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,31 +13,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.hibernate.validator.constraints.Email;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
 
             AccountDao daoAccount = new AccountDao();
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+
             if (service == null) {
                 service = "login";
             }
@@ -149,6 +130,9 @@ public class LoginController extends HttpServlet {
                                 .role(acc.getRole())
                                 .build());
 
+                        int totalProduct = daoProduct.getTotalProduct();//Get total All Product
+
+                        request.setAttribute("totalProduct", totalProduct);
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
                     }
                 }
@@ -488,6 +472,8 @@ public class LoginController extends HttpServlet {
                     }
                 }
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
 

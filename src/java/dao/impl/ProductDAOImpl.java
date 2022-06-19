@@ -1,19 +1,25 @@
-package Modal;
+package dao.impl;
 
 import Entity.Product;
+import dao.ConnectDB;
+import dao.FeedbackDao;
+import dao.OrderDetailsDao;
+import dao.ProductDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ProductDao extends ConnectDB {
+public class ProductDAOImpl extends ConnectDB implements ProductDAO{
 
     //Trả về danh sách tất cả sản phẩm
-    public List<Product> getAllProduct() {
+    public List<Product> getAllProduct() throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -37,16 +43,16 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về danh sách tất cả sản phẩm theo ProductID
-    public List<Product> getAllProductByProductID(int ProductID) {
+    public List<Product> getAllProductByProductID(int ProductID) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where ProductID = ?";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -71,17 +77,17 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về danh sách sản phẩm theo categoryID
-    public List<Product> getProductsByCateID(int iCateId) {
+    public List<Product> getProductsByCateID(int iCateId) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where CategoryID = ?";
         try {
-            ProductDao dao = new ProductDao();
+            ProductDAOImpl dao = new ProductDAOImpl();
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, iCateId);
             ResultSet rs = pre.executeQuery();
@@ -104,19 +110,19 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về 1 danh sách phần trang theo kích thước
-    public List<Product> getProductWithPaging(int page, int PAGE_SIZE) {
+    public List<Product> getProductWithPaging(int page, int PAGE_SIZE) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *,\n"
                 + " ROW_NUMBER() OVER (ORDER BY ProductID) AS Seq\n"
                 + " FROM Product )t\n"
                 + " WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, page);
@@ -143,20 +149,20 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về 1 danh sách phân trang theo tăng dần, giảm dần
-    public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) {
+    public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "                              OVER (ORDER BY ProductID) AS Seq FROM Product \n"
                 + "                              )t \n"
                 + "                              WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?\n"
                 + "                              order by "+col+ " " + type;
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, page);
@@ -183,13 +189,13 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+           throw ex;
         }
         return listPro;
     }
 
     //Trả về tổng số sản phẩm
-    public int getTotalProduct() {
+    public int getTotalProduct() throws Exception{
         String sql = "select COUNT(*) from Product";
         try {
             //Đưa vào prepare
@@ -202,14 +208,14 @@ public class ProductDao extends ConnectDB {
                 return count;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return 0;
     }
 
     //Trả về Product theo Product ID
-    public Product getProductByProductID(int ProductID) {
-        ProductDao dao = new ProductDao();
+    public Product getProductByProductID(int ProductID) throws Exception{
+        ProductDAOImpl dao = new ProductDAOImpl();
         String sql = "select * from Product where ProductID =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -234,16 +240,16 @@ public class ProductDao extends ConnectDB {
                 return pro;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
     //Trả về danh sách tất cả sản phẩm theo sản phầm theo số nhập vào
-    public List<Product> getTopNumberProduct(int number) {
+    public List<Product> getTopNumberProduct(int number) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select top(?) * from Product where Quantity > 5";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, number);
@@ -267,13 +273,13 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về Giá sau khi discount
-    public double PriceArterDiscount(int ProductID) {
+    public double PriceArterDiscount(int ProductID) throws Exception{
         double price = 0;
         String sql = "select UnitPrice,Discount from Product where ProductID =?";
         try {
@@ -289,20 +295,20 @@ public class ProductDao extends ConnectDB {
                 return price;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return 0;
     }
 
     //Trả về danh sách phần trang theo category
-    public List<Product> getAllProductsWithPagingByCateID(int iCateId, int page, int PAGE_SIZE) {
+    public List<Product> getAllProductsWithPagingByCateID(int iCateId, int page, int PAGE_SIZE) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "OVER (ORDER BY ProductID) AS Seq FROM Product \n"
                 + "where CategoryID = ?\n"
                 + ")t \n"
                 + "WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, iCateId);
@@ -330,13 +336,13 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về tổng sản phẩm theo category
-    public int getTotalProductByCate(int iCateId) {
+    public int getTotalProductByCate(int iCateId) throws Exception{
         String sql = "select COUNT(*) from Product where CategoryID = ?";
         try {
             //Đưa vào prepare
@@ -349,20 +355,20 @@ public class ProductDao extends ConnectDB {
                 return count;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return 0;
     }
 
     //Trả về danh sách phần trang theo Search Key
-    public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) {
+    public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "                OVER (ORDER BY ProductID) AS Seq FROM Product \n"
                 + "                where ProductName like ?\n"
                 + "                )t \n"
                 + "                WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
-        ProductDao dao = new ProductDao();
+        ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, "%" + keySearch + "%");
@@ -390,13 +396,13 @@ public class ProductDao extends ConnectDB {
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về tổng sản phẩm theo Search Key
-    public int getTotalProductByPName(String keySearch) {
+    public int getTotalProductByPName(String keySearch) throws Exception{
         String sql = "select COUNT(*) from Product where ProductName like ?";
         try {
             //Đưa vào prepare
@@ -408,14 +414,14 @@ public class ProductDao extends ConnectDB {
                 int count = rs.getInt(1);
                 return count;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
 
     //Update Product
-    public int updateProducts(Product pro) {
+    public int updateProducts(Product pro) throws Exception{
         int n = 0;
         String sql = "UPDATE [Product]\n"
                 + "   SET [ProductName] = ?\n"
@@ -446,13 +452,13 @@ public class ProductDao extends ConnectDB {
             pre.setInt(11, pro.getProductID());
 
             n = pre.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }
 
-    public int createProduct(Product pro) {
+    public int createProduct(Product pro) throws Exception{
         int n = 0;
         String sql = "INSERT INTO [Product]\n"
                 + "           ([ProductName]\n"
@@ -483,23 +489,25 @@ public class ProductDao extends ConnectDB {
             pre.setInt(10, pro.getIsActive());
 
             n = pre.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }
 
     public static void main(String[] args) {
-        ProductDao dao = new ProductDao();
-        int n = dao.deleteProduct(4);
-        if (n > 0) {
-            System.out.println("OK");
-        } else {
-            System.out.println("Not OK");
+        try {
+            ProductDAOImpl dao = new ProductDAOImpl();
+            List list = dao.getAllProduct();
+            for (Object object : list) {
+                System.out.println(object);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public int deleteProduct(int pID) {
+    public int deleteProduct(int pID) throws Exception{
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
         FeedbackDao daoFeedback = new FeedbackDao();
@@ -511,8 +519,8 @@ public class ProductDao extends ConnectDB {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, pID);
             n = pre.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }

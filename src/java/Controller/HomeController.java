@@ -1,7 +1,7 @@
 package Controller;
 
 import Entity.Product;
-import Modal.ProductDao;
+import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,27 +12,28 @@ import javax.servlet.http.HttpServletResponse;
 
 public class HomeController extends HttpServlet {
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            if(service == null){
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            if (service == null) {
                 service = "home";
             }
-            if(service.equals("home")){
+            if (service.equals("home")) {
                 List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-                
+
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-            if (service.equals("about")) {                
+            if (service.equals("about")) {
                 List<Product> listProduct = daoProduct.getTopNumberProduct(2);
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("about.jsp").forward(request, response);
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
 

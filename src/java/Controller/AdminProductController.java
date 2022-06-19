@@ -3,9 +3,9 @@ package Controller;
 import Entity.Category;
 import Entity.Product;
 import Entity.Supplier;
-import Modal.CategoryDao;
-import Modal.ProductDao;
-import Modal.SupplierDao;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ProductDAOImpl;
+import dao.SupplierDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ public class AdminProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
             SupplierDao daoSupplier = new SupplierDao();
-            CategoryDao daoCategory = new CategoryDao();
+            CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             HttpSession session = request.getSession();
 
             if (service == null) {
@@ -113,7 +113,7 @@ public class AdminProductController extends HttpServlet {
                     request.setAttribute("list", listProduct);
                     request.setAttribute("listSup", listSuppliers);
                     request.setAttribute("listCate", listCategories);
-                    if (pName == null != pName.isEmpty()) {//Check Name
+                    if (pName == null || pName.isEmpty()) {//Check Name
                         String mess = "Product name is not empty";
 
                         request.setAttribute("mess", mess);
@@ -230,8 +230,6 @@ public class AdminProductController extends HttpServlet {
                         request.setAttribute("listSup", listSuppliers);
                         request.setAttribute("listCate", listCategories);
                         request.getRequestDispatcher("adminProductCreate.jsp").forward(request, response);
-                    } else {
-                        out.println("500");
                     }
                 }
             }
@@ -266,8 +264,6 @@ public class AdminProductController extends HttpServlet {
                     request.setAttribute("mess", mess);
                     request.setAttribute("listProduct", listProduct);
                     request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
-                } else {
-                    out.println("500");
                 }
             }
             if (service.equals("searchProduct")) {//Search Product By Name
@@ -374,7 +370,7 @@ public class AdminProductController extends HttpServlet {
                         listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
                         request.setAttribute("typeDis", "up");
                     }
-                }else if (col.equalsIgnoreCase("UnitInStock")) {//Sort By UnitInStock
+                } else if (col.equalsIgnoreCase("UnitInStock")) {//Sort By UnitInStock
                     if (type.equalsIgnoreCase("asc")) {
                         listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
                         request.setAttribute("typeStock", "down");
@@ -383,7 +379,7 @@ public class AdminProductController extends HttpServlet {
                         listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
                         request.setAttribute("typeStock", "up");
                     }
-                }else if (col.equalsIgnoreCase("IsActive")) {//Sort By Is Active
+                } else if (col.equalsIgnoreCase("IsActive")) {//Sort By Is Active
                     if (type.equalsIgnoreCase("asc")) {
                         listProduct = daoProduct.getPagingSortProduct(page, PAGE_SIZE, col, type);
                         request.setAttribute("typeActive", "down");
@@ -401,6 +397,8 @@ public class AdminProductController extends HttpServlet {
                 request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
             }
 
+        } catch (Exception ex) {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
 

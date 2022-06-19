@@ -1,6 +1,6 @@
 package Controller;
 
-import Modal.ProductDao;
+import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,18 +15,20 @@ public class AdminHomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            if(service == null){
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            if (service == null) {
                 service = "home";
             }
-            if(service.equals("home")){
+            if (service.equals("home")) {
                 int totalProduct = daoProduct.getTotalProduct();//Get total All Product
-                
+
                 request.setAttribute("totalProduct", totalProduct);
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
 

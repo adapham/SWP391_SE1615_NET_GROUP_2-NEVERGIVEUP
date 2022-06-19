@@ -18,6 +18,7 @@
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/mains.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -41,7 +42,7 @@
                             <div class="col-xl-12">
                                 <!-- Account details card-->
                                 <div class="card mb-4">
-                                    <div class="card-header">Create Product</div>
+                                    <div class="card-header"><a href="adminProduct">Product </a>/ Create Product</div>
                                     <c:if test="${mess != null}"> 
                                         <br>
                                         <div class="alert alert-danger" role="alert">
@@ -60,7 +61,7 @@
                                                 <!-- Form Group (organization name)-->
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="imageURL">Images URL</label>
-                                                    <input maxlength="50"  name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your url images..." value="${images}">
+                                                    <input maxlength="10000"  name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your url images..." value="${images}">
                                                 </div>
                                             </div>
                                             <!-- Form Row        -->
@@ -168,6 +169,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
