@@ -7,8 +7,8 @@ package Controller;
 
 import Entity.Order;
 import Entity.Product;
-import Modal.OrderDao;
-import Modal.OrderDetailsDao;
+import dao.OrderDao;
+import dao.OrderDetailsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

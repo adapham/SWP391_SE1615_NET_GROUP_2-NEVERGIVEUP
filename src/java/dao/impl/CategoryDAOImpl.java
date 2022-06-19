@@ -110,7 +110,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     public static void main(String[] args) {
         try {
             CategoryDAOImpl dao = new CategoryDAOImpl();
-            List list = dao.getAllCategoryByCateID(1);
+            List list = dao.getAllCategory();
             for (Object object : list) {
                 System.out.println(object);
             }

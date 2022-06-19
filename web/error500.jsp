@@ -33,7 +33,7 @@
 			<img src="images/owl.gif" alt="flashy" class="w3l">
             <h2 class="main-title"><span>500</span></h2>
 			<p class="w3-agileits2">We can't seem to find the page you're looking for.</p>
-                       
+                        ${error}
                         <p class="copyright">  <a style="font-size: larger" href="home" target="_blank">Back to Home</a></p>
                         
         </div>
