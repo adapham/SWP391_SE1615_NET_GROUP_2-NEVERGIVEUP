@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modal;
-
+package dao;
 
 import Entity.FeedBack;
 import Entity.Intouch;
@@ -81,6 +80,17 @@ public class FeedbackDao extends ConnectDB {
             pre.setString(2, intouch.getEmail());
             pre.setString(3, intouch.getSubject());
             pre.setString(4, intouch.getMessage());
+            pre.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void deleteFeedbackByProductID(int pID) {
+        String sql = "delete from Feedback where ProductID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, pID);
             pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

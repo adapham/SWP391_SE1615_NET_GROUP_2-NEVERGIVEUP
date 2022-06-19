@@ -4,25 +4,28 @@
  * and open the template in the editor.
  */
 package Entity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
+/**
+ *
+ * @author ADA
+ */
 @Builder
 @Getter
 @Setter
 @ToString
-public class Account {
-    private int accountid;
-    private String username;
-    private String password;
-    private String displayname;
-    private String address;
-    private String email;
-    private String phone;
-    private String imageURL;
-    private int role;    
-    private int gender;
+public class Comments {
+    private int commentID;
+    private String comment;
+    private int parentID;
+    private int userID;
+    private int articleID;
+    private Boolean hide;
+    private int commentDepth;
+    private int childCount;
+    
 }

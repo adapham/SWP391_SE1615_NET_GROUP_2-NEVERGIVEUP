@@ -1,51 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
-import Modal.CategoryDao;
-import Modal.FeedbackDao;
-import Modal.ProductDao;
+import dao.impl.CategoryDAOImpl;
+import dao.FeedbackDao;
+import dao.impl.ProductDAOImpl;
 import Entity.FeedBack;
 import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "DetailsController", urlPatterns = {"/details"})
 public class DetailsController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             FeedbackDao dao = new FeedbackDao();
-            ProductDao daoPro = new ProductDao();
-            CategoryDao daoCate = new CategoryDao();            
+            ProductDAOImpl daoPro = new ProductDAOImpl();
+            CategoryDAOImpl daoCate = new CategoryDAOImpl();            
             String service = request.getParameter("do");
             if (service == null) {
                 service = "details";
@@ -60,6 +43,8 @@ public class DetailsController extends HttpServlet {
                 Product pro = daoPro.getProductByProductID(ProductID);
                 //Lay CategoryName thong qua ProductID
                 String CategoryName = daoCate.GetCategoryName(pro.getCategoryID());
+                List<Product> listrelated = daoPro.getProductsByCateIDTop4(pro.getCategoryID());
+                request.setAttribute("listrelated", listrelated);
                 request.setAttribute("categoryName", CategoryName);
                 request.setAttribute("proID", ProductID);
                 request.setAttribute("pro", pro);
@@ -94,6 +79,8 @@ public class DetailsController extends HttpServlet {
                 
             }
 
+        }catch(Exception ex){
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

@@ -3,11 +3,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminHome">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Food Admin <sup>2</sup></div>
     </a>
 
     <!-- Divider -->
@@ -20,7 +20,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="adminHome">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -42,9 +42,11 @@
         <div id="collapseProduct" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Product Manager Crud:</h6>
-                <a class="collapse-item" href="#">Products</a>
-                <a class="collapse-item" href="#">Categories</a>
-                <a class="collapse-item" href="#">Suppliers</a>
+                <a class="collapse-item" href="adminProduct"> Products</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
+                <a class="collapse-item" href="adminCategory"> Categories</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminCategory?do=createCategory"><i class="fas fa-plus"></i> Create Category</a>
+                <a class="collapse-item" href="#"> Suppliers</a>
             </div>
         </div>
     </li>
@@ -66,9 +68,10 @@
         <div id="collapseAccount" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Account Manager CRUD:</h6>
-                <a class="collapse-item" href="#">Customers</a>
-                <a class="collapse-item" href="#">Employees</a>
-                <a class="collapse-item" href="#">Shippers</a>
+                <a class="collapse-item" href="accountmanager">Customers</a>
+                <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
+                <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
+                <a class="collapse-item" href="adminCreateAccount.jsp">Create Account</a>
             </div>
         </div>
     </li>

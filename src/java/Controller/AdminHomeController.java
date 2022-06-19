@@ -1,6 +1,5 @@
 package Controller;
 
-import Entity.Product;
 import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,57 +8,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "AddToCartController", urlPatterns = {"/AddToCart"})
-public class AddToCartController extends HttpServlet {
+@WebServlet(name = "AdminHomeController", urlPatterns = {"/adminHome"})
+public class AdminHomeController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            /* TODO output your page here. You may use following sample code. */
-            String pid = request.getParameter("pid");
-            int iPID = Integer.parseInt(pid);
-            ProductDAOImpl dao = new ProductDAOImpl();
-            String amout = request.getParameter("amount");
-            System.out.println(amout);
-            Product temp = dao.getProductByProductID(iPID);
-            HttpSession session = request.getSession();
-            Product pro = (Product) session.getAttribute(pid);
+            String service = request.getParameter("do");
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            if (service == null) {
+                service = "home";
+            }
+            if (service.equals("home")) {
+                int totalProduct = daoProduct.getTotalProduct();//Get total All Product
 
-            String sizeStr;
-            try {
-                sizeStr = session.getAttribute("size").toString();
-            } catch (Exception e) {
-                sizeStr = null;
+                request.setAttribute("totalProduct", totalProduct);
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
-            int size = 0;
-            if (sizeStr == null) {
-                size = 0;
-            } else {
-                size = Integer.parseInt(sizeStr);
-            }
-
-            if (pro == null) {
-                pro = Product.builder()
-                        .productID(Integer.parseInt(pid))
-                        .imageURL(temp.getImageURL())
-                        .productName(temp.getProductName())
-                        .quantity(1)
-                        .unitPrice(temp.getPriceAferDiscount())
-                        .build();
-                size++;
-            } else {
-                pro.setQuantity(pro.getQuantity() + 1);
-            }
-            session.setAttribute(pid, pro);
-            session.setAttribute("size", size);
-//            String urlHistory = (String) session.getAttribute("urlHistory");
-//            if (urlHistory == null) {
-//                urlHistory = "details?do=details&pid=" + iPID;
-//            }
-            response.sendRedirect("menu");
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }

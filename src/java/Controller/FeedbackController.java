@@ -6,7 +6,7 @@
 package Controller;
 
 import Entity.Intouch;
-import Modal.FeedbackDao;
+import dao.FeedbackDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

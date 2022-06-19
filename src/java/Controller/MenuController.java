@@ -2,8 +2,8 @@ package Controller;
 
 import Entity.Category;
 import Entity.Product;
-import Modal.CategoryDao;
-import Modal.ProductDao;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,10 +18,10 @@ public class MenuController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            ProductDao daoProduct = new ProductDao();
-            CategoryDao daoCategory = new CategoryDao();
+            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             HttpSession session = request.getSession();
 
             if (service == null) {
@@ -133,6 +133,8 @@ public class MenuController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
+        }catch(Exception ex){
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 
