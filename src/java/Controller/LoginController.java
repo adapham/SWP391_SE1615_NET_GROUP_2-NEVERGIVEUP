@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-                    int checkAccount = daoAccount.checkAccount(username.toLowerCase().trim(), password);
+                    int checkAccount = daoAccount.checkAccount(username, password);
                     String r = request.getParameter("rem");
                     if (checkAccount == 0) {
                         request.setAttribute("mess", "wrong user or pass");
@@ -106,6 +106,34 @@ public class LoginController extends HttpServlet {
                                 .build());
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
 
+                    } else if (checkAccount == 4) {
+                        Cookie cu = new Cookie("us", username);
+                        Cookie pa = new Cookie("pa", password);
+                        Cookie cr = new Cookie("rem", r);
+                        if (r == null) {
+                            //time life =0
+                            cu.setMaxAge(0);
+                            pa.setMaxAge(0);
+                            cr.setMaxAge(0);
+                        } else {
+                            cu.setMaxAge(60 * 60 * 24);
+                            pa.setMaxAge(60 * 60 * 24);
+                            cr.setMaxAge(60 * 60 * 24);
+                        }
+                        response.addCookie(cu);
+                        response.addCookie(pa);
+                        response.addCookie(cr);
+                        Account DisplayName = daoAccount.GetDisplayNameByUsername(username);
+                        Account ImageURL = daoAccount.GetImageURLByUsername(username);
+                        Account accountID = daoAccount.GetAccountIDLByUsername(username);
+                        session.setAttribute("Account", Account.builder()
+                                .accountid(accountID.getAccountid())
+                                .username(username)
+                                .password(password)
+                                .displayname(DisplayName.getDisplayname())
+                                .imageURL(ImageURL.getImageURL())
+                                .build());
+                        request.getRequestDispatcher("Shipper.jsp").forward(request, response);
                     } else {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);

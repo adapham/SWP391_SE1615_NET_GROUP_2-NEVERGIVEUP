@@ -5,7 +5,10 @@
  */
 package Controller;
 
+import Entity.Order;
 import Entity.Product;
+import dao.OrderDao;
+import dao.OrderDetailsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,10 +23,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author Window 10
  */
-@WebServlet(name = "CartController", urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+@WebServlet(name = "checkout1", urlPatterns = {"/checkout1"})
+public class checkout1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,30 +42,28 @@ public class CartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            List<Product> listProductCarts = new ArrayList<>();
+            OrderDao daoOrder = new OrderDao();
+            OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
+            String accountID = request.getParameter("accountID");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String temp = request.getParameter("temp");
+            //out.print(temp);        
+            List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
-//            Product prod = Product.builder()
-//                    .productName("alo")
-//                    .quantity(123)
-//                    .build();
-//            listProductCarts.add(prod);
-
             Enumeration em = session.getAttributeNames();
-            int sum = 0;
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();
-                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("Account") && !key.equals("size") && !key.equals("listCategory")) {
+                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
                     Product pro = (Product) session.getAttribute(key);
-                    sum += pro.getQuantity();
+                    if (pro == null) {
+                        listProductCarts = new ArrayList<>();
+                    }
                     listProductCarts.add(pro);
                     session.setAttribute(key, pro);
                 }
             }
-
-//            for(Product list : listProductCarts){
-//                out.print(list);
-//            }
-            //session.setAttribute("size", sum);
             double totalMoney = 0;
             for (Product list : listProductCarts) {
                 totalMoney += list.getUnitPrice() * list.getQuantity();
@@ -70,11 +71,29 @@ public class CartController extends HttpServlet {
                 double total = Math.ceil(totalMoney);
                 total = (double) total / 100;
                 totalMoney = total;
-
             }
-            request.setAttribute("totalMoney", totalMoney);
-            request.setAttribute("listProductCarts", listProductCarts);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+
+            Order order = Order.builder()
+                    .accountID(Integer.parseInt(accountID))
+                    .shipperID(1)
+                    .address(address.trim())
+                    .email(email)
+                    .status(1)
+                    .phone(phone.trim())
+                    .build();
+            int orderID = new OrderDao().insertOrderID(order);
+            new OrderDetailsDao().saveCart(orderID, listProductCarts);
+
+            while (em.hasMoreElements()) {
+                String key = em.nextElement().toString();
+                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
+                    session.removeAttribute(key);
+                }
+            }
+            if (Integer.parseInt(temp) == 1) {
+                request.getRequestDispatcher("menu").forward(request, response);
+            }
+            request.getRequestDispatcher("login?do=logout").forward(request, response);
         }
     }
 

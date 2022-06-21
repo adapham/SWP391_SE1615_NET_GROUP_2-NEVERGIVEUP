@@ -1,5 +1,9 @@
-
-package dao;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Modal;
 
 import Entity.OrderDetails;
 import Entity.Product;
@@ -74,17 +78,7 @@ public class OrderDetailsDao extends ConnectDB {
         return list;
     }
 
-    public void deleteOrderDetailByProductID(int pID) {
-        String sql = "delete from [Order Details] where ProductID = ?";
-        try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setInt(1, pID);
-            pre.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    //    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        List<Product> listProductCarts = new ArrayList<>();
 //        OrderDetailsDao dao = new OrderDetailsDao();
 //        Product pro = Product.builder()

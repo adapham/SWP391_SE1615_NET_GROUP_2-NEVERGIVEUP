@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductDAOImpl extends ConnectDB implements ProductDAO{
 
@@ -530,12 +528,12 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public static void main(String[] args) {
         try {
             ProductDAOImpl dao = new ProductDAOImpl();
-            List list = dao.getAllProduct();
+            List list = dao.getProductWithPaging(1, 3);
             for (Object object : list) {
                 System.out.println(object);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ProductDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

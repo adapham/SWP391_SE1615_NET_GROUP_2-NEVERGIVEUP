@@ -11,16 +11,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Builder
 @Getter
 @Setter
-@ToString 
+@ToString
 public class Order {
+
     private int orderID;
     private int accountID;
     private int shipperID;
-    private Date orderDate;
+    private String orderDate;
     private String address;
     private String email;
     private int status;

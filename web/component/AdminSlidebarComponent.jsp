@@ -92,8 +92,8 @@
         </a>
         <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Account Manager CRUD:</h6>
-                <a class="collapse-item" href="#">Orders</a>
+                <h6 class="collapse-header">Bill Manager</h6>
+                <a class="collapse-item" href="billManager?do=bill">Bills</a>
             </div>
         </div>
     </li>

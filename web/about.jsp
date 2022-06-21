@@ -108,7 +108,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
-                                <div class="team-img">
+                                <div class="team-img" style="height: 270px;">
                                     <img src="https://scontent.fhan4-3.fna.fbcdn.net/v/t1.6435-9/65283213_452725832223607_2321629019776221184_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=oTMbMuOtRIkAX-6lCgq&_nc_ht=scontent.fhan4-3.fna&oh=00_AT--4L3nCJUrYtL0Jw68k7nqhS3b1QYQHein9q_rwobUDQ&oe=62C81961" alt="">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/khacbao07">
@@ -117,80 +117,80 @@
                                         <a class="twitter" href="https://twitter.com/POTUS">
                                             <i class="social_twitter"></i>
                                         </a>
-                                        <a class="instagram" href="#">
+                                        <a class="instagram" href="https://www.instagram.com/baonk__07/?hl=en">
                                             <i class="social_instagram"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="team-content text-center">
-                                    <h4>Mr. Mike Banding</h4>
-                                    <span>Manager </span>
+                                    <h4>Mr. Bao</h4>
+                                    <span>Manager</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img">
-                                    <img src="assets/images/team/team-2.jpg" alt="">
+                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t1.6435-9/65200617_151530962638024_6849459645744939008_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=174925&_nc_ohc=L94vf-pyahgAX-_FIaR&tn=UjtbTFtl40nTD_jt&_nc_ht=scontent.fhan3-1.fna&oh=00_AT9MloAoUeJeymsshZiI4CPVXPHbDLnBR7U_FR6y-bahdg&oe=62D11A52" alt="">
                                     <div class="team-action">
-                                        <a class="facebook" href="#">
+                                        <a class="facebook" href="https://www.facebook.com/SoftwareEngineering.khai">
                                             <i class="social_facebook"></i>
                                         </a>
-                                        <a class="twitter" href="#">
+                                        <a class="twitter" href="https://twitter.com/DonaldJTrumpJr">
                                             <i class="social_twitter"></i>
                                         </a>
-                                        <a class="instagram" href="#">
+                                        <a class="instagram" href="https://www.instagram.com/ngoc_khai_06/?hl=en">
                                             <i class="social_instagram"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="team-content text-center">
-                                    <h4>Mr. Peter Pan</h4>
-                                    <span>Developer </span>
+                                    <h4>Mr. Khai</h4>
+                                    <span>Security </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="team-wrapper mb-30">
+                                <div class="team-img" style="height: 270px;">
+                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/272959853_1004762727116170_3184609971225838167_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=gsJA8lXDkaAAX-4gfh2&tn=UjtbTFtl40nTD_jt&_nc_ht=scontent.fhan3-1.fna&oh=00_AT_UIh8TsbFmZxM6eWF7lmkDVOpv-Wqo4vcMsFyoUnapBQ&oe=62AE73A3" alt="">
+                                    <div class="team-action">
+                                        <a class="facebook" href="https://www.facebook.com/phamada2803">
+                                            <i class="social_facebook"></i>
+                                        </a>
+                                        <a class="twitter" href="https://twitter.com/HarryMaguire93">
+                                            <i class="social_twitter"></i>
+                                        </a>
+                                        <a class="instagram" href="https://www.instagram.com/datvilla94/?hl=en">
+                                            <i class="social_instagram"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="team-content text-center">
+                                    <h4>Ms. Dat</h4>
+                                    <span>Staff </span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img">
-                                    <img src="assets/images/team/team-3.jpg" alt="">
+                                    <img src="https://scontent.fhan3-5.fna.fbcdn.net/v/t1.6435-9/107894381_148547816872572_1543076683685639068_n.jpg?stp=c0.8.206.206a_dst-jpg_p206x206&_nc_cat=110&ccb=1-7&_nc_sid=da31f3&_nc_ohc=WLFcoAUV4VAAX_eljAf&_nc_ht=scontent.fhan3-5.fna&oh=00_AT9ifwJfOBbEZszuvWT7tvpaQGIUPbPeE-B3mToWrLcWbA&oe=62D1077C" alt="">
                                     <div class="team-action">
-                                        <a class="facebook" href="#">
+                                        <a class="facebook" href="https://www.facebook.com/tuyen.nguyenvan.46">
                                             <i class="social_facebook"></i>
                                         </a>
-                                        <a class="twitter" href="#">
+                                        <a class="twitter" href="https://twitter.com/Cristiano">
                                             <i class="social_twitter"></i>
                                         </a>
-                                        <a class="instagram" href="#">
+                                        <a class="instagram" href="https://www.instagram.com/tuynnn____/?hl=en">
                                             <i class="social_instagram"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="team-content text-center">
-                                    <h4>Ms. Sophia</h4>
-                                    <span>Designer </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="team-wrapper mb-30">
-                                <div class="team-img">
-                                    <img src="assets/images/team/team-4.jpg" alt="">
-                                    <div class="team-action">
-                                        <a class="facebook" href="#">
-                                            <i class="social_facebook"></i>
-                                        </a>
-                                        <a class="twitter" href="#">
-                                            <i class="social_twitter"></i>
-                                        </a>
-                                        <a class="instagram" href="#">
-                                            <i class="social_instagram"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="team-content text-center">
-                                    <h4>Mr. John Lee</h4>
-                                    <span>Chairmen </span>
+                                    <h4>Mr. Tuyen</h4>
+                                    <span>Chef </span>
                                 </div>
                             </div>
                         </div>

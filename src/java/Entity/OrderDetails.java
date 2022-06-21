@@ -10,15 +10,23 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Builder
 @Getter
 @Setter
-@ToString 
+@ToString
 public class OrderDetails {
+
     private int orderID;
-    private int productID;
-    private int price;
+    private double price;
     private int quantity;
-    private int discount;
+    private double discount;
+    private String displayname;
+    private String address;
+    private String email;
+    private String phone;
+    private String orderDate;
+    private String productName;
+    private double total;
+    private int status;
+    private int productID;
 }

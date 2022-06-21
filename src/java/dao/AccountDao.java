@@ -43,6 +43,7 @@ public class AccountDao extends ConnectDB {
                 String phone = rs.getString("phone");
                 String imageurl = rs.getString("imageURL");
                 int roll = rs.getInt("role");
+                int gender = rs.getInt("gender");
                 Account acc = Account.builder()
                         .accountid(accountid)
                         .username(username)
@@ -53,6 +54,7 @@ public class AccountDao extends ConnectDB {
                         .phone(phone)
                         .imageURL(imageurl)
                         .role(roll)
+                        .gender(gender)
                         .build();
 
                 list.add(acc);
@@ -76,6 +78,9 @@ public class AccountDao extends ConnectDB {
             }
             if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 3) {
                 return 3;
+            }
+            if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 4) {
+                return 4;
             }
 
         }
@@ -780,19 +785,7 @@ public class AccountDao extends ConnectDB {
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();
-        List list = dao.ListAccountOfCustomerWithPagging(1, 6);
-        Account acc = Account.builder()
-                .username("Tuyen")
-                .password("123")
-                .displayname("tuyenoccho")
-                .address("lung")
-                .email("tuyen@gmail.com")
-                .phone("0345821695")
-                .imageURL("pexels-ray-bilcliff-7520329.jpg")
-                .role(4)
-                .gender(1)
-                .build();
-        dao.RegisterAccount(acc);
+        
     }
     public Account infoAccount(String user, String pass){
         String sql = "select * from Account where UserName = '?' and Password = '?'";
