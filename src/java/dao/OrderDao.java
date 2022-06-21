@@ -47,4 +47,22 @@ public class OrderDao extends ConnectDB {
         return 0;
     }
 
+    public int getTotalOrder() {
+        String sql = "select COUNT(*) from [Order]";
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
 }

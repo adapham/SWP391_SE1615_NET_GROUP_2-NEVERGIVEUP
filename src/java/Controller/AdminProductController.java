@@ -5,7 +5,7 @@ import Entity.Product;
 import Entity.Supplier;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ProductDAOImpl;
-import dao.SupplierDao;
+import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class AdminProductController extends HttpServlet {
         try {
             String service = request.getParameter("do");
             ProductDAOImpl daoProduct = new ProductDAOImpl();
-            SupplierDao daoSupplier = new SupplierDao();
+            SupplierDAOImpl daoSupplier = new SupplierDAOImpl();
             CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             HttpSession session = request.getSession();
 

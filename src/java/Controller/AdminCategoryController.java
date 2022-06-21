@@ -59,14 +59,12 @@ public class AdminCategoryController extends HttpServlet {
                 } else {
                     int cateId = Integer.parseInt(request.getParameter("cateID"));
                     String cateName = request.getParameter("cateName");
-                    String address = request.getParameter("address");
-                    String phone = request.getParameter("phone");
+                    String description = request.getParameter("description");
 
                     Category cateBefor = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryID(cateId)
                             .categoryName(cateName)
-                            .address(address)
-                            .phone(phone)
+                            .description(description)
                             .build();
 
                     List<Category> categoryList = new ArrayList<>();
@@ -87,24 +85,15 @@ public class AdminCategoryController extends HttpServlet {
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                         return;
                     }
-                    if (address == null || address.isEmpty()) {//Check Address
-                        String mess = "Address is not empty";
+                    if (description == null || description.isEmpty()) {//Check Address
+                        String mess = "Decription is not empty";
 
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                         return;
                     }
-                    if (address != address.trim()) {//Check Address
-                        String mess = "Address invalid";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
-                        return;
-                    }
-                    String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
-                            + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
-                    if (!phone.matches(reg)) {//Check phone
-                        String mess = "Phone invalid";
+                    if (description != description.trim()) {//Check Address
+                        String mess = "Decription invalid";
 
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
@@ -114,13 +103,13 @@ public class AdminCategoryController extends HttpServlet {
                     Category cate = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryID(cateId)
                             .categoryName(cateName.trim())
-                            .address(address.trim())
-                            .phone(phone.trim())
+                            .description(description.trim())
                             .build();
-
+                    System.out.println("Check Cate");
+                    System.out.println(cate);
                     String mess = "Update successfull";
                     int updateCategory = daoCategory.updateCategory(cate);
-
+                    System.out.println(updateCategory);
                     request.setAttribute("mess", mess);
                     request.setAttribute("categoryList", categoryList);
                     request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
@@ -132,12 +121,10 @@ public class AdminCategoryController extends HttpServlet {
                     request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                 } else {
                     String cateName = request.getParameter("cateName");
-                    String address = request.getParameter("address");
-                    String phone = request.getParameter("phone");
+                    String description = request.getParameter("description");
 
                     request.setAttribute("cateName", cateName);
-                    request.setAttribute("address", address);
-                    request.setAttribute("phone", phone);
+                    request.setAttribute("description", description);
 
                     if (cateName == null || cateName.isEmpty()) {//Check Name
                         String mess = "Category name is not empty";
@@ -151,22 +138,14 @@ public class AdminCategoryController extends HttpServlet {
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (address == null || address.isEmpty()) {//Check Address
-                        String mess = "Address is not empty";
+                    if (description == null || description.isEmpty()) {//Check Address
+                        String mess = "Description is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (address != address.trim()) {//Check Address
-                        String mess = "Address invalid";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
-                        return;
-                    }
-                    String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
-                            + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
-                    if (!phone.matches(reg)) {//Check phone
-                        String mess = "Phone invalid";
+                    if (description != description.trim()) {//Check Address
+                        String mess = "Description invalid";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
@@ -174,8 +153,7 @@ public class AdminCategoryController extends HttpServlet {
 
                     Category cate = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryName(cateName.trim())
-                            .address(address.trim())
-                            .phone(phone.trim())
+                            .description(description.trim())
                             .build();
 
                     int createCategory = daoCategory.createCategory(cate);
