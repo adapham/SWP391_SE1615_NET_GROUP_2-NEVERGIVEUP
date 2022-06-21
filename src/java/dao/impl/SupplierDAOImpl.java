@@ -10,36 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-    
-public class SupplierDAOImpl extends ConnectDB implements SupplierDAO{
-    
+
+public class SupplierDAOImpl extends ConnectDB implements SupplierDAO {
+
     //Trả về danh sách tất cả nhà cung cấp
-    public List<Supplier> getAllSupplier() throws Exception{
+    public List<Supplier> getAllSupplier() throws Exception {
         List<Supplier> listSup = new ArrayList<>();
         String sql = "select * from Supplier";
-        
+
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                 Supplier sup = Supplier.builder()
-                         .supplierID(rs.getInt("supplierID"))
-                         .companyName(rs.getString("companyName"))
-                         .address(rs.getString("address"))
-                         .phone(rs.getString("phone"))
-                         .build();
-                 listSup.add(sup);
-}
+                Supplier sup = Supplier.builder()
+                        .supplierID(rs.getInt("supplierID"))
+                        .companyName(rs.getString("companyName"))
+                        .address(rs.getString("address"))
+                        .phone(rs.getString("phone"))
+                        .build();
+                listSup.add(sup);
+            }
         } catch (SQLException ex) {
             throw ex;
         }
         return listSup;
     }
-    
+
     public static void main(String[] args) {
         try {
             SupplierDAOImpl dao = new SupplierDAOImpl();
-            
+
             List list = dao.getAllSupplier();
             for (Object object : list) {
                 System.out.println(object);
@@ -48,8 +48,8 @@ public class SupplierDAOImpl extends ConnectDB implements SupplierDAO{
             Logger.getLogger(SupplierDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public int getTotalSupplier() throws Exception{
+
+    public int getTotalSupplier() throws Exception {
         String sql = "select COUNT(*) from Supplier";
         try {
             //Đưa vào prepare
