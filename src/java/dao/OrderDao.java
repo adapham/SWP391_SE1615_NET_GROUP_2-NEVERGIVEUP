@@ -67,6 +67,8 @@ public class OrderDao extends ConnectDB {
             ex.printStackTrace();
         }
         return 0;
+    }
+
     public List<Order> listAllOrders() {
         List<Order> list = new ArrayList<>();
         try {
@@ -93,7 +95,7 @@ public class OrderDao extends ConnectDB {
     }
 
     public static void main(String[] args) {
-        OrderDao dao = new OrderDao();        
+        OrderDao dao = new OrderDao();
         Order order = Order.builder()
                 .accountID(2)
                 .shipperID(1)
@@ -104,6 +106,7 @@ public class OrderDao extends ConnectDB {
                 .build();
         System.out.println(dao.insertOrderID(order));
     }
+
     public int updateStatus(int status, int orId) {
         int n = 0;
         String sql = "update [Order]set status = ? where OrderID = ?";
