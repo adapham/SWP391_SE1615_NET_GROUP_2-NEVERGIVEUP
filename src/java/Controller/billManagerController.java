@@ -7,8 +7,8 @@ package Controller;
 
 import Entity.Order;
 import Entity.OrderDetails;
-import dao.OrderDao;
-import dao.OrderDetailsDao;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Window 10
  */
 @WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
-public class billManagerController extends HttpServlet {
+public class BillManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,19 +37,19 @@ public class billManagerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
             if (service == null) {
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
             if (service.equals("bill")) {
-                OrderDao dao = new OrderDao();
+                OrderDAOImpl dao = new OrderDAOImpl();
                 List<Order> list = dao.listAllOrders();
                 request.setAttribute("list", list);
                 request.getRequestDispatcher("listBill.jsp").forward(request, response);
             }
             if (service.equals("updateStatus")) {
-                OrderDao dao = new OrderDao();
+                OrderDAOImpl dao = new OrderDAOImpl();
                 String id = request.getParameter("odId");
                 //Convert
                 int odID = Integer.parseInt(id);
@@ -59,7 +59,7 @@ public class billManagerController extends HttpServlet {
 
             }
             if (service.equals("details")) {
-                OrderDetailsDao dao = new OrderDetailsDao();
+                OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
                 String odID = request.getParameter("odID");
                 int oID = Integer.parseInt(odID);
                 List<OrderDetails> list = dao.getDetailsBill(oID);
@@ -70,7 +70,7 @@ public class billManagerController extends HttpServlet {
                 request.getRequestDispatcher("detailsBill.jsp").forward(request, response);
             }
             if (service.equals("updateStatusDetails")) {
-                OrderDao dao = new OrderDao();
+                OrderDAOImpl dao = new OrderDAOImpl();
                 String id = request.getParameter("odId");
                 //Convert
                 int odID = Integer.parseInt(id);
@@ -78,6 +78,8 @@ public class billManagerController extends HttpServlet {
                 int n = dao.updateStatus(Status, odID);
                 request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 
