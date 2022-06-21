@@ -10,7 +10,6 @@ import Entity.OrderDetails;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
