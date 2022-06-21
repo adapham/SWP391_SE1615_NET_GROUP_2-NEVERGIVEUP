@@ -47,7 +47,7 @@
 
 
                     <!------------------CODE HERE-------------------------->
-                    <h1 style="text-align: center" class="h3 mb-2 text-gray-800">Update Account of Employee</h1>
+                    <h1 style="text-align: center" class="h3 mb-2 text-gray-800">Update Account of Shipper</h1>
                         <!-- DataTales Example -->
                         <form action="accountmanager?do=updateShipper" method="post">
                             <table style="border: 1px;margin: auto"  >

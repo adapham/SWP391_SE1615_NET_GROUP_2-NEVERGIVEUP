@@ -17,6 +17,6 @@ import lombok.ToString;
 public class Category {
     private int categoryID;
     private String categoryName;
-    private String address;
-    private String phone;
+    private String description;
+
 }

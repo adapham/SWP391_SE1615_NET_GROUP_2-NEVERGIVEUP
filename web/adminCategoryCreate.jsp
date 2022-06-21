@@ -63,16 +63,8 @@
                                             <div class="row gx-3 mb-3">
                                                 <!-- Form Group (Username)-->
                                                 <div class="col-md-8">
-                                                    <label class="small mb-1" for="address">Address</label>
-                                                    <input maxlength="50" name="address" class="form-control" id="address" type="text" placeholder="Enter your new address..." value="${address}">
-                                                </div>
-                                            </div>
-                                            <!-- Form Row-->
-                                            <div class="row gx-3 mb-3">
-                                                <!-- Form Group (last name)-->
-                                                <div class="col-md-8">
-                                                    <label class="small mb-1" for="phone">Phone</label>
-                                                    <input maxlength="10" name="phone" class="form-control" id="phone" type="text" placeholder="Enter your new phone..." value="${phone}">
+                                                    <label class="small mb-1" for="description">Desctiption</label>
+                                                    <input maxlength="50" name="description" class="form-control" id="address" type="text" placeholder="Enter your new description..." value="${description}">
                                                 </div>
                                             </div>
                                             <!-- Save changes button-->

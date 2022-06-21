@@ -104,4 +104,22 @@ public class FeedbackDao extends ConnectDB {
             System.out.println(object);
         }
     }
+
+    public int getTotalFeedBack() {
+        String sql = "select COUNT(*) from Feedback";
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 }

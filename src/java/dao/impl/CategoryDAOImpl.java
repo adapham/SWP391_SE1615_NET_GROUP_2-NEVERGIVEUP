@@ -15,20 +15,19 @@ import java.util.logging.Logger;
  *
  * @author admin
  */
-public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
+public class CategoryDAOImpl extends ConnectDB implements CategoryDAO {
 
     //Trả về 1 danh sách category có trong DB
-    public List<Category> getAllCategory() throws Exception{
+    public List<Category> getAllCategory() throws Exception {
         List<Category> listCate = new ArrayList<>();
         String sql = "select * from Category";
-        ResultSet rs = getData(sql);
         try {
+            ResultSet rs = getData(sql);
             while (rs.next()) {
                 Category cate = Category.builder()
                         .categoryID(rs.getInt("categoryID"))
                         .categoryName(rs.getString("categoryName"))
-                        .address(rs.getString("address"))
-                        .phone(rs.getString("phone"))
+                        .description(rs.getString("description"))
                         .build();
                 listCate.add(cate);
             }
@@ -39,7 +38,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     //Trả về 1 danh sách phần trang theo kích thước
-    public List<Category> getAllCategoryWithPaging(int page, int PAGE_SIZE) throws Exception{
+    public List<Category> getAllCategoryWithPaging(int page, int PAGE_SIZE) throws Exception {
         List<Category> listCate = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *,\n"
                 + "                 ROW_NUMBER() OVER (ORDER BY CategoryID) AS Seq\n"
@@ -57,8 +56,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
                 Category cate = Category.builder()
                         .categoryID(rs.getInt("categoryID"))
                         .categoryName(rs.getString("categoryName"))
-                        .address(rs.getString("address"))
-                        .phone(rs.getString("phone"))
+                        .description(rs.getString("description"))
                         .build();
                 listCate.add(cate);
             }
@@ -69,7 +67,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     //Trả về tổng số sản phẩm
-    public int getTotalCategory() throws Exception{
+    public int getTotalCategory() throws Exception {
         String sql = "select COUNT(*) from Category";
         try {
             //Đưa vào prepare
@@ -88,7 +86,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     //Lấy ra tên Category theo CategoryID
-    public String GetCategoryName(int CategoryID) throws Exception{
+    public String GetCategoryName(int CategoryID) throws Exception {
         String CategoryName;
         String sql = "select CategoryName from Category where CategoryID =?";
         try {
@@ -108,18 +106,27 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     public static void main(String[] args) {
+
         try {
             CategoryDAOImpl dao = new CategoryDAOImpl();
-            List list = dao.getAllCategory();
-            for (Object object : list) {
-                System.out.println(object);
+            Category cate = Category.builder()
+                    .categoryID(1)
+                    .categoryName("Update")
+                    .description("Update Description")
+                    .build();
+            int n = dao.updateCategory(cate);
+            if (n > 0) {
+                System.out.println("Succes");
+            } else {
+                System.out.println("Fail");
             }
         } catch (Exception ex) {
-            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+
     }
 
-    public List<Category> getAllCategoryByCateID(int cateID) throws Exception{
+    public List<Category> getAllCategoryByCateID(int cateID) throws Exception {
         List<Category> listCate = new ArrayList<>();
         String sql = "select * from Category where CategoryID = ?";
         try {
@@ -130,8 +137,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
                 Category cate = Category.builder()
                         .categoryID(rs.getInt("categoryID"))
                         .categoryName(rs.getString("categoryName"))
-                        .address(rs.getString("address"))
-                        .phone(rs.getString("phone"))
+                        .description(rs.getString("description"))
                         .build();
                 listCate.add(cate);
             }
@@ -142,21 +148,19 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     //Update Category
-    public int updateCategory(Category cate) throws Exception{
+    public int updateCategory(Category cate) throws Exception {
         int n = 0;
         String sql = "UPDATE [Category]\n"
                 + "   SET [CategoryName] = ?\n"
-                + "      ,[Address] = ?\n"
-                + "      ,[Phone] = ?\n"
+                + "      ,[Description] = ?\n"
                 + " WHERE CategoryID = ?";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
 
             pre.setString(1, cate.getCategoryName());
-            pre.setString(2, cate.getAddress());
-            pre.setString(3, cate.getPhone());
-            pre.setInt(4, cate.getCategoryID());
+            pre.setString(2, cate.getDescription());
+            pre.setInt(3, cate.getCategoryID());
 
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -166,21 +170,19 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
     }
 
     //Create Category
-    public int createCategory(Category cate) throws Exception{
+    public int createCategory(Category cate) throws Exception {
         int n = 0;
         String sql = "INSERT INTO [Category]\n"
                 + "           ([CategoryName]\n"
-                + "           ,[Address]\n"
-                + "           ,[Phone])\n"
+                + "           ,[Description])\n"
                 + "     VALUES\n"
-                + "           (?,?,?)";
+                + "           (?,?)";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
 
             pre.setString(1, cate.getCategoryName());
-            pre.setString(2, cate.getAddress());
-            pre.setString(3, cate.getPhone());
+            pre.setString(2, cate.getDescription());
 
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -189,7 +191,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
         return n;
     }
 
-    public List<Category> getsearchCatePagingByCateName(String keySearch, int page, int PAGE_SIZE) throws Exception{
+    public List<Category> getsearchCatePagingByCateName(String keySearch, int page, int PAGE_SIZE) throws Exception {
         List<Category> listCate = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *,\n"
                 + "                                ROW_NUMBER() OVER (ORDER BY CategoryID) AS Seq\n"
@@ -198,7 +200,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, "%"+keySearch+"%");
+            pre.setString(1, "%" + keySearch + "%");
             pre.setInt(2, page);
             pre.setInt(3, PAGE_SIZE);
             pre.setInt(4, page);
@@ -208,8 +210,7 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
                 Category cate = Category.builder()
                         .categoryID(rs.getInt("categoryID"))
                         .categoryName(rs.getString("categoryName"))
-                        .address(rs.getString("address"))
-                        .phone(rs.getString("phone"))
+                        .description(rs.getString("description"))
                         .build();
                 listCate.add(cate);
             }
@@ -219,13 +220,13 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO{
         return listCate;
     }
 
-    public int getTotalCategoryByName(String keySearch) throws Exception{
+    public int getTotalCategoryByName(String keySearch) throws Exception {
         String sql = "select COUNT(*) from Category where CategoryName like ?";
         try {
             //Đưa vào prepare
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, "%"+keySearch+"%");
-            
+            pre.setString(1, "%" + keySearch + "%");
+
             //Đưa vào ResultSet
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {

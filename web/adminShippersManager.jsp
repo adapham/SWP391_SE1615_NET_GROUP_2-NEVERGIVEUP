@@ -59,7 +59,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">View List Account of Employee</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">View List Account of Shipper</h6>
                         </div>
                         <form  action="accountmanager?do=searchShipper" style="margin: auto" method="post">
                             <input type="text" placeholder="Search.." name="search" value="${search}">

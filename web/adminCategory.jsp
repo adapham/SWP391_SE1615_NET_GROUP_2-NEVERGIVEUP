@@ -69,8 +69,7 @@
                                     <th>CategoryID</th>
                                     <th>Category Name</th>
                                     <th>Address</th>
-                                    <th>Phone</th>
-                                    <th>Edit</th>
+                                    <th>Description</th>
                                     <th>Delete</th>    
                                 </tr>
                             </thead>
@@ -79,8 +78,7 @@
                                     <tr>
                                         <td>${l.categoryID}</td>
                                         <td>${l.categoryName}</td>
-                                        <td>${l.address}</td>
-                                        <td>${l.phone}</td>
+                                        <td>${l.description}</td>
                                         <td><a href="adminCategory?do=updateCategory&cateID=${l.categoryID}"><i class="fas fa-edit"></i></a></td>
                                         <td>
                                             <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.categoryID}">

@@ -1,6 +1,12 @@
 package Controller;
 
+import dao.AccountDao;
+import dao.FeedbackDao;
+import dao.OrderDao;
+import dao.impl.CategoryDAOImpl;
 import dao.impl.ProductDAOImpl;
+import dao.impl.ShipperDAOImpl;
+import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,13 +24,26 @@ public class AdminHomeController extends HttpServlet {
         try {
             String service = request.getParameter("do");
             ProductDAOImpl daoProduct = new ProductDAOImpl();
+            CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             if (service == null) {
                 service = "home";
             }
             if (service.equals("home")) {
                 int totalProduct = daoProduct.getTotalProduct();//Get total All Product
+                int totalCategory = daoCategory.getTotalCategory();
+                int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
+                int totalOrder = new OrderDao().getTotalOrder();
+                int totalFeedback = new FeedbackDao().getTotalFeedBack();
+                int totalCustomer = new AccountDao().getTotalCustomer();
+                int totalShipper = new ShipperDAOImpl().getTotalShipper();
 
+                request.setAttribute("totalOrder", totalOrder);
+                request.setAttribute("totalFeedback", totalFeedback);
+                request.setAttribute("totalCustomer", totalCustomer);
+                request.setAttribute("totalShipper", totalShipper);
+                request.setAttribute("totalSupplier", totalSupplier);
                 request.setAttribute("totalProduct", totalProduct);
+                request.setAttribute("totalCategory", totalCategory);
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
         } catch (Exception ex) {
