@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+    
 public class SupplierDAOImpl extends ConnectDB implements SupplierDAO{
     
     //Trả về danh sách tất cả nhà cung cấp
@@ -29,7 +29,7 @@ public class SupplierDAOImpl extends ConnectDB implements SupplierDAO{
                          .phone(rs.getString("phone"))
                          .build();
                  listSup.add(sup);
-            }
+}
         } catch (SQLException ex) {
             throw ex;
         }
@@ -48,7 +48,7 @@ public class SupplierDAOImpl extends ConnectDB implements SupplierDAO{
             Logger.getLogger(SupplierDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public int getTotalSupplier() throws Exception{
         String sql = "select COUNT(*) from Supplier";
         try {
