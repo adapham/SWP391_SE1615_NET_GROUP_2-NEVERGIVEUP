@@ -7,7 +7,6 @@ package Controller;
 
 import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +34,7 @@ public class UpdateQuantityController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             String pid = request.getParameter("pid");
             String amount = request.getParameter("amount");
@@ -53,6 +52,8 @@ public class UpdateQuantityController extends HttpServlet {
                 }
             }
             response.sendRedirect("cart");
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

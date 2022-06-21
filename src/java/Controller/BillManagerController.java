@@ -5,21 +5,25 @@
  */
 package Controller;
 
+import Entity.Order;
+import Entity.OrderDetails;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.util.Enumeration;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Window 10
  */
-@WebServlet(name = "DeleteController", urlPatterns = {"/delete"})
-public class DeleteController extends HttpServlet {
+@WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
+public class BillManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,35 +38,46 @@ public class DeleteController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session = request.getSession();
-            String sizeStr;
-            try {
-                sizeStr = session.getAttribute("size").toString();
-            } catch (Exception e) {
-                sizeStr = null;
+            String service = request.getParameter("do");
+            if (service == null) {
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
-            int size = 0;
-            if (sizeStr == null) {
-                size = 0;
-            } else {
-                size = Integer.parseInt(sizeStr);
+            if (service.equals("bill")) {
+                OrderDAOImpl dao = new OrderDAOImpl();
+                List<Order> list = dao.listAllOrders();
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("listBill.jsp").forward(request, response);
             }
-            String pid = request.getParameter("pid");
+            if (service.equals("updateStatus")) {
+                OrderDAOImpl dao = new OrderDAOImpl();
+                String id = request.getParameter("odId");
+                //Convert
+                int odID = Integer.parseInt(id);
+                int Status = Integer.parseInt(request.getParameter("status"));
+                int n = dao.updateStatus(Status, odID);
+                response.sendRedirect("billManager?do=bill");
 
-            if (pid != null) {
-                session.removeAttribute(pid);
-                size--;
-                session.setAttribute("size", size);
-            } else {
-                Enumeration em = session.getAttributeNames();
-                while (em.hasMoreElements()) {
-                    String key = em.nextElement().toString();
-                    if (!key.equals("Account")) {
-                        session.removeAttribute(key);
-                    }
-                }
             }
-            response.sendRedirect("cart");
+            if (service.equals("details")) {
+                OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
+                String odID = request.getParameter("odID");
+                int oID = Integer.parseInt(odID);
+                List<OrderDetails> list = dao.getDetailsBill(oID);
+                OrderDetails info = dao.getInfoBill(oID);
+                request.setAttribute("info", info);
+                request.setAttribute("list", list);
+                request.setAttribute("orderID", oID);
+                request.getRequestDispatcher("detailsBill.jsp").forward(request, response);
+            }
+            if (service.equals("updateStatusDetails")) {
+                OrderDAOImpl dao = new OrderDAOImpl();
+                String id = request.getParameter("odId");
+                //Convert
+                int odID = Integer.parseInt(id);
+                int Status = Integer.parseInt(request.getParameter("status"));
+                int n = dao.updateStatus(Status, odID);
+                request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
+            }
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
