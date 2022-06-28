@@ -183,13 +183,13 @@
                                                                                 </c:if>
                                                                                 <spam class="new-price">$${pro.priceAferDiscount}</spam>
                                                                             </div>
-                                                                            
-                                                                            
+
+
                                                                             <div class="pro-details-action-wrap">
                                                                                 <div class="pro-details-add-to-cart">
                                                                                     <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
                                                                                 </div>
-                                                                                
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -214,14 +214,15 @@
                                                 <ul>
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=menu&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
-                                                    </c:if>
-                                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=menu&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                    </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            </c:if>
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=menu&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=menu&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
-                                                    </c:if>
+                                                            </c:if>
                                                 </ul>
                                             </div>
                                         </c:otherwise>
@@ -239,14 +240,15 @@
                                                 <ul>
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=fillCategory&categoryID=${cateID}&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
-                                                    </c:if>
-                                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=fillCategory&categoryID=${cateID}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                    </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            </c:if>
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=fillCategory&categoryID=${cateID}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=fillCategory&categoryID=${cateID}&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
-                                                    </c:if>
+                                                            </c:if>
                                                 </ul>
                                             </div>
                                         </c:otherwise>
@@ -265,11 +267,12 @@
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=search&searchKey=${keySearch}&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
                                                             </c:if>
-                                                            <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=search&searchKey=${keySearch}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                        </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=search&searchKey=${keySearch}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=search&searchKey=${keySearch}&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
                                                             </c:if>
                                                 </ul>

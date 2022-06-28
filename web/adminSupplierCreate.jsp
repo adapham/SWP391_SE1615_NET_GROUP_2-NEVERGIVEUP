@@ -42,7 +42,7 @@
                             <div class="col-xl-6" >
                                 <!-- Account details card-->
                                 <div class="card mb-4">
-                                    <div class="card-header"><a href="adminCategory">Category </a>/ Create Product</div>
+                                    <div class="card-header"><a href="adminSupplier">Supplier </a>/ Create Supplier</div>
                                     <c:if test="${mess != null}"> 
                                         <br>
                                         <div class="alert alert-danger" role="alert">
@@ -50,27 +50,35 @@
                                         </div> 
                                     </c:if>
                                     <div class="card-body">
-                                        <form action="adminCategory?do=createCategory" method="POST">
+                                        <form action="adminSupplier?do=createSupplier" method="POST">
                                             <!-- Form Row-->
                                             <div class="row gx-3 mb-3">
+                                                <!-- Form Group (last name)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="cpName">Company Name <span style="color: red;">(*)</span></label>
+                                                    <input maxlength="50" name="cpName" class="form-control" id="cateName" type="text" placeholder="Enter your new company name..." value="${companyName}">
+                                                </div>
                                                 <!-- Form Group (Username)-->
-                                                <div class="col-md-8">
-                                                    <label class="small mb-1" for="cateName">Category Name <span style="color: red;">(*)</span></label>
-                                                    <input maxlength="50" name="cateName" class="form-control" id="cateName" type="text" placeholder="Enter your new category name..." value="${cateName}">
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="email">Email <span style="color: red;">(*)</span></label>
+                                                    <input maxlength="50" name="email" class="form-control" id="email" type="text" placeholder="Enter your new Email..." value="${email}">
                                                 </div>
                                             </div>
                                             <!-- Form Row-->
                                             <div class="row gx-3 mb-3">
                                                 <!-- Form Group (Username)-->
-                                                <div class="col-md-8">
-                                                    <label class="small mb-1" for="description">Desctiption <span style="color: red;">(*)</span></label>
-                                                    <input maxlength="50" name="description" class="form-control" id="address" type="text" placeholder="Enter your new description..." value="${description}">
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="address">Address <span style="color: red;">(*)</span></label>
+                                                    <input maxlength="50" name="address" class="form-control" id="address" type="text" placeholder="Enter your new address..." value="${address}">
+                                                </div>
+                                                <!-- Form Group (Username)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="phone">Phone <span style="color: red;">(*)</span></label>
+                                                    <input maxlength="10" name="phone" class="form-control" id="phone" type="text" placeholder="Enter your new phone..." value="${phone}">
                                                 </div>
                                             </div>
                                             <!-- Save changes button-->
-                                            <div class="d-flex justify-content-start">
-                                                <button name="submit" class="btn btn-primary text-center" type="submit">Create</button>
-                                            </div>
+                                            <button name="submit" class="btn btn-primary" type="submit">Save changes</button>
                                         </form>
                                     </div>
                                 </div>

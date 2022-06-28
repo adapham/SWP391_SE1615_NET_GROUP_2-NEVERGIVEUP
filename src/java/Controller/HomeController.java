@@ -3,11 +3,7 @@ package Controller;
 import Entity.Product;
 import dao.impl.ProductDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +20,13 @@ public class HomeController extends HttpServlet {
             if (service == null) {
                 service = "home";
             }
-            if (service.equals("home")) {
+            if (service.equals("home")) {//Chuyển đến trang home
                 List<Product> listProduct = daoProduct.getTopNumberProduct(4);
 
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-            if (service.equals("about")) {
+            if (service.equals("about")) {//Chuyển đến trang about
                 List<Product> listProduct = daoProduct.getTopNumberProduct(2);
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("about.jsp").forward(request, response);

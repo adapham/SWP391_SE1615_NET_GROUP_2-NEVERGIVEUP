@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -237,5 +235,19 @@ public class CategoryDAOImpl extends ConnectDB implements CategoryDAO {
             throw ex;
         }
         return 0;
+    }
+
+    public int deleteCategory(int cateID) throws Exception {
+        int n = 0;
+        String sql = "DELETE FROM [Category]\n"
+                + "      WHERE CategoryID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, cateID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return n;
     }
 }

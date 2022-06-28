@@ -2,8 +2,6 @@ package dao.impl;
 
 import Entity.Product;
 import dao.ConnectDB;
-import dao.FeedbackDao;
-import dao.OrderDetailsDao;
 import dao.ProductDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -528,10 +526,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public static void main(String[] args) {
         try {
             ProductDAOImpl dao = new ProductDAOImpl();
-            List list = dao.getProductWithPaging(1, 3);
-            for (Object object : list) {
-                System.out.println(object);
-            }
+            int n = dao.deleteProduct(20);
+            System.out.println("Check");
+            System.out.println(n);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -540,10 +537,10 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public int deleteProduct(int pID) throws Exception{
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
-        FeedbackDao daoFeedback = new FeedbackDao();
-        OrderDetailsDao daoOdDetail = new OrderDetailsDao();
-        daoFeedback.deleteFeedbackByProductID(pID);
-        daoOdDetail.deleteOrderDetailByProductID(pID);
+//        FeedbackDao daoFeedback = new FeedbackDao();
+//        OrderDetailsDao daoOdDetail = new OrderDetailsDao();
+//        daoFeedback.deleteFeedbackByProductID(pID);
+//        daoOdDetail.deleteOrderDetailByProductID(pID);
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);

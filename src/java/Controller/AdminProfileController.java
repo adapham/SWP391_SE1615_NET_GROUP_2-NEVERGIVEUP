@@ -1,9 +1,11 @@
+/*
+    Update Profile and Change Password Admin
+ */
 package Controller;
 
 import Entity.Account;
 import dao.AccountDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -26,12 +28,12 @@ public class AdminProfileController extends HttpServlet {
             if (service == null) {
                 service = "updateAdminProfile";
             }
-            if (service.equals("logout")) {
+            if (service.equals("logout")) {//Logout
                 HttpSession session = request.getSession();
                 session.invalidate();
                 response.sendRedirect("home");
             }
-            if (service.equals("updateAdminProfile")) {
+            if (service.equals("updateAdminProfile")) {//Update Profile and Check valid
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     HttpSession session = request.getSession();
@@ -48,11 +50,11 @@ public class AdminProfileController extends HttpServlet {
                     String username = acc.getUsername();
                     String password = acc.getPassword();
                     int role = acc.getRole();
-                    String DisplayName = request.getParameter("displayname");
-                    String Address = request.getParameter("address");
-                    String Email = request.getParameter("email");
-                    String Phone = request.getParameter("phone");
-                    String ImageURL = request.getParameter("imageURL");
+                    String DisplayName = request.getParameter("displayname").trim();
+                    String Address = request.getParameter("address").trim();
+                    String Email = request.getParameter("email").trim();
+                    String Phone = request.getParameter("phone").trim();
+                    String ImageURL = request.getParameter("imageURL").trim();
 
                     Account accupdateBefore = Account.builder()
                             .accountid(AccountID)
@@ -71,47 +73,28 @@ public class AdminProfileController extends HttpServlet {
                     request.setAttribute("list", ListAccount);
                     if (DisplayName == null || DisplayName.isEmpty()) {//Tên không được null
                         String mess = "DisplayName is not null";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (DisplayName != DisplayName.trim()) {//Tên không được để trống 2 đầu
-                        String mess = "DisplayName invalid";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
                     if (DisplayName.length() >= 50) {//Tên không được vượt quá 50 kí tự
                         String mess = "DisplayName can must <=50 character";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    if (Address == null || Address.isEmpty()) {//Địa chỉ không được null
+                    if (Address == null || Address.isEmpty()) {//Tên không được null
                         String mess = "Address is not null";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
                     if (Address.length() > 50) {//Địa chỉ không được vượt quá 50 kí tự
                         String mess = "Address can must <=50 character";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    if (Address != Address.trim()) {//Địa chỉ không được để trống 2 đầu
-                        String mess = "Address invalid";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
                             + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
                     if (!Phone.matches(reg)) {
@@ -125,32 +108,17 @@ public class AdminProfileController extends HttpServlet {
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";//Format mail
                     if (!Email.matches(EMAIL_PATTERN)) {//Email không đúng format
                         String mess = "Email invalid";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
                     if (Email == null || Email.isEmpty()) {//Email không được null
                         String mess = "Email is not null";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    if (Email != Email.trim()) {//Email không được để trống 2 đầu
-                        String mess = "Email invalid";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
-                    if (ImageURL != ImageURL.trim()) {//Ảnh không được để trống 2 đầu
-                        String mess = "ImageURL invalid";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
-                        return;
-                    }
+                    
                     Account accupdate = Account.builder()
                             .accountid(AccountID)
                             .displayname(DisplayName.trim())
@@ -173,7 +141,7 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                 }
             }
-            if (service.equals("changePass")) {
+            if (service.equals("changePass")) {//Change Password and check valid
                 HttpSession session = request.getSession();
                 Account acc = (Account) session.getAttribute("Account");
                 String pass = acc.getPassword();
@@ -181,7 +149,9 @@ public class AdminProfileController extends HttpServlet {
                 String oldPass = request.getParameter("oldPassword");
                 String newPass = request.getParameter("newPassword");
                 String confirmpassword = request.getParameter("comfirmPassword");
-
+                request.setAttribute("oldPass", oldPass);
+                request.setAttribute("newPass", newPass);
+                request.setAttribute("confirmpassword", confirmpassword);
                 if (!pass.equals(oldPass)) {
                     String mess1 = "Old Password Incorrect";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
@@ -238,6 +208,7 @@ public class AdminProfileController extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
+            request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
