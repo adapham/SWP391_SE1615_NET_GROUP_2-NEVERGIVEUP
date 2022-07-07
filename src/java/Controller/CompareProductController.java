@@ -5,11 +5,13 @@ import dao.impl.ProductDAOImpl;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomeController extends HttpServlet {
+@WebServlet(name = "CompareProductAjaxController", urlPatterns = {"/compareProduct"})
+public class CompareProductController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -18,26 +20,27 @@ public class HomeController extends HttpServlet {
             String service = request.getParameter("do");
             ProductDAOImpl daoProduct = new ProductDAOImpl();
             if (service == null) {
-                service = "home";
+                service = "compareProduct";
             }
-            if (service.equals("home")) {//Chuyển đến trang home
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-                if (service.equals("about")) {//Chuyển đến trang about
-                List<Product> listProduct = daoProduct.getTopNumberProduct(2);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("about.jsp").forward(request, response);
-            }
-            if (service.equals("blog")) {//Chuyển đến trang blog
+            if (service.equals("compareProduct")) {
+                int pId = Integer.parseInt(request.getParameter("pId"));
+                List<Product> productList = daoProduct.getAllProductByProductID(pId);
+                Product pro = daoProduct.getProductByProductID(pId);
                 
-                request.getRequestDispatcher("blog.jsp").forward(request, response);
+                request.setAttribute("listProduct", productList);
+                request.setAttribute("product", pro);
+                request.getRequestDispatcher("compareProduct.jsp").forward(request, response);
             }
-            if (service.equals("contact")) {//Chuyển đến trang contact
+            if(service.equals("compareResult")){
+                int pId1 = Integer.parseInt(request.getParameter("pId1"));
+                int pId2 = Integer.parseInt(request.getParameter("pId2"));
                 
-                request.getRequestDispatcher("contact.jsp").forward(request, response);
+                Product product1 = daoProduct.getProductByProductID(pId1);
+                Product product2 = daoProduct.getProductByProductID(pId2);
+                
+                request.setAttribute("product1", product1);
+                request.setAttribute("product2", product2);
+                request.getRequestDispatcher("compareProductResult.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
