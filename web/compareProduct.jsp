@@ -137,18 +137,22 @@
         </div>
         <!--Footer-->
         <%@include file="component/FooterComponent.jsp" %>
-    </div>
 
+    
     <!-- All JS is here
 ============================================ -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        function searchByName(param, param1, param2) {
+        function searchByName(param, param1, param2, param3) {
             var keySearch = param.value.trim();
             var cateId = param1;
             var pId = param2;
+            var x = location.origin;
+            var s = "<%= getServletContext().getContextPath() %>"
+            console.log(x);
+            console.log(s);
             $.ajax({
-                url: "/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/searchCompare",
+                url: x+s+"/searchCompare",
                 type: "get", //send it through get method
                 data: {
                     keySearch: keySearch,
