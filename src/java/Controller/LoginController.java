@@ -2,15 +2,14 @@ package Controller;
 
 import Entity.Account;
 import dao.impl.AccountDAOImpl;
-import dao.AccountDao;
-import dao.FeedbackDao;
+
 import dao.OrderDao;
 import dao.impl.CategoryDAOImpl;
+import dao.impl.FeedbackDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -169,8 +168,8 @@ public class LoginController extends HttpServlet {
                         int totalCategory = daoCategory.getTotalCategory();
                         int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
                         int totalOrder = new OrderDao().getTotalOrder();
-                        int totalFeedback = new FeedbackDao().getTotalFeedBack();
-                        int totalCustomer = new AccountDao().getTotalCustomer();
+                        int totalFeedback = new FeedbackDAOImpl().getTotalFeedBack();
+                        int totalCustomer = new AccountDAOImpl().getTotalCustomer();
                         int totalShipper = new ShipperDAOImpl().getTotalShipper();
                         
                         request.setAttribute("totalOrder", totalOrder);

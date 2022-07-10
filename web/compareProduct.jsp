@@ -148,7 +148,7 @@
             var cateId = param1;
             var pId = param2;
             $.ajax({
-                url: "/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/searchCompare",
+                url: "/home/searchCompare",
                 type: "get", //send it through get method
                 data: {
                     keySearch: keySearch,
