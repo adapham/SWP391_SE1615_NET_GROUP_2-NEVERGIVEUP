@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Account;
@@ -22,10 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "confirm", urlPatterns = {"/confirm"})
 public class ConfirmController extends HttpServlet {
 
@@ -81,21 +72,20 @@ public class ConfirmController extends HttpServlet {
             }
             request.setAttribute("totalMoney", totalMoney);
             Order order = Order.builder()
+                    .accountID(accountid)
                     .shipperID(1)
                     .address(address.trim())
                     .email(email)
                     .status(1)
                     .phone(phone.trim())
                     .build();
-            int orderID = new OrderDAOImpl().insertOrderID(order);
-
-            new OrderDetailsDAOImpl().saveCart(orderID, listProductCarts);
 
             request.setAttribute("listProductCarts", listProductCarts);
             session.setAttribute("order", order);
             request.setAttribute("account", account);
             request.getRequestDispatcher("confirm.jsp").forward(request, response);
         } catch (Exception ex) {
+            ex.printStackTrace();
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

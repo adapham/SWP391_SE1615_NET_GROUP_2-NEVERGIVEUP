@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Account;
-import Entity.Order;
 import Entity.Product;
 import dao.AccountDao;
 import dao.impl.OrderDAOImpl;
@@ -22,10 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "CheckOutController", urlPatterns = {"/checkOut"})
 public class CheckOutController extends HttpServlet {
 
@@ -70,8 +60,7 @@ public class CheckOutController extends HttpServlet {
                 total = (double) total / 100;
                 totalMoney = total;
             }
-            //out.print(acc);
-//            int infoAccount = ac.getAccountid();
+
             request.setAttribute("account", account);
             request.setAttribute("totalMoney", totalMoney);
             request.setAttribute("listProductCarts", listProductCarts);
@@ -140,17 +129,6 @@ public class CheckOutController extends HttpServlet {
                 total = (double) total / 100;
                 totalMoney = total;
             }
-
-            Order order = Order.builder()
-                    .accountID(Integer.parseInt(accountID))
-                    .shipperID(1)
-                    .address(address.trim())
-                    .email(email)
-                    .status(1)
-                    .phone(phone.trim())
-                    .build();
-            int orderID = new OrderDAOImpl().insertOrderID(order);
-            new OrderDetailsDAOImpl().saveCart(orderID, listProductCarts);
 
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Order;
@@ -21,10 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "checkout1", urlPatterns = {"/checkout1"})
 public class CheckOut1Controller extends HttpServlet {
 
@@ -49,7 +40,7 @@ public class CheckOut1Controller extends HttpServlet {
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String temp = request.getParameter("temp");
-            //out.print(temp);        
+      
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
             Enumeration em = session.getAttributeNames();

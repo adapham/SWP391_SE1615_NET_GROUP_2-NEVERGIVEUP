@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -38,66 +36,52 @@
                     <!-- Topbar -->
                     <%@include file="component/AdminTopbarComponent.jsp" %>
                     <!-- End of Topbar -->
+
+                    <!-- Begin Page Content -->
+                    
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="billManager?do=pageBill"><h3>List bills</h3></a>
+                                <a href="feedbackManager?do=getInTouch"><h3>List get in touch</h3></a>
                             </li>
-                            <li class="active">Detail bill</li>
+                            <li class="active">Detail get in touch</li>
                         </ul>
                     </div>
-                    <!-- Begin Page Content -->
-                    <main class="main-content position-relative border-radius-lg ">
-                        <div class="container-fluid py-4">
-                            <div class="col-lg-4 mb-lg-0 mb-4">
+                
+                    <div class="get-in-touch-wrap">
+                        <div class="contact-from contact-shadow">
+                                <div class="row">
+                                    <c:forEach items="${listInTouch}" var="l">
+                                        <div class="col-lg-6 col-md-6">
+                                            <h4>Name</h4>
+                                            <input style="border: 1px solid #000000" name="name" value="${l.name}" readonly="">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h4>Email</h4>
+                                            <input style="border: 1px solid #000000" name="email" value="${l.email}" readonly="">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h4>Date</h4>
+                                            <input style="border: 1px solid #000000" name="date" value="${l.date}" readonly="">
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <h4>Subject</h4>
+                                            <input style="border: 1px solid #000000" name="subject" value="${l.subject}" readonly="">
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <h4>Message</h4>
+                                            <textarea style="border: 1px solid #000000" name="message"  readonly="">${l.message}</textarea>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <button class="submit" type="submit"><a href="feedbackManager?do=reply&email=${l.email}" style="color: white">Reply</a></button>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            
 
-                                <p><h3 style="color: black"><b> Information customer:  </b></h3></p> 
-                                <p style="color: black"><b>Order date: </b>${info.orderDate}</p> 
-                                <p style="color: black"><b>Customer name: </b>${info.displayname}</p> 
-                                <p style="color: black"><b>Address: </b>${info.address}</p> 
-                                <p style="color: black"><b>Email: </b>${info.email}</p> 
-                                <p style="color: black"><b>Phone: </b>${info.phone}</p>
-
-                                <form action="billManager?do=updateStatusDetails" method="POST">
-                                    <input type="hidden" name="odId" value="${orderID}">
-                                    <select name="status" onchange="this.form.submit()">
-                                        <option value="1" ${info.status == 1 ? " selected" : ""}>Wait</option>
-                                        <option value="2" ${info.status == 2 ? " selected" : ""}>Process</option>
-                                        <option value="3" ${info.status == 3 ? " selected" : ""}>Done</option>
-                                    </select>
-                                </form>
-
-                                <p><h3 style="color: black"><b>Details bill</b></h3></p>     
-
-                                <table border="1" >
-                                    <thead>
-                                        <tr>                                            
-                                            <th style="color: black">ProductName</th>
-                                            <th style="color: black">Price</th>   
-                                            <th style="color: black">Quantity</th>
-                                            <th style="color: black">Discount</th>                                          
-                                            <th style="color: black">Total</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <c:forEach items="${list}" var="l">
-                                            <tr>
-                                                <td style="color: black">${l.productName}</td>
-                                                <td style="color: black">$${l.price}</td>
-                                                <td style="color: black">${l.quantity}</td>
-                                                <td style="color: black">${l.discount}</td>                                                
-                                                <td style="color: black">$${Math.round(l.total*100)/100}</td>
-                                            </tr> 
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <td colspan="2" ><h4>Total Amount: $${totalMoney}</h4></td>
-                            </div>
+                            <p class="form-messege"></p>
                         </div>
-                    </main>
-                    <!-- /.container-fluid -->
-
+                    </div>
                 </div>
                 <!-- End of Main Content -->
 

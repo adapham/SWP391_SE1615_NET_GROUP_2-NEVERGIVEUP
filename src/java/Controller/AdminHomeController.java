@@ -1,14 +1,14 @@
 package Controller;
 
 import dao.AccountDao;
-import dao.FeedbackDao;
-import dao.OrderDao;
+import dao.impl.FeedbackDAOImpl;
+
 import dao.impl.CategoryDAOImpl;
+import dao.impl.OrderDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,8 +32,8 @@ public class AdminHomeController extends HttpServlet {
                 int totalProduct = daoProduct.getTotalProduct();//Get total All Product
                 int totalCategory = daoCategory.getTotalCategory();
                 int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
-                int totalOrder = new OrderDao().getTotalOrder();
-                int totalFeedback = new FeedbackDao().getTotalFeedBack();
+                int totalOrder = new OrderDAOImpl().getTotalOrder();
+                int totalFeedback = new FeedbackDAOImpl().getTotalFeedBack();
                 int totalCustomer = new AccountDao().getTotalCustomer();
                 int totalShipper = new ShipperDAOImpl().getTotalShipper();
 

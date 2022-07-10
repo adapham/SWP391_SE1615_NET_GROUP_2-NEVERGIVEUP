@@ -38,11 +38,11 @@
 
                     <!-- Begin Page Content -->
                     <div class="card-header py-3">
-                        <h1 class="m-0 font-weight-bold text-primary" style="text-align: center">List bills</h1>
+                        <h1 class="m-0 font-weight-bold text-primary" style="text-align: center">List feedbacks</h1>
                     </div>
-                    <form action="billManager?do=searchBill" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form action="feedbackManager?do=searchFeedbacks" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search bill by address..."
+                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search by product name..."
                                    aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button name="submit" class="btn btn-primary" type="submit">
@@ -54,38 +54,49 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Order ID</th>
+                                <th scope="col">Feedback ID</th>
                                 <th scope="col">Display name</th>
-                                <th scope="col">Shipper name</th>
-                                <th scope="col">Order date</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Phone</th>
+                                <th scope="col">Product name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Delete</th>
                                 <th scope="col">Detail</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${listOrder}" var="l">
+                            <c:forEach items="${listFeedBack}" var="l">
                                 <tr>
-                                    <th scope="row">${l.orderID}</th>
-                                    <td>${l.displayName}</td>
-                                    <td>${l.shipperName}</td>
-                                    <td>${l.orderDate}</td>
-                                    <td>${l.address}</td>
-                                    <td>${l.email}</td>
+                                    <th scope="row">${l.feedbackID}</th>
+                                    <td>${l.disPlayName}</td>
+                                    <td>${l.productName}</td>
+                                    <td>${l.timeComment}</td>
                                     <td>
-                                        <form action="billManager?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
-                                            <input type="hidden" name="odId" value="${l.orderID}">
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
-                                                <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
-                                                <option value="3" ${l.status == 3 ? " selected" : ""}>Done</option>
-                                            </select>
-                                        </form>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModa${l.feedbackID}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <!-- The Modal -->
+
+                                        <div class="modal" id="myModa${l.feedbackID}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete feedback</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete the feedback?
+                                                    </div>
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-danger"><a href="feedbackManager?do=deleteFeedback&feedbackid=${l.feedbackID}&page=${page}&keySearch=${keySearch}">Confirm</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td>${l.phone}</td>
-                                    <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
+                                    <td><a href="feedbackManager?do=detailFeedBack&iD=${l.feedbackID}">Detail</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -94,36 +105,36 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination" style="display: flex; justify-content: center;">
                             <c:choose>
-                                        <c:when test="${search!=null}">
-                                            <c:choose>
-                                                <c:when test="${listOrder ==null || listOrder.size() ==0}">
-                                                    <h2 style="color: red">NOT FOUND</h2>
-                                                </c:when> 
-                                                <c:otherwise>
-                                                    <c:if test="${page!=1}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
-                                                        </c:if>
-                                                        <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=searchBill&page=${i}&keySearch=${keySearch}">${i}</a></li>
-                                                        </c:forEach>
-                                                        <c:if test="${page !=totalPage}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page+1}&keySearch=${keySearch}">Next</a></li>
-                                                        </c:if>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:if test="${page!=1}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page-1}">Previous</a></li>   
+                                <c:when test="${search!=null}">
+                                    <c:choose>
+                                        <c:when test="${listFeedBack ==null || listFeedBack.size() ==0}">
+                                            <h2 style="color: red">NOT FOUND</h2>
+                                        </c:when> 
+                                        <c:otherwise>
+                                            <c:if test="${page!=1}">
+                                                <li class="page-item"><a class="page-link" href="feedbackManager?do=searchFeedbacks&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
                                                 </c:if>
                                                 <c:forEach begin="1" end="${totalPage}" var="i">
-                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=pageBill&page=${i}">${i}</a></li>
+                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="feedbackManager?do=searchFeedbacks&page=${i}&keySearch=${keySearch}">${i}</a></li>
                                                 </c:forEach>
                                                 <c:if test="${page !=totalPage}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page+1}">Next</a></li>
+                                                <li class="page-item"><a class="page-link" href="feedbackManager?do=searchFeedbacks&page=${page+1}&keySearch=${keySearch}">Next</a></li>
                                                 </c:if>
                                             </c:otherwise>
                                         </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:if test="${page!=1}">
+                                        <li class="page-item"><a class="page-link" href="feedbackManager?do=listFeedback&page=${page-1}">Previous</a></li>   
+                                        </c:if>
+                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="feedbackManager?do=listFeedback&page=${i}">${i}</a></li>
+                                        </c:forEach>
+                                        <c:if test="${page !=totalPage}">
+                                        <li class="page-item"><a class="page-link" href="feedbackManager?do=listFeedback&page=${page+1}">Next</a></li>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
                         </ul>
                     </nav>
                 </div>

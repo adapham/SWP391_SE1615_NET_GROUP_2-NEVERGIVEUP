@@ -32,6 +32,7 @@ public class HomeController extends HttpServlet {
                 request.getRequestDispatcher("about.jsp").forward(request, response);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

@@ -93,7 +93,7 @@
         <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Bill Manager</h6>
-                <a class="collapse-item" href="billManager?do=bill">Bills</a>
+                <a class="collapse-item" href="billManager?do=pageBill">Bills</a>
             </div>
         </div>
     </li>
@@ -114,8 +114,8 @@
         <div id="collapseFeedback" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">FeedBack Manager CRUD:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="#">Feekbacks</a>
+                <a class="collapse-item" href="feedbackManager?do=getInTouch">Get in touch</a>
+                <a class="collapse-item" href="feedbackManager?do=listFeedback">Feedbacks</a>
             </div>
         </div>
     </li>

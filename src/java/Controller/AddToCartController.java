@@ -54,10 +54,6 @@ public class AddToCartController extends HttpServlet {
             }
             session.setAttribute(pid, pro);
             session.setAttribute("size", size);
-//            String urlHistory = (String) session.getAttribute("urlHistory");
-//            if (urlHistory == null) {
-//                urlHistory = "details?do=details&pid=" + iPID;
-//            }
             response.sendRedirect("menu");
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);

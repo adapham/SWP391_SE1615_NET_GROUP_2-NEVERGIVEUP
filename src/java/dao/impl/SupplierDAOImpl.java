@@ -45,7 +45,7 @@ public class SupplierDAOImpl extends ConnectDB implements SupplierDAO {
                 System.out.println(object);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SupplierDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

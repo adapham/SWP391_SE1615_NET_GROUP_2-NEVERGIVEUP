@@ -25,4 +25,6 @@ public class Order {
     private String email;
     private int status;
     private String phone;
+    private String displayName;
+    private String shipperName;
 }

@@ -16,8 +16,10 @@ import lombok.ToString;
 @ToString
 
 public class Intouch {
+   private int id;
    private String name;
    private String email;
    private String subject;
-   private String message;    
+   private String message;  
+   private String date;
 }

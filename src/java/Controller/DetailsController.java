@@ -1,7 +1,7 @@
 package Controller;
 
 import dao.impl.CategoryDAOImpl;
-import dao.FeedbackDao;
+import dao.impl.FeedbackDAOImpl;
 import dao.impl.ProductDAOImpl;
 import Entity.FeedBack;
 import Entity.Product;
@@ -25,7 +25,7 @@ public class DetailsController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             /* TODO output your page here. You may use following sample code. */
-            FeedbackDao dao = new FeedbackDao();
+            FeedbackDAOImpl dao = new FeedbackDAOImpl();
             ProductDAOImpl daoPro = new ProductDAOImpl();
             CategoryDAOImpl daoCate = new CategoryDAOImpl();            
             String service = request.getParameter("do");

@@ -31,8 +31,6 @@ public class MenuController extends HttpServlet {
                 String pageStr = request.getParameter("page");
                 //Category
                 List<Category> listCategory = daoCategory.getAllCategory();
-                System.out.println("Check list Cate");
-                System.out.println(listCategory);
                 session.setAttribute("listCategory", listCategory);
                 //Phân trang
                 String viewPage = request.getParameter("viewPage");
@@ -50,8 +48,6 @@ public class MenuController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
-                System.out.println("Check listProduct");
-                System.out.println(listProduct);
                 //Set Data For JSP
                 request.setAttribute("PAGE_SIZE", PAGE_SIZE);
                 session.setAttribute("backToUrl", "menu");
@@ -137,6 +133,7 @@ public class MenuController extends HttpServlet {
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
         }catch(Exception ex){
+            ex.printStackTrace();
             request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }

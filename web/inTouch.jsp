@@ -38,11 +38,11 @@
 
                     <!-- Begin Page Content -->
                     <div class="card-header py-3">
-                        <h1 class="m-0 font-weight-bold text-primary" style="text-align: center">List bills</h1>
+                        <h1 class="m-0 font-weight-bold text-primary" style="text-align: center">List get in touch</h1>
                     </div>
-                    <form action="billManager?do=searchBill" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form action="feedbackManager?do=searchFeedback" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search bill by address..."
+                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search by name..."
                                    aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button name="submit" class="btn btn-primary" type="submit">
@@ -54,38 +54,21 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Display name</th>
-                                <th scope="col">Shipper name</th>
-                                <th scope="col">Order date</th>
-                                <th scope="col">Address</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Phone</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Detail</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${listOrder}" var="l">
+                            <c:forEach items="${listInTouch}" var="l">
                                 <tr>
-                                    <th scope="row">${l.orderID}</th>
-                                    <td>${l.displayName}</td>
-                                    <td>${l.shipperName}</td>
-                                    <td>${l.orderDate}</td>
-                                    <td>${l.address}</td>
+                                    <th scope="row">${l.id}</th>
+                                    <td>${l.name}</td>
                                     <td>${l.email}</td>
-                                    <td>
-                                        <form action="billManager?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
-                                            <input type="hidden" name="odId" value="${l.orderID}">
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
-                                                <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
-                                                <option value="3" ${l.status == 3 ? " selected" : ""}>Done</option>
-                                            </select>
-                                        </form>
-                                    </td>
-                                    <td>${l.phone}</td>
-                                    <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
+                                    <td>${l.date}</td>
+                                    <td><a href="feedbackManager?do=detailinTouch&iD=${l.id}">Detail</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -96,31 +79,31 @@
                             <c:choose>
                                         <c:when test="${search!=null}">
                                             <c:choose>
-                                                <c:when test="${listOrder ==null || listOrder.size() ==0}">
+                                                <c:when test="${listInTouch ==null || listInTouch.size() ==0}">
                                                     <h2 style="color: red">NOT FOUND</h2>
                                                 </c:when> 
                                                 <c:otherwise>
                                                     <c:if test="${page!=1}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
+                                                        <li class="page-item"><a class="page-link" href="feedbackManager?do=searchFeedback&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
                                                         </c:if>
                                                         <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=searchBill&page=${i}&keySearch=${keySearch}">${i}</a></li>
+                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="feedbackManager?do=searchFeedback&page=${i}&keySearch=${keySearch}">${i}</a></li>
                                                         </c:forEach>
                                                         <c:if test="${page !=totalPage}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page+1}&keySearch=${keySearch}">Next</a></li>
+                                                        <li class="page-item"><a class="page-link" href="feedbackManager?do=searchFeedback&page=${page+1}&keySearch=${keySearch}">Next</a></li>
                                                         </c:if>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:if test="${page!=1}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page-1}">Previous</a></li>   
+                                                <li class="page-item"><a class="page-link" href="feedbackManager?do=getInTouch&page=${page-1}">Previous</a></li>   
                                                 </c:if>
                                                 <c:forEach begin="1" end="${totalPage}" var="i">
-                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=pageBill&page=${i}">${i}</a></li>
+                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="feedbackManager?do=getInTouch&page=${i}">${i}</a></li>
                                                 </c:forEach>
                                                 <c:if test="${page !=totalPage}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page+1}">Next</a></li>
+                                                <li class="page-item"><a class="page-link" href="feedbackManager?do=getInTouch&page=${page+1}">Next</a></li>
                                                 </c:if>
                                             </c:otherwise>
                                         </c:choose>
