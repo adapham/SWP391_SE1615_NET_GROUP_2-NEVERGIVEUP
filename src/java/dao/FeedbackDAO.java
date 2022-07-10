@@ -22,4 +22,14 @@ public interface FeedbackDAO {
     public void InsertIntouch(Intouch intouch) throws Exception;
 
     public void deleteFeedbackByProductID(int pID) throws Exception;
+    
+    public int getTotalFeedBack() throws Exception;
+    
+    public List<FeedBack> getFeedBackWithPaging(int page, int PAGE_SIZE) throws Exception;
+    
+    public List<FeedBack> getSearchFeedBackPagingByName(String keySearch, int page, int PAGE_SIZE) throws Exception;
+    
+    public int getTotalFeedBackByName(String keySearch) throws Exception;
+    
+    public int deleteFeedBackByID(String feedbackid) throws Exception;
 }
