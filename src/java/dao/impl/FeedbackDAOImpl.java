@@ -8,12 +8,12 @@ package dao.impl;
 import Entity.FeedBack;
 import Entity.Intouch;
 import dao.ConnectDB;
-import dao.FeedbackDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import dao.FeedbackDAO;
 
 /**
  *
@@ -130,23 +130,6 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
 //        System.out.println(dao.InsertIntouch(in));
 //        
 //    }
-    public int getTotalFeedBack() {
-        String sql = "select COUNT(*) from Feedback";
-        try {
-            //Đưa vào prepare
-            PreparedStatement pre = conn.prepareStatement(sql);
-
-            //Đưa vào ResultSet
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
-                int count = rs.getInt(1);
-                return count;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return 0;
-    }
 
     public List<FeedBack> getFeedBackWithPaging(int page, int PAGE_SIZE) throws Exception {
         List<FeedBack> listFeedBack = new ArrayList<>();

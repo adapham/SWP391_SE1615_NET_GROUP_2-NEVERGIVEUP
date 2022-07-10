@@ -9,7 +9,6 @@ import Entity.Account;
 import Entity.OrderDetails;
 import dao.AccountDAO;
 import dao.ConnectDB;
-import dao.OrderDetailsDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -899,24 +898,6 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
                 return count;
             }
         } catch (SQLException ex) {
-            throw ex;
-        }
-        return 0;
-    }
-
-    public int getTotalCustomer() throws Exception{
-        String sql = "select COUNT(*) from Account where Role = 1";
-        try {
-            //Đưa vào prepare
-            PreparedStatement pre = conn.prepareStatement(sql);
-
-            //Đưa vào ResultSet
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
-                int count = rs.getInt(1);
-                return count;
-            }
-        } catch (Exception ex) {
             throw ex;
         }
         return 0;
