@@ -6,7 +6,7 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import dao.OrderDao;
 import dao.OrderDetailsDao;
 import java.io.IOException;
@@ -40,10 +40,10 @@ public class confirm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             OrderDao daoOrder = new OrderDao();
             OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("Account");
             int accountid = acc.getAccountid();
@@ -94,6 +94,9 @@ public class confirm extends HttpServlet {
             session.setAttribute("order", order);
             request.setAttribute("account", account);
             request.getRequestDispatcher("confirm.jsp").forward(request, response);
+        }
+        catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

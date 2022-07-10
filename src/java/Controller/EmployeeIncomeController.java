@@ -1,42 +1,55 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Controller;
 
-import Entity.Product;
-import dao.impl.ProductDAOImpl;
+import Entity.OrderDetails;
+import dao.impl.AccountDAOImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomeController extends HttpServlet {
+/**
+ *
+ * @author admin
+ */
+@WebServlet(name = "EmployeeIncomeController", urlPatterns = {"/employeeincome"})
+public class EmployeeIncomeController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String service = request.getParameter("do");
-            ProductDAOImpl daoProduct = new ProductDAOImpl();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             if (service == null) {
-                service = "home";
+                service = "IncomeHome";
             }
-            if (service.equals("home")) {//Chuyển đến trang home
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-                if (service.equals("about")) {//Chuyển đến trang about
-                List<Product> listProduct = daoProduct.getTopNumberProduct(2);
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("about.jsp").forward(request, response);
-            }
-            if (service.equals("blog")) {//Chuyển đến trang blog
-                
-                request.getRequestDispatcher("blog.jsp").forward(request, response);
-            }
-            if (service.equals("contact")) {//Chuyển đến trang contact
-                
-                request.getRequestDispatcher("contact.jsp").forward(request, response);
+            if (service.equals("IncomeHome")) {
+                LocalDateTime current = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                    String formatted = current.format(formatter);
+                    System.out.println(formatted);
+                response.sendRedirect("EmployeeIncome.jsp");
             }
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);

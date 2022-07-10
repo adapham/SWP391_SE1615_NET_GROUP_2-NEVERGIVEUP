@@ -48,72 +48,129 @@
 
                     <!------------------CODE HERE-------------------------->
                     <h1 style="text-align: center" class="h3 mb-2 text-gray-800">Update Account of Customer</h1>
+                    <div id="content">
+                        <div class="container-xl px-4 mt-4">
+                            <!-- Account page navigation-->
+                            <hr class="mt-0 mb-4">
+                            <div class="row">
+                                <c:forEach items="${list}" var="l">
+                                    <div class="col-xl-4">
+                                        <!-- Profile picture card-->
+                                        <div class="card mb-4 mb-xl-0">
+                                            <div class="card-header"> Picture</div>
+                                            <div class="card-body text-center">
+                                                <!-- Profile picture image-->
+                                                <img class="img-account-profile rounded-circle mb-2" src="${l.imageURL}" alt="" style="min-width: 60%;width:42px;height:160px;">
+                                                <!-- Profile picture help block-->
+                                                <div class="small font-italic text-muted mb-4">
+                                                    <br>
+                                                    <h3>
+
+                                                    </h3>
+                                                </div>
+
+                                                <!-- Profile picture upload button-->
+                                                <button class="btn btn-primary" ><a href="accountmanager" style="color: white; text-decoration: none;">Back to Account Manager</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-8">
+                                        <!-- Account details card-->
+                                        <div class="card mb-4">
+                                            <div class="card-header"><a href="accountmanager">Account Customer </a>/ Update Account Customer</div>
+                                            <c:if test="${mess != null}"> 
+                                                <br>
+                                                <div class="alert alert-danger" role="alert">
+                                                    ${mess}
+                                                </div> 
+                                            </c:if>
+                                            <div class="card-body">
+                                                <form action="accountmanager?do=updateCustomer" method="post">
+                                                    <input hidden="" name="accountid" value="${l.accountid}" >
+                                                    <input hidden="" name="emailold" value="${l.email}" >
+                                                    <input hidden="" name="phoneold" value="${l.phone}" >
+                                                    <input hidden="" name="password" value="${l.password}" >
+                                                    <!-- Form Row-->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (Username)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >User Name</label>
+                                                            <input name="username" readonly="" class="form-control"  type="text" placeholder="" value="${l.username}">
+                                                        </div>
+                                                        <!-- Form Group (last name)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >Display Name</label>
+                                                            <input maxlength="50" name="displayname" class="form-control"  type="text" placeholder="Enter your Display Name..." value="${l.displayname}">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row        -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (organization name)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >Address</label>
+                                                            <input name="address" class="form-control" type="text" placeholder="Enter your Address..." value="${l.address}">
+                                                        </div>
+                                                        <!-- Form Group (location)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >Email</label>
+                                                            <input  name="email" class="form-control"  type="email" placeholder="Enter your Email..." value="${l.email}">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row        -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (organization name)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >Phone</label>
+                                                            <input maxlength="10" name="phone" class="form-control"  type="phone" placeholder="Enter your Phone..." value="${l.phone}">
+                                                        </div>
+                                                        <!-- Form Group (location)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" >ImageURL</label>
+                                                            <input name="imageURL" class="form-control"  type="text" placeholder="Enter your ImageURL..." value="${l.imageURL}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row gx-3 mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="gender">Gender</label>
+                                                            <br>
+                                                            <div style="margin-top: 20px; font-size: 25px;">
+                                                                <c:choose>
+                                                                    <c:when test="${l.gender ==1}">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked="">
+                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0">
+                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                                        </div>
+                                                                    </c:when><c:otherwise>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" >
+                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0" checked="">
+                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                                        </div>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Save changes button-->
+                                                    <button name="submit" class="btn btn-primary" type="submit" value="submit">Save changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
                     <!-- DataTales Example -->
-                    <form action="accountmanager?do=updateCustomer" method="post">
-                        <table style="border: 1px;margin: auto"  >
-                            <c:if test="${mess !=null}"><h6 style="color: red;text-align: center">${mess}</h6></c:if>
-                            <c:forEach items="${list}" var="l">
-                                <input hidden="" name="accountid" value="${l.accountid}" >
-                                <input hidden="" name="emailold" value="${l.email}" >
-                                <input hidden="" name="phoneold" value="${l.phone}" >
-                                <input hidden="" name="password" value="${l.password}" >
-                                <tr>
-                                    <td>User Name:</td>
-                                    <td><input maxlength="50" type="text" name="username" readonly="" value="${l.username}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Display Name:</td>
-                                    <td><input maxlength="50" type="text" name="displayname" value="${l.displayname}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Address:</td>
-                                    <td><input maxlength="50" type="text" name="address" value="${l.address}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td><input type="email" name="email" value="${l.email}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Phone:</td>
-                                    <td><input maxlength="10" type="number" name="phone" value="${l.phone}"></td>
-                                </tr>
-                                <tr>
-                                    <td>ImageURL:</td>
-                                    <td><input type="text" name="imageURL" value="${l.imageURL}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Gender:</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${l.gender ==1}">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked="">
-                                                    <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0">
-                                                    <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
-                                                </div>
-                                            </c:when><c:otherwise>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" >
-                                                    <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0" checked="">
-                                                    <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>  <input type="submit" name="submit" value="submit"></td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </form>
+
+                    
                     <!----------------------------------------------------------->
 
                     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -158,7 +215,7 @@
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
+                            <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
 package Controller;
 
 import Entity.Account;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class AdminProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
 
             String service = request.getParameter("do");
             if (service == null) {

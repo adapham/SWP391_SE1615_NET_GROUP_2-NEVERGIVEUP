@@ -7,23 +7,12 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Food Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Food Employee </div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Overview
-    </div>
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="adminHome">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -44,10 +33,6 @@
                 <h6 class="collapse-header">Product Manager Crud:</h6>
                 <a class="collapse-item" href="adminProduct"> Products</a>
                 <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
-                <a class="collapse-item" href="adminCategory"> Categories</a>
-                <a style="padding-left: 30px;" class="collapse-item" href="adminCategory?do=createCategory"><i class="fas fa-plus"></i> Create Category</a>
-                <a class="collapse-item" href="adminSupplier"> Suppliers</a>
-                <a style="padding-left: 30px;" class="collapse-item" href="adminSupplier?do=createSupplier"><i class="fas fa-plus"></i> Create Supplier</a>
             </div>
         </div>
     </li>
@@ -69,10 +54,7 @@
         <div id="collapseAccount" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Account Manager CRUD:</h6>
-                <a class="collapse-item" href="accountmanager">Customers</a>
-                <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
-                <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
-                <a class="collapse-item" href="accountmanager?do=createAccount">Create Account</a>
+                <a class="collapse-item" href="employeeaccount?do=AccountCustomer">Customers</a>
             </div>
         </div>
     </li>
@@ -80,21 +62,19 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
-        Bill Manager
-    </div>
+   
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder"
            aria-expanded="true" aria-controls="collapseOrder">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Bill Managerment</span>
+            <span>Income Managerment</span>
         </a>
         <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Bill Manager</h6>
-                <a class="collapse-item" href="billManager?do=bill">Bills</a>
+                <h6 class="collapse-header">Income Manager</h6>
+                <a class="collapse-item" href="employeeincome">Income</a>
             </div>
         </div>
     </li>
