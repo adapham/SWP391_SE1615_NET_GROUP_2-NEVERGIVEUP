@@ -72,7 +72,7 @@
                 <a class="collapse-item" href="accountmanager">Customers</a>
                 <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
                 <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
-                <a class="collapse-item" href="adminCreateAccount.jsp">Create Account</a>
+                <a class="collapse-item" href="accountmanager?do=createAccount">Create Account</a>
             </div>
         </div>
     </li>

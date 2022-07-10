@@ -886,6 +886,23 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         }
         return list;
     }
+    public int getTotalCustomer() throws Exception{
+        String sql = "select COUNT(*) from Account where Role = 1";
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return 0;
+    }
 
     public int getTotalCustomer() throws Exception{
         String sql = "select COUNT(*) from Account where Role = 1";

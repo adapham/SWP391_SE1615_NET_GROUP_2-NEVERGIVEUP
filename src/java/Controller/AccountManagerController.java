@@ -271,7 +271,7 @@ public class AccountManagerController extends HttpServlet {
                         request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
                         return;
                     }
-                   //chap nhan email cu
+                    //chap nhan email cu
                     daoAccount.updateEmailCustomerByEmail(accountid);
                     //check email da ton tai
                     List<String> listEmail = daoAccount.ListAllEmail();
@@ -363,126 +363,133 @@ public class AccountManagerController extends HttpServlet {
                 request.getRequestDispatcher("adminEmployeeManager.jsp").forward(request, response);
             }
             if (service.equals("createAccount")) {
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String DisplayName = request.getParameter("displayname");
-                String address = request.getParameter("address");
-                String Email = request.getParameter("email");
-                String Phone = request.getParameter("phone");
-                String imageURL = request.getParameter("imageURL");
-                String role = request.getParameter("role");
-                String gender = request.getParameter("gender");
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                } else {
 
-                request.setAttribute("username", username.trim());
-                request.setAttribute("password", password.trim());
-                request.setAttribute("displayname", DisplayName.trim());
-                request.setAttribute("address", address.trim());
-                request.setAttribute("email", Email);
-                request.setAttribute("phone", Phone);
-                request.setAttribute("imageURL", imageURL);
-                request.setAttribute("role", role);
-                request.setAttribute("gender", gender);
-                //- check username null
-                if (username.trim() == null || username.trim().isEmpty()) {
-                    String mess = "UserName is not empty";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //-check username da ton tai
-                List<String> listUserName = daoAccount.ListAllUserName();
-                for (String listusername : listUserName) {
-                    if (listusername.equals(username.trim())) {
-                        String mess = "username available";
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    String DisplayName = request.getParameter("displayname");
+                    String address = request.getParameter("address");
+                    String Email = request.getParameter("email");
+                    String Phone = request.getParameter("phone");
+                    String imageURL = request.getParameter("imageURL");
+                    String role = request.getParameter("role");
+                    String gender = request.getParameter("gender");
+
+                    request.setAttribute("username", username.trim());
+                    request.setAttribute("password", password.trim());
+                    request.setAttribute("displayname", DisplayName.trim());
+                    request.setAttribute("address", address.trim());
+                    request.setAttribute("email", Email);
+                    request.setAttribute("phone", Phone);
+                    request.setAttribute("imageURL", imageURL);
+                    request.setAttribute("role", role);
+                    request.setAttribute("gender", gender);
+                    //- check username null
+                    if (username.trim() == null || username.trim().isEmpty()) {
+                        String mess = "UserName is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
                     }
-                }
-                //check password 
-                //check password null
-                if (password.trim() == null || password.trim().isEmpty()) {
-                    String mess = "password is not empty";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //check DisplayName
-                if (DisplayName.trim() == null || DisplayName.trim().isEmpty()) {
-                    String mess = "DisplayName is not empty";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //check Adreess
-                if (address.trim() == null || address.trim().isEmpty()) {
-                    String mess = "Address is not empty";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //Check email
-                //check email not null
-                if (Email == null || Email.isEmpty()) {
-                    String mess = "Email is not empty";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //check email da ton tai
-                List<String> listEmail = daoAccount.ListAllEmail();
-                for (String listemail : listEmail) {
-                    if (listemail.equals(Email)) {
-                        String mess = "Email available";
+                    //-check username da ton tai
+                    List<String> listUserName = daoAccount.ListAllUserName();
+                    for (String listusername : listUserName) {
+                        if (listusername.equals(username.trim())) {
+                            String mess = "username available";
+                            request.setAttribute("mess", mess);
+                            request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                            return;
+                        }
+                    }
+                    //check password 
+                    //check password null
+                    if (password.trim() == null || password.trim().isEmpty()) {
+                        String mess = "password is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
                     }
-                }
-                //check form email   
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                if (!Email.matches(EMAIL_PATTERN)) {
-                    String mess = "Email Wrong";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //check PhoneNumber
-                //Phone numer form
-                String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
-                        + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
-                if (!Phone.matches(reg)) {
-                    String mess = "Phone invalid";
-                    request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
-                    return;
-                }
-                //Phone da ton tai
-                List<String> listPhone = daoAccount.ListAllPhone();
-                for (String listphone : listPhone) {
-                    if (listphone.equals(Phone)) {
-                        String mess = "Phone available";
+                    //check DisplayName
+                    if (DisplayName.trim() == null || DisplayName.trim().isEmpty()) {
+                        String mess = "DisplayName is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
                     }
+                    //check Adreess
+                    if (address.trim() == null || address.trim().isEmpty()) {
+                        String mess = "Address is not empty";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                        return;
+                    }
+                    //Check email
+                    //check email not null
+                    if (Email == null || Email.isEmpty()) {
+                        String mess = "Email is not empty";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                        return;
+                    }
+                    //check email da ton tai
+                    List<String> listEmail = daoAccount.ListAllEmail();
+                    for (String listemail : listEmail) {
+                        if (listemail.equals(Email)) {
+                            String mess = "Email available";
+                            request.setAttribute("mess", mess);
+                            request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                            return;
+                        }
+                    }
+                    //check form email   
+                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                    if (!Email.matches(EMAIL_PATTERN)) {
+                        String mess = "Email Wrong";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                        return;
+                    }
+                    //check PhoneNumber
+                    //Phone numer form
+                    String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
+                            + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
+                    if (!Phone.matches(reg)) {
+                        String mess = "Phone invalid";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                        return;
+                    }
+                    //Phone da ton tai
+                    List<String> listPhone = daoAccount.ListAllPhone();
+                    for (String listphone : listPhone) {
+                        if (listphone.equals(Phone)) {
+                            String mess = "Phone available";
+                            request.setAttribute("mess", mess);
+                            request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                            return;
+                        }
+                    }
+                    Account acc = Account.builder()
+                            .username(username.trim())
+                            .password(password)
+                            .displayname(DisplayName.trim())
+                            .address(address.trim())
+                            .email(Email)
+                            .phone(Phone)
+                            .imageURL(imageURL.trim())
+                            .role(Integer.parseInt(role))
+                            .gender(Integer.parseInt(gender))
+                            .build();
+                    daoAccount.RegisterAccount(acc);
+                    String mess = "Create Account success";
+                    request.setAttribute("mess", mess);
+                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                 }
-                Account acc = Account.builder()
-                        .username(username.trim())
-                        .password(password)
-                        .displayname(DisplayName.trim())
-                        .address(address.trim())
-                        .email(Email)
-                        .phone(Phone)
-                        .imageURL(imageURL.trim())
-                        .role(Integer.parseInt(role))
-                        .gender(Integer.parseInt(gender))
-                        .build();
-                daoAccount.RegisterAccount(acc);
-                String mess = "Create Account success";
-                request.setAttribute("mess", mess);
-                request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+
             }
             if (service.equals("listAccountShipper")) {
                 final int PAGE_SIZE = 6;
@@ -553,7 +560,7 @@ public class AccountManagerController extends HttpServlet {
                         request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
                         return;
                     }
-                   //chap nhan email cu
+                    //chap nhan email cu
                     daoAccount.updateEmailCustomerByEmail(accountid);
                     //check email da ton tai
                     List<String> listEmail = daoAccount.ListAllEmail();
