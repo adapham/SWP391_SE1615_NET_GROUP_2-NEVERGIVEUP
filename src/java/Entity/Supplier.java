@@ -20,4 +20,5 @@ public class Supplier {
     private String companyName;
     private String address;
     private String phone;
+    private String email;
 }

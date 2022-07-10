@@ -131,6 +131,7 @@
                                                             </c:if>
                                                             <div class="product-action-2 tooltip-style-2">
                                                                 <button title="Quick View" data-toggle="modal" data-target="#exampleModal${pro.productID}"><i class="icon-size-fullscreen icons"></i></button>
+                                                                <button title="Compare"><a href="compareProduct?do=compareProduct&pId=${pro.productID}"><i class="icon-refresh"></i></a></button>
                                                             </div>
                                                         </div>
                                                         <div class="product-content-wrap-2 text-center">
@@ -183,13 +184,13 @@
                                                                                 </c:if>
                                                                                 <spam class="new-price">$${pro.priceAferDiscount}</spam>
                                                                             </div>
-                                                                            
-                                                                            
+
+
                                                                             <div class="pro-details-action-wrap">
                                                                                 <div class="pro-details-add-to-cart">
                                                                                     <a title="Add to Cart" href="AddToCart?pid=${pro.productID}">Add To Cart </a>
                                                                                 </div>
-                                                                                
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -214,14 +215,15 @@
                                                 <ul>
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=menu&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
-                                                    </c:if>
-                                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=menu&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                    </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            </c:if>
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=menu&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=menu&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
-                                                    </c:if>
+                                                            </c:if>
                                                 </ul>
                                             </div>
                                         </c:otherwise>
@@ -239,14 +241,15 @@
                                                 <ul>
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=fillCategory&categoryID=${cateID}&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
-                                                    </c:if>
-                                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=fillCategory&categoryID=${cateID}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                    </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            </c:if>
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=fillCategory&categoryID=${cateID}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=fillCategory&categoryID=${cateID}&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
-                                                    </c:if>
+                                                            </c:if>
                                                 </ul>
                                             </div>
                                         </c:otherwise>
@@ -265,11 +268,12 @@
                                                     <c:if test="${page > 1}">
                                                         <li><a class="prev" href="menu?do=search&searchKey=${keySearch}&page=${page - 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-left"></i></a></li>
                                                             </c:if>
-                                                            <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li><a class="${i == page?" active":""}" href="menu?do=search&searchKey=${keySearch}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
-                                                        </c:forEach>   
-
-                                                    <c:if test="${page < totalPage}">
+                                                            <c:if test="${totalPage != 1}">
+                                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                            <li><a class="${i == page?" active":""}" href="menu?do=search&searchKey=${keySearch}&page=${i}&viewPage=${PAGE_SIZE}">${i}</a></li>
+                                                            </c:forEach>   
+                                                        </c:if>
+                                                        <c:if test="${page < totalPage}">
                                                         <li><a class="next" href="menu?do=search&searchKey=${keySearch}&page=${page + 1}&viewPage=${PAGE_SIZE}"><i class="icon-arrow-right"></i></a></li>
                                                             </c:if>
                                                 </ul>
@@ -318,72 +322,7 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer-bg">
-                <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center footer" style="margin-left: 0; margin-right: 0;">
-                    <div class="col">
-                        <div class=" text-center">
-                            <h3 class="text-center">Contact Us</h3>
-                            </br>
-                            <span class="text-center">
-                                <i class="bi bi-geo-alt"></i>Location
-                            </span>
-                            </br>
-                            <span class="text-center">
-                                <i class="bi bi-telephone"></i>Call 0353890333
-                            </span>
-                            </br>
-                            <span class="text-center">
-                                <i class="bi bi-envelope"></i>baonkhe151451@gmail.com
-                            </span>
-
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="text-center">
-                            <h3 class="text-center">Foodie</h3>
-                            </br>
-                            <span class="text-center">
-                                Always bring customers the most delicious food.
-                                Prestige top priority!
-                            </span>
-                            </br>
-                            <h5>Follow me</h5>
-                            <div class="footer-icon">
-                                <a href="https://www.facebook.com/Dangnguyentattttooo">
-                                    <i class="bi bi-facebook"></i>
-                                </a>
-                                <a href="https://www.facebook.com/Dangnguyentattttooo">
-                                    <i class="bi bi-telegram"></i>
-                                </a>
-                                <a href="https://www.facebook.com/Dangnguyentattttooo">
-                                    <i class="bi bi-instagram"></i>
-                                </a>
-                                <a href="https://www.facebook.com/Dangnguyentattttooo">
-                                    <i class="bi bi-twitter"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="text-center">
-                            <h3 class="text-center">Opening Hours</h3>
-                            </br>
-                            <h4 class="text-center">
-                                Everyday
-                            </h4>
-                            <span>10.00 Am - 10.00 Pm</span>
-                            </br>
-                            <a href="https://www.facebook.com/messages/t/731005607318608">
-                                <img class="contact-image" src="https://cdns.diongame.com/static/messenger-01.svg">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    </br>
-                    <p class="m-0 text-center text-white">Copyright &copy; Team Never Give Up</p>
-                </div>
-            </footer>
+            <%@include file="component/FooterComponent.jsp" %>
         </div>
 
         <!-- All JS is here

@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.Account;
+import dao.impl.AccountDAOImpl;
 import dao.AccountDao;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
@@ -27,7 +28,7 @@ public class LoginController extends HttpServlet {
         try {
             String service = request.getParameter("do");
 
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             ProductDAOImpl daoProduct = new ProductDAOImpl();
             CategoryDAOImpl daoCategory = new CategoryDAOImpl();
 
@@ -42,7 +43,7 @@ public class LoginController extends HttpServlet {
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-                    int checkAccount = daoAccount.checkAccount(username, password);
+                    int checkAccount = daoAccount.checkAccount(username.trim().toLowerCase(), password);
                     String r = request.getParameter("rem");
                     if (checkAccount == 0) {
                         request.setAttribute("mess", "wrong user or pass");

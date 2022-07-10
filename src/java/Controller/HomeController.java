@@ -20,16 +20,23 @@ public class HomeController extends HttpServlet {
             if (service == null) {
                 service = "home";
             }
-            if (service.equals("home")) {
+            if (service.equals("home")) {//Chuyển đến trang home
                 List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-            if (service.equals("about")) {
+                if (service.equals("about")) {//Chuyển đến trang about
                 List<Product> listProduct = daoProduct.getTopNumberProduct(2);
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("about.jsp").forward(request, response);
+            }
+            if (service.equals("blog")) {//Chuyển đến trang blog
+                
+                request.getRequestDispatcher("blog.jsp").forward(request, response);
+            }
+            if (service.equals("contact")) {//Chuyển đến trang contact
+                
+                request.getRequestDispatcher("contact.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

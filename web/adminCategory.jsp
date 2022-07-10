@@ -34,6 +34,7 @@
                 <!-- Topbar -->
                 <%@include file="component/AdminTopbarComponent.jsp" %>
                 <!-- End of Topbar -->
+                <h1 class="text-center text-primary">List All Category</h1>
                 <!--Main COntent-->
                 <div id="content">
                     <div class="d-flex justify-content-between" style="background-color: #ccc; padding:10px 0;">
@@ -68,8 +69,8 @@
                                 <tr>
                                     <th>CategoryID</th>
                                     <th>Category Name</th>
-                                    <th>Address</th>
                                     <th>Description</th>
+                                    <th>Edit</th>
                                     <th>Delete</th>    
                                 </tr>
                             </thead>
@@ -96,12 +97,12 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="modal-body">
-                                                            Are you sure you want to delete the product?
+                                                            Are you sure you want to delete the category?
                                                         </div>
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminProduct?do=deleteProduct&pID=${l.categoryID}">Confirm</a></button>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminCategory?do=deleteCategory&cateID=${l.categoryID}">Yes</a></button>
                                                         </div>
                                                     </div>
                                                 </div>

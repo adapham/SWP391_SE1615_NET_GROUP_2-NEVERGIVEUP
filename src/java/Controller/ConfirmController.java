@@ -36,6 +36,9 @@ public class ConfirmController extends HttpServlet {
             OrderDAOImpl daoOrder = new OrderDAOImpl();
             OrderDetailsDAOImpl daoOrderDetails = new OrderDetailsDAOImpl();
             AccountDao daoAccount = new AccountDao();
+            OrderDao daoOrder = new OrderDao();
+            OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("Account");
             int accountid = acc.getAccountid();
@@ -86,6 +89,9 @@ public class ConfirmController extends HttpServlet {
             request.getRequestDispatcher("confirm.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
+        }
+        catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

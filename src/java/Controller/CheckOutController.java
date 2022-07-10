@@ -32,7 +32,7 @@ public class CheckOutController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
 //            Account ac = null;
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
@@ -67,6 +67,9 @@ public class CheckOutController extends HttpServlet {
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
 
         } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
+        }
+        catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

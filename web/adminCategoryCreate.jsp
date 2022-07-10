@@ -55,7 +55,7 @@
                                             <div class="row gx-3 mb-3">
                                                 <!-- Form Group (Username)-->
                                                 <div class="col-md-8">
-                                                    <label class="small mb-1" for="cateName">Category Name</label>
+                                                    <label class="small mb-1" for="cateName">Category Name <span style="color: red;">(*)</span></label>
                                                     <input maxlength="50" name="cateName" class="form-control" id="cateName" type="text" placeholder="Enter your new category name..." value="${cateName}">
                                                 </div>
                                             </div>
@@ -63,7 +63,7 @@
                                             <div class="row gx-3 mb-3">
                                                 <!-- Form Group (Username)-->
                                                 <div class="col-md-8">
-                                                    <label class="small mb-1" for="description">Desctiption</label>
+                                                    <label class="small mb-1" for="description">Desctiption <span style="color: red;">(*)</span></label>
                                                     <input maxlength="50" name="description" class="form-control" id="address" type="text" placeholder="Enter your new description..." value="${description}">
                                                 </div>
                                             </div>

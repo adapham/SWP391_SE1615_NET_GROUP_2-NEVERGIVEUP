@@ -8,6 +8,7 @@ package dao.impl;
 import Entity.FeedBack;
 import Entity.Intouch;
 import dao.ConnectDB;
+import dao.FeedbackDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author admin
  */
-public class FeedbackDAOImpl extends ConnectDB {
+public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO{
 
     public List ListFeedBackByProductID(int productID) {
         List<FeedBack> list = new ArrayList<>();

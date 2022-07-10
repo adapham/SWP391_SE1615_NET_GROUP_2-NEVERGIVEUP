@@ -47,6 +47,7 @@ public class AdminHomeController extends HttpServlet {
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
         } catch (Exception ex) {
+            request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
