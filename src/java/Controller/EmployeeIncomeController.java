@@ -5,10 +5,14 @@
  */
 package Controller;
 
-import Entity.Intouch;
-import dao.impl.FeedbackDAOImpl;
+import Entity.OrderDetails;
+import dao.impl.AccountDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-@WebServlet(name = "FeedbackController", urlPatterns = {"/feedback"})
-public class FeedbackController extends HttpServlet {
+@WebServlet(name = "EmployeeIncomeController", urlPatterns = {"/employeeincome"})
+public class EmployeeIncomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,21 +39,18 @@ public class FeedbackController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            FeedbackDAOImpl daofeedback = new FeedbackDAOImpl();
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String subject = request.getParameter("subject");
-            String message = request.getParameter("message");
-            Intouch intouch = Intouch.builder()
-                    .name(name)
-                    .email(email)
-                    .subject(subject)
-                    .message(message)
-                    .build();
-            daofeedback.InsertIntouch(intouch);
-            String mess = "Send Intouch success!";
-            request.setAttribute("mess", mess);
-            request.getRequestDispatcher("contact.jsp").forward(request, response);
+            String service = request.getParameter("do");
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
+            if (service == null) {
+                service = "IncomeHome";
+            }
+            if (service.equals("IncomeHome")) {
+                LocalDateTime current = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                    String formatted = current.format(formatter);
+                    System.out.println(formatted);
+                response.sendRedirect("EmployeeIncome.jsp");
+            }
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }

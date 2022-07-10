@@ -26,7 +26,6 @@ public class HomeController extends HttpServlet {
             }
             if (service.equals("home")) {
                 List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }

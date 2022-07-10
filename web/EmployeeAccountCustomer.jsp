@@ -36,7 +36,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <%@include file="component/AdminSlidebarComponent.jsp" %>
+            <%@include file="component/EmployeeSlidebarComponent.jsp" %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -46,22 +46,18 @@
                 <div id="content">
 
                     <!-- Topbar -->
-                    <%@include file="component/AdminTopbarComponent.jsp" %>
+                    <%@include file="component/EmployeeTopbarComponent.jsp" %>
 
 
 
                     <!------------------CODE HERE-------------------------->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                                                                                   href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">View List Account of Customer</h6>
                         </div>
-                        <form  action="accountmanager?do=searchCustomer" style="margin: auto" method="post">
+                        <form  action="employeeaccount?do=searchCustomer" style="margin: auto" method="post">
                             <input type="text" placeholder="Search.." name="search" value="${search}">
                             <button type="submit" ><i class="fa fa-search"></i></button>
                         </form>
@@ -70,28 +66,25 @@
                                 <table class="table table-bordered"  width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th style="color: black">AccountID</th>
                                             <th style="color: black">Username</th>
                                             <th style="color: black">Display Name</th>
                                             <th style="color: black">Address</th>
                                             <th style="color: black">Email</th>
                                             <th style="color: black">Phone</th>
                                             <th style="color: black">ImageURL</th>
-                                            <th style="color: black">Update</th>
+                                            <th style="color: black">DetailsOrder</th>
                                         </tr>
                                     </thead>
                                     <c:forEach items="${listAccount}" var="l">
                                         <tbody>
                                             <tr>
-                                                <td style="color: black">${l.accountid}</td>
                                                 <td style="color: black">${l.username}</td>
                                                 <td style="color: black">${l.displayname}</td>
                                                 <td style="color: black">${l.address}</td>
                                                 <td style="color: black">${l.email}</td>
                                                 <td style="color: black">${l.phone}</td>
                                                 <td> <img src="${l.imageURL}" height="50px"></td>
-                                                <td><a href="accountmanager?do=updateCustomer&accountid=${l.accountid}"><i class="fas fa-user-edit"></i></a></td>
-
+                                                <td><a href="employeeaccount?do=DetailOrder&accountid=${l.accountid}">Detail Order</a></td>
                                             </tr>
                                         </tbody>
                                     </c:forEach>
@@ -108,26 +101,26 @@
                                                 </c:when> 
                                                 <c:otherwise>
                                                     <c:if test="${page!=1}">
-                                                        <li class="page-item"><a class="page-link" href="accountmanager?do=searchCustomer&page=${page-1}&search=${search}">Previous</a></li>   
+                                                        <li class="page-item"><a class="page-link" href="employeeaccount?do=searchCustomer&page=${page-1}&search=${search}">Previous</a></li>   
                                                         </c:if>
                                                         <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="accountmanager?do=searchCustomer&page=${i}&search=${search}">${i}</a></li>
+                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="employeeaccount?do=searchCustomer&page=${i}&search=${search}">${i}</a></li>
                                                         </c:forEach>
                                                         <c:if test="${page !=totalPage}">
-                                                        <li class="page-item"><a class="page-link" href="accountmanager?do=searchCustomer&page=${page+1}&search=${search}">Next</a></li>
+                                                        <li class="page-item"><a class="page-link" href="employeeaccount?do=searchCustomer&page=${page+1}&search=${search}">Next</a></li>
                                                         </c:if>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:if test="${page!=1}">
-                                                <li class="page-item"><a class="page-link" href="accountmanager?page=${page-1}">Previous</a></li>   
+                                                <li class="page-item"><a class="page-link" href="employeeaccount?do=AccountCustomer&page=${page-1}">Previous</a></li>   
                                                 </c:if>
                                                 <c:forEach begin="1" end="${totalPage}" var="i">
-                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="accountmanager?page=${i}">${i}</a></li>
+                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="employeeaccount?do=AccountCustomer&page=${i}">${i}</a></li>
                                                 </c:forEach>
                                                 <c:if test="${page !=totalPage}">
-                                                <li class="page-item"><a class="page-link" href="accountmanager?page=${page+1}">Next</a></li>
+                                                <li class="page-item"><a class="page-link" href="employeeaccount?do=AccountCustomer&page=${page+1}">Next</a></li>
                                                 </c:if>
                                             </c:otherwise>
                                         </c:choose>
@@ -205,9 +198,9 @@
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
                 <script src="js/demo/chart-bar-demo.js"></script>
-<!--                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
-                
+                <!--                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+
                 </body>
                 </html>

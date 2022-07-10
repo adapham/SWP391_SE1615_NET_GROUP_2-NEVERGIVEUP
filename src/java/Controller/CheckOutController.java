@@ -8,7 +8,7 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import dao.OrderDao;
 import dao.OrderDetailsDao;
 import java.io.IOException;
@@ -42,8 +42,8 @@ public class CheckOutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            AccountDao daoAccount = new AccountDao();
+        try {
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
 //            Account ac = null;
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
@@ -78,6 +78,9 @@ public class CheckOutController extends HttpServlet {
             request.setAttribute("listProductCarts", listProductCarts);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
 
+        }
+        catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

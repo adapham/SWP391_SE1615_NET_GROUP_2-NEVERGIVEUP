@@ -1,12 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ Quan li Account cua trang Admin bao gom update,delete cua nhan vien, khach hang hoac shipper, create account cua employee va shipper
  */
 package Controller;
 
 import Entity.Account;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "AccountManagerController", urlPatterns = {"/accountmanager"})
 public class AccountManagerController extends HttpServlet {
 
@@ -36,9 +30,9 @@ public class AccountManagerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             if (service == null) {
                 service = "listAccountCustomer";
             }
@@ -79,6 +73,7 @@ public class AccountManagerController extends HttpServlet {
                     String accountid = request.getParameter("accountid");
                     String emailold = request.getParameter("emailold");
                     String phoneold = request.getParameter("phoneold");
+
                     request.setAttribute("username", username);
                     request.setAttribute("displayname", DisplayName);
                     request.setAttribute("address", address);
@@ -115,12 +110,7 @@ public class AccountManagerController extends HttpServlet {
                         return;
                     }
                     //chap nhan email cu
-                    if (Email.equals(emailold)) {
-                        daoAccount.updateEmailCustomerByEmail(Email);
-                    }
-                    if (Phone.equals(phoneold)) {
-                        daoAccount.updatePhoneCustomerByPhone(Phone);
-                    }
+                    daoAccount.updateEmailCustomerByEmail(accountid);
                     //check email da ton tai
                     List<String> listEmail = daoAccount.ListAllEmail();
                     for (String listemail : listEmail) {
@@ -131,15 +121,8 @@ public class AccountManagerController extends HttpServlet {
                             return;
                         }
                     }
-                    //check form email   
-                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                    if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email Wrong";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
-                        return;
-                    }
+                    daoAccount.updateEmailOldCustomerByEmail(Email, accountid);
+
                     //check PhoneNumber
                     //Phone numer form
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
@@ -150,6 +133,8 @@ public class AccountManagerController extends HttpServlet {
                         request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                         return;
                     }
+                    daoAccount.updatePhoneCustomerByPhone(accountid);
+
                     //Phone da ton tai
                     List<String> listPhone = daoAccount.ListAllPhone();
                     for (String listphone : listPhone) {
@@ -160,19 +145,20 @@ public class AccountManagerController extends HttpServlet {
                             return;
                         }
                     }
+                    daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
+
                     String mess = "Update Success";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
                             .accountid(AccountID)
                             .displayname(DisplayName.trim())
-                            .address(address)
-                            .email(Email)
+                            .address(address.trim())
+                            .email(Email.trim())
                             .phone(Phone)
-                            .imageURL(imageURL)
+                            .imageURL(imageURL.trim())
                             .gender(Integer.parseInt(gender))
                             .build();
                     int n = daoAccount.updateAccount(accoutupdate);
-                    System.out.println(acc);
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                     return;
@@ -285,32 +271,20 @@ public class AccountManagerController extends HttpServlet {
                         request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
                         return;
                     }
-                    //chap nhan email cu
-                    if (Email.equals(emailold)) {
-                        daoAccount.updateEmailCustomerByEmail(Email);
-                    }
-                    if (Phone.equals(phoneold)) {
-                        daoAccount.updatePhoneCustomerByPhone(Phone);
-                    }
+                   //chap nhan email cu
+                    daoAccount.updateEmailCustomerByEmail(accountid);
                     //check email da ton tai
                     List<String> listEmail = daoAccount.ListAllEmail();
                     for (String listemail : listEmail) {
                         if (listemail.equals(Email)) {
                             String mess = "Email available";
                             request.setAttribute("mess", mess);
-                            request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
+                            request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                             return;
                         }
                     }
-                    //check form email   
-                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                    if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email Wrong";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
-                        return;
-                    }
+                    daoAccount.updateEmailOldCustomerByEmail(Email, accountid);
+
                     //check PhoneNumber
                     //Phone numer form
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
@@ -318,19 +292,22 @@ public class AccountManagerController extends HttpServlet {
                     if (!Phone.matches(reg)) {
                         String mess = "Phone invalid";
                         request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
+                        request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                         return;
                     }
+                    daoAccount.updatePhoneCustomerByPhone(accountid);
+
                     //Phone da ton tai
                     List<String> listPhone = daoAccount.ListAllPhone();
                     for (String listphone : listPhone) {
                         if (listphone.equals(Phone)) {
                             String mess = "Phone available";
                             request.setAttribute("mess", mess);
-                            request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
+                            request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                             return;
                         }
                     }
+                    daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
                     String mess = "Update Success";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
@@ -396,17 +373,17 @@ public class AccountManagerController extends HttpServlet {
                 String role = request.getParameter("role");
                 String gender = request.getParameter("gender");
 
-                request.setAttribute("username", username);
-                request.setAttribute("password", password);
-                request.setAttribute("displayname", DisplayName);
-                request.setAttribute("address", address);
+                request.setAttribute("username", username.trim());
+                request.setAttribute("password", password.trim());
+                request.setAttribute("displayname", DisplayName.trim());
+                request.setAttribute("address", address.trim());
                 request.setAttribute("email", Email);
                 request.setAttribute("phone", Phone);
                 request.setAttribute("imageURL", imageURL);
                 request.setAttribute("role", role);
                 request.setAttribute("gender", gender);
                 //- check username null
-                if (username == null || username.isEmpty()) {
+                if (username.trim() == null || username.trim().isEmpty()) {
                     String mess = "UserName is not empty";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
@@ -424,7 +401,7 @@ public class AccountManagerController extends HttpServlet {
                 }
                 //check password 
                 //check password null
-                if (password == null || password.isEmpty()) {
+                if (password.trim() == null || password.trim().isEmpty()) {
                     String mess = "password is not empty";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
@@ -433,6 +410,13 @@ public class AccountManagerController extends HttpServlet {
                 //check DisplayName
                 if (DisplayName.trim() == null || DisplayName.trim().isEmpty()) {
                     String mess = "DisplayName is not empty";
+                    request.setAttribute("mess", mess);
+                    request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
+                    return;
+                }
+                //check Adreess
+                if (address.trim() == null || address.trim().isEmpty()) {
+                    String mess = "Address is not empty";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                     return;
@@ -569,32 +553,20 @@ public class AccountManagerController extends HttpServlet {
                         request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
                         return;
                     }
-                    //chap nhan email cu
-                    if (Email.equals(emailold)) {
-                        daoAccount.updateEmailCustomerByEmail(Email);
-                    }
-                    if (Phone.equals(phoneold)) {
-                        daoAccount.updatePhoneCustomerByPhone(Phone);
-                    }
+                   //chap nhan email cu
+                    daoAccount.updateEmailCustomerByEmail(accountid);
                     //check email da ton tai
                     List<String> listEmail = daoAccount.ListAllEmail();
                     for (String listemail : listEmail) {
                         if (listemail.equals(Email)) {
                             String mess = "Email available";
                             request.setAttribute("mess", mess);
-                            request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
+                            request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                             return;
                         }
                     }
-                    //check form email   
-                    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                    if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email Wrong";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
-                        return;
-                    }
+                    daoAccount.updateEmailOldCustomerByEmail(Email, accountid);
+
                     //check PhoneNumber
                     //Phone numer form
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
@@ -602,19 +574,22 @@ public class AccountManagerController extends HttpServlet {
                     if (!Phone.matches(reg)) {
                         String mess = "Phone invalid";
                         request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
+                        request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                         return;
                     }
+                    daoAccount.updatePhoneCustomerByPhone(accountid);
+
                     //Phone da ton tai
                     List<String> listPhone = daoAccount.ListAllPhone();
                     for (String listphone : listPhone) {
                         if (listphone.equals(Phone)) {
                             String mess = "Phone available";
                             request.setAttribute("mess", mess);
-                            request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
+                            request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                             return;
                         }
                     }
+                    daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
                     String mess = "Update Success";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
@@ -669,6 +644,8 @@ public class AccountManagerController extends HttpServlet {
                 request.setAttribute("listAccount", listAccount);
                 request.getRequestDispatcher("adminShippersManager.jsp").forward(request, response);
             }
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

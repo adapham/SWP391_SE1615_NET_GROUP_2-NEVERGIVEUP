@@ -29,4 +29,5 @@ public class OrderDetails {
     private double total;
     private int status;
     private int productID;
+    private String imageURL;
 }

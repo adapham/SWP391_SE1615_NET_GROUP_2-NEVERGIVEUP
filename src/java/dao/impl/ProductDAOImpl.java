@@ -2,7 +2,6 @@ package dao.impl;
 
 import Entity.Product;
 import dao.ConnectDB;
-import dao.FeedbackDao;
 import dao.OrderDetailsDao;
 import dao.ProductDAO;
 import java.sql.PreparedStatement;
@@ -540,7 +539,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public int deleteProduct(int pID) throws Exception{
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
-        FeedbackDao daoFeedback = new FeedbackDao();
+        FeedbackDAOImpl daoFeedback = new FeedbackDAOImpl();
         OrderDetailsDao daoOdDetail = new OrderDetailsDao();
         daoFeedback.deleteFeedbackByProductID(pID);
         daoOdDetail.deleteOrderDetailByProductID(pID);
