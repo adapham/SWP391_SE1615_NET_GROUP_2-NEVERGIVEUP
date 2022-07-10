@@ -1,3 +1,9 @@
+/*
+    Hiển thị danh sách tất cả Product có trong DB và phân trang
+    Thêm sửa xoa tìm kiếm và phân trang khi tìm kiếm
+    Check valid cho các method update and create
+    Lọc theo các trường khác nhau
+ */
 package Controller;
 
 import Entity.Category;
@@ -5,9 +11,8 @@ import Entity.Product;
 import Entity.Supplier;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ProductDAOImpl;
-import dao.SupplierDao;
+import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -26,14 +31,14 @@ public class AdminProductController extends HttpServlet {
         try {
             String service = request.getParameter("do");
             ProductDAOImpl daoProduct = new ProductDAOImpl();
-            SupplierDao daoSupplier = new SupplierDao();
+            SupplierDAOImpl daoSupplier = new SupplierDAOImpl();
             CategoryDAOImpl daoCategory = new CategoryDAOImpl();
             HttpSession session = request.getSession();
 
             if (service == null) {
                 service = "ProductHome";
             }
-            if (service.equals("ProductHome")) {
+            if (service.equals("ProductHome")) {//Product Home Manager and Paging
                 String pageStr = request.getParameter("page");
 
                 int page = 1;
@@ -47,6 +52,11 @@ public class AdminProductController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
+                List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
+                List<Category> listCategories = daoCategory.getAllCategory();
+
+                request.setAttribute("listSup", listSuppliers);
+                request.setAttribute("listCate", listCategories);
 
                 session.setAttribute("backToUrl", "adminProduct");
                 request.setAttribute("totalProduct", totalProduct);
@@ -55,7 +65,7 @@ public class AdminProductController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
             }
-            if (service.equals("updateProduct")) {//Update Product theo ID
+            if (service.equals("updateProduct")) {//Update Product theo ID and Paging
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     String pID = request.getParameter("pID");
@@ -70,27 +80,16 @@ public class AdminProductController extends HttpServlet {
                     request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                 } else {
                     int pID = Integer.parseInt(request.getParameter("pID"));
-                    String pName = request.getParameter("productName");
+                    String pName = request.getParameter("productName").trim();
                     int supID = Integer.parseInt(request.getParameter("supplierID"));
                     int cateID = Integer.parseInt(request.getParameter("categoryID"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     double uPrice = Double.parseDouble(request.getParameter("unitPrice"));
                     double discount = Double.parseDouble(request.getParameter("discount"));
                     int uInStock = Integer.parseInt(request.getParameter("unitInStock"));
-                    String des = request.getParameter("description");
-                    String images = request.getParameter("imageURL");
+                    String des = request.getParameter("description").trim();
+                    String images = request.getParameter("imageURL").trim();
                     int isActive = Integer.parseInt(request.getParameter("isActive"));
-
-                    request.setAttribute("pName", pName);
-                    request.setAttribute("supID", supID);
-                    request.setAttribute("cateID", cateID);
-                    request.setAttribute("quantity", quantity);
-                    request.setAttribute("uPrice", uPrice);
-                    request.setAttribute("discount", discount);
-                    request.setAttribute("uInStock", uInStock);
-                    request.setAttribute("des", des);
-                    request.setAttribute("images", images);
-                    request.setAttribute("isActive", isActive);
 
                     Product productBefore = Product.builder()//Add Product
                             .productID(pID)
@@ -113,20 +112,21 @@ public class AdminProductController extends HttpServlet {
                     request.setAttribute("list", listProduct);
                     request.setAttribute("listSup", listSuppliers);
                     request.setAttribute("listCate", listCategories);
-                    if (pName == null || pName.isEmpty()) {//Check Name
-                        String mess = "Product name is not empty";
-
+                    String mess;
+                    //Check valid
+                    if (pName == null != pName.isEmpty()) {//Check Name
+                        mess = "Product name is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                         return;
                     }
-                    if (pName != pName.trim()) {//Check Name
-                        String mess = "Product name invalid";
-
+                    if (des == null != des.isEmpty()) {//Check Name
+                        mess = "Description is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                         return;
                     }
+
                     Product pro = Product.builder()//Add Product
                             .productID(pID)
                             .productName(pName.trim())
@@ -141,7 +141,7 @@ public class AdminProductController extends HttpServlet {
                             .isActive(isActive)
                             .build();
 
-                    String mess = "Update successfull";
+                    mess = "Update successfull";
                     int updateProduct = daoProduct.updateProducts(pro);
 
                     request.setAttribute("mess", mess);
@@ -151,7 +151,7 @@ public class AdminProductController extends HttpServlet {
                     request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                 }
             }
-            if (service.equals("createProduct")) {//method create 1 new product
+            if (service.equals("createProduct")) {//Create new Product, check valid and Paging
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
@@ -161,15 +161,15 @@ public class AdminProductController extends HttpServlet {
                     request.setAttribute("listCate", listCategories);
                     request.getRequestDispatcher("adminProductCreate.jsp").forward(request, response);
                 } else {
-                    String pName = request.getParameter("productName");
+                    String pName = request.getParameter("productName").trim();
                     int supID = Integer.parseInt(request.getParameter("supplierID"));
                     int cateID = Integer.parseInt(request.getParameter("categoryID"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     double uPrice = Double.parseDouble(request.getParameter("unitPrice"));
                     double discount = Double.parseDouble(request.getParameter("discount"));
                     int uInStock = Integer.parseInt(request.getParameter("unitInStock"));
-                    String des = request.getParameter("description");
-                    String images = request.getParameter("imageURL");
+                    String des = request.getParameter("description").trim();
+                    String images = request.getParameter("imageURL").trim();
                     int isActive = Integer.parseInt(request.getParameter("isActive"));
                     request.setAttribute("pName", pName);
                     request.setAttribute("supID", supID);
@@ -190,21 +190,18 @@ public class AdminProductController extends HttpServlet {
                     //Check valid
                     if (pName == null != pName.isEmpty()) {//Check Name
                         mess = "Product name is not empty";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProductCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (pName != pName.trim()) {//Check Name
-                        mess = "Product name invalid";
-
+                    if (images == null != images.isEmpty()) {//Check Name
+                        mess = "Images is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProductCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (images != images.trim()) {
-                        mess = "Image URL invalid";
-
+                    if (des == null != des.isEmpty()) {//Check Name
+                        mess = "Description is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminProductCreate.jsp").forward(request, response);
                         return;
@@ -233,44 +230,55 @@ public class AdminProductController extends HttpServlet {
                     }
                 }
             }
-            if (service.equals("deleteProduct")) {
+            if (service.equals("deleteProduct")) {//Delete Product By ID and Paging
                 String spID = request.getParameter("pID");
                 int pID = Integer.parseInt(spID);
-                int delete = daoProduct.deleteProduct(pID);
                 //Select JSP
                 String mess;
-                if (delete > 0) {//Remove Successs
-                    String pageStr = request.getParameter("page");
-
-                    int page = 1;
-                    final int PAGE_SIZE = 10;
-                    if (pageStr != null) {
-                        page = Integer.parseInt(pageStr);
-                    }
-                    List<Product> listProduct = daoProduct.getProductWithPaging(page, PAGE_SIZE);
-                    int totalProduct = daoProduct.getTotalProduct();//Get total All Product
-                    int totalPage = totalProduct / PAGE_SIZE;
-                    if (totalProduct % PAGE_SIZE != 0) {
-                        totalPage += 1;
-                    }
-
-                    mess = "Delete Successfull!";
-
-                    session.setAttribute("backToUrl", "adminProduct");
-                    request.setAttribute("totalProduct", totalProduct);
-                    request.setAttribute("page", page);
-                    request.setAttribute("totalPage", totalPage);
-
-                    request.setAttribute("mess", mess);
-                    request.setAttribute("listProduct", listProduct);
-                    request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
+                int delete = 0;
+                try {
+                    delete = daoProduct.deleteProduct(pID);
+                } catch (Exception e) {
+                    mess = "Can't delete Product";
                 }
+
+                if (delete > 0) {//Remove Successs
+                    mess = "Delete Successfull!";
+                } else {
+                    mess = "Can't delete Product";
+                }
+                String pageStr = request.getParameter("page");
+
+                int page = 1;
+                final int PAGE_SIZE = 10;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+                List<Product> listProduct = daoProduct.getProductWithPaging(page, PAGE_SIZE);
+                int totalProduct = daoProduct.getTotalProduct();//Get total All Product
+                int totalPage = totalProduct / PAGE_SIZE;
+                if (totalProduct % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+                
+                List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
+                List<Category> listCategories = daoCategory.getAllCategory();
+
+                session.setAttribute("backToUrl", "adminProduct");
+                request.setAttribute("listSup", listSuppliers);
+                request.setAttribute("listCate", listCategories);
+                request.setAttribute("totalProduct", totalProduct);
+                request.setAttribute("page", page);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("mess", mess);
+                request.setAttribute("listProduct", listProduct);
+                request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
             }
-            if (service.equals("searchProduct")) {//Search Product By Name
+            if (service.equals("searchProduct")) {//Search Product By Name and Paging
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
 
-                String keySearch = request.getParameter("searchKey");
+                String keySearch = request.getParameter("searchKey").trim();
                 if (keySearch.isEmpty()) {
                     response.sendRedirect("adminProduct");
                     return;
@@ -290,8 +298,12 @@ public class AdminProductController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
+                List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
+                List<Category> listCategories = daoCategory.getAllCategory();
 
                 session.setAttribute("backToUrl", "adminProduct?do=searchProduct");
+                request.setAttribute("listSup", listSuppliers);
+                request.setAttribute("listCate", listCategories);
                 request.setAttribute("keySearch", keySearch);
                 request.setAttribute("totalProduct", totalProduct);
                 request.setAttribute("page", page);
@@ -299,7 +311,7 @@ public class AdminProductController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("adminProduct.jsp").forward(request, response);
             }
-            if (service.equals("sort")) {//Sort Product
+            if (service.equals("sort")) {//Sort Product and Paging
                 String type = request.getParameter("type");//Get tpye
                 String col = request.getParameter("col");//get column
                 String pageStr = request.getParameter("page");//Get page
@@ -389,7 +401,11 @@ public class AdminProductController extends HttpServlet {
                         request.setAttribute("typeActive", "up");
                     }
                 }
+                List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
+                List<Category> listCategories = daoCategory.getAllCategory();
 
+                request.setAttribute("listSup", listSuppliers);
+                request.setAttribute("listCate", listCategories);
                 request.setAttribute("totalProduct", totalProduct);
                 request.setAttribute("page", page);
                 request.setAttribute("totalPage", totalPage);
@@ -398,6 +414,7 @@ public class AdminProductController extends HttpServlet {
             }
 
         } catch (Exception ex) {
+            request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

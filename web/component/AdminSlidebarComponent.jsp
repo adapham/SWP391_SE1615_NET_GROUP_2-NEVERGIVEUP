@@ -46,7 +46,8 @@
                 <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
                 <a class="collapse-item" href="adminCategory"> Categories</a>
                 <a style="padding-left: 30px;" class="collapse-item" href="adminCategory?do=createCategory"><i class="fas fa-plus"></i> Create Category</a>
-                <a class="collapse-item" href="#"> Suppliers</a>
+                <a class="collapse-item" href="adminSupplier"> Suppliers</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminSupplier?do=createSupplier"><i class="fas fa-plus"></i> Create Supplier</a>
             </div>
         </div>
     </li>

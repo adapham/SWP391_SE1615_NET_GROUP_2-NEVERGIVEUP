@@ -2,7 +2,13 @@ package Controller;
 
 import Entity.Account;
 import dao.impl.AccountDAOImpl;
+import dao.AccountDao;
+import dao.FeedbackDao;
+import dao.OrderDao;
+import dao.impl.CategoryDAOImpl;
 import dao.impl.ProductDAOImpl;
+import dao.impl.ShipperDAOImpl;
+import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -25,7 +31,8 @@ public class LoginController extends HttpServlet {
 
             AccountDAOImpl daoAccount = new AccountDAOImpl();
             ProductDAOImpl daoProduct = new ProductDAOImpl();
-
+            CategoryDAOImpl daoCategory = new CategoryDAOImpl();
+            
             if (service == null) {
                 service = "login";
             }
@@ -159,8 +166,20 @@ public class LoginController extends HttpServlet {
                                 .build());
 
                         int totalProduct = daoProduct.getTotalProduct();//Get total All Product
-
+                        int totalCategory = daoCategory.getTotalCategory();
+                        int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
+                        int totalOrder = new OrderDao().getTotalOrder();
+                        int totalFeedback = new FeedbackDao().getTotalFeedBack();
+                        int totalCustomer = new AccountDao().getTotalCustomer();
+                        int totalShipper = new ShipperDAOImpl().getTotalShipper();
+                        
+                        request.setAttribute("totalOrder", totalOrder);
+                        request.setAttribute("totalFeedback", totalFeedback);
+                        request.setAttribute("totalCustomer", totalCustomer);
+                        request.setAttribute("totalShipper", totalShipper);
+                        request.setAttribute("totalSupplier", totalSupplier);
                         request.setAttribute("totalProduct", totalProduct);
+                        request.setAttribute("totalCategory", totalCategory);
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
                     }
                 }

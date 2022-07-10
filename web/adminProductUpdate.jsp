@@ -80,7 +80,7 @@
                                                     </div>
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="productName">Product Name</label>
+                                                        <label class="small mb-1" for="productName">Product Name <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="productName" class="form-control" id="productName" type="text" placeholder="Enter your new product name..." value="${l.productName}">
                                                     </div>
                                                 </div>
@@ -88,7 +88,7 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="supplierID">Supplier ID</label>
+                                                        <label class="small mb-1" for="supplierID">Supplier <span style="color: red;">(*)</span></label>
                                                         <select style="width: 100%;height: 35px;border-radius: 5px;border-color: #ccc;" name="supplierID" class="form-select" aria-label="Default select example" class="form-control" id="supplierID">
                                                             <c:forEach items="${listSup}" var="ls">
                                                                 <option value="${ls.supplierID}" ${l.supplierID == ls.supplierID ? " selected":""} >  ${ls.companyName} </option>
@@ -97,7 +97,7 @@
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="categoryID">Category ID</label>
+                                                        <label class="small mb-1" for="categoryID">Category <span style="color: red;">(*)</span></label>
                                                         <select name="categoryID" style="width: 100%;height: 35px;border-radius: 5px;border-color: #ccc;" class="form-select" aria-label="Default select example" class="form-control" id="categoryID">
                                                             <c:forEach items="${listCate}" var="lc">
                                                                 <option value="${lc.categoryID}" ${l.categoryID == lc.categoryID ? " selected":""} >  ${lc.categoryName} </option>
@@ -109,40 +109,40 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="quantity">Quantity</label>
-                                                        <input min="0"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
+                                                        <label class="small mb-1" for="quantity">Quantity <span style="color: red;">(*)</span></label>
+                                                        <input min="0" max="1000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="unitPrice">Unit Price</label>
-                                                        <input min="0" step=any name="unitPrice" class="form-control" id="unitPrice" type="number" placeholder="Enter your price..." value="${l.unitPrice}">
+                                                        <label class="small mb-1" for="unitPrice">Unit Price <span style="color: red;">(*)</span></label>
+                                                        <input min="0" max="10000" step=any name="unitPrice" class="form-control" id="unitPrice" type="number" placeholder="Enter your price..." value="${l.unitPrice}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="discount">Discount</label>
+                                                        <label class="small mb-1" for="discount">Discount <span style="color: red;">(*)</span></label>
                                                         <input step="0.01" min="0" max="1" name="discount" class="form-control" id="discount" type="number" placeholder="Enter your Phone..." value="${l.discount}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="unitInStock">Unit In Stock</label>
-                                                        <input min="0" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
+                                                        <label class="small mb-1" for="unitInStock">UnitInStock <span style="color: red;">(*)</span></label>
+                                                        <input min="0" max="1000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="description">Description</label>
+                                                        <label class="small mb-1" for="description">Description <span style="color: red;">(*)</span></label>
                                                         <textarea maxlength="100"  style="height: 100px;" name="description" class="form-control" id="description" type="text" placeholder="Enter your Description..." value="">${l.description}</textarea>
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="isActive">Is Active</label>
+                                                        <label class="small mb-1" for="isActive">Is Active <span style="color: red;">(*)</span></label>
                                                         <br>
-                                                        <div style="margin-top: 20px; font-size: 25px;">
+                                                        <div style="margin-top: 20px; font-size: 20px;">
                                                             <input style="margin-left: 10px;" type="radio" value="0" ${l.isActive == 0 ? " checked":""} name="isActive">  No
                                                             <input style="margin-left: 10px;" type="radio" value="1" ${l.isActive == 1 ? " checked":""} name="isActive">  Yes
                                                         </div>
@@ -152,8 +152,8 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-12">
-                                                        <label class="small mb-1" for="imageURL">Images URL</label>
-                                                        <input name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
+                                                        <label class="small mb-1" for="imageURL">Images URL <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="10000" name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
                                                     </div>
                                                 </div>
                                                 <!-- Save changes button-->

@@ -34,15 +34,15 @@
                 <!-- Topbar -->
                 <%@include file="component/AdminTopbarComponent.jsp" %>
                 <!-- End of Topbar -->
-                <h1 class="text-center text-primary">List All Category</h1>
+                <h1 class="text-center text-primary">List All Supplier</h1>
                 <!--Main COntent-->
                 <div id="content">
                     <div class="d-flex justify-content-between" style="background-color: #ccc; padding:10px 0;">
                         <div class="same-style-2 header-search-1">
                             <!-- Topbar Search -->
-                            <form action="adminCategory?do=searchCategory" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <form action="adminSupplier?do=searchSupplier" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                 <div class="input-group">
-                                    <input value="${keySearch}" name="searchKey" type="text" class="form-control bg-light border-2 small" placeholder="Search category name..."
+                                    <input value="${keySearch}" name="searchKey" type="text" class="form-control bg-light border-2 small" placeholder="Search company name..."
                                            aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button name="submit" class="btn btn-primary" type="submit">
@@ -53,7 +53,7 @@
                             </form>
                         </div>
                         <div style="margin-right: 20px;">
-                            <button type="button" class="btn btn-outline-success"><a href="adminCategory?do=createCategory" style="text-decoration: none;"><i class="fas fa-plus"></i> Add new Category</a></button>
+                            <button type="button" class="btn btn-outline-success"><a href="adminSupplier?do=createSupplier" style="text-decoration: none;"><i class="fas fa-plus"></i> Add new Category</a></button>
                         </div>
                     </div>
                     <c:if test="${mess != null}"> 
@@ -67,27 +67,31 @@
                         <table class="border table table-striped table-hover table-bordered border-primary text-center" style="margin-top: 10px">
                             <thead class="bg-info" >
                                 <tr>
-                                    <th>CategoryID</th>
-                                    <th>Category Name</th>
-                                    <th>Description</th>
+                                    <th>Supplier ID</th>
+                                    <th>Company Name</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
                                     <th>Edit</th>
                                     <th>Delete</th>    
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${categoryList}" var="l">
+                                <c:forEach items="${supplierList}" var="l">
                                     <tr>
-                                        <td>${l.categoryID}</td>
-                                        <td>${l.categoryName}</td>
-                                        <td>${l.description}</td>
-                                        <td><a href="adminCategory?do=updateCategory&cateID=${l.categoryID}"><i class="fas fa-edit"></i></a></td>
+                                        <td>${l.supplierID}</td>
+                                        <td>${l.companyName}</td>
+                                        <td>${l.address}</td>
+                                        <td>${l.phone}</td>
+                                        <td>${l.email}</td>
+                                        <td><a href="adminSupplier?do=updateSupplier&supID=${l.supplierID}"><i class="fas fa-edit"></i></a></td>
                                         <td>
-                                            <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.categoryID}">
+                                            <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.supplierID}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
 
                                             <!-- The Modal -->
-                                            <div class="modal" id="myModal${l.categoryID}">
+                                            <div class="modal" id="myModal${l.supplierID}">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
                                                         <!-- Modal Header -->
@@ -97,12 +101,12 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="modal-body">
-                                                            Are you sure you want to delete the category?
+                                                            Are you sure you want to delete the supplier?
                                                         </div>
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminCategory?do=deleteCategory&cateID=${l.categoryID}">Yes</a></button>
+                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminSupplier?do=deleteSupplier&supID=${l.supplierID}">Yes</a></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,24 +118,24 @@
                         </table>
                         <!--Paging-->
                         <!--Paging Category-->
-                        <c:if test="${sessionScope.backToUrl eq \"adminCategory\"}">
+                        <c:if test="${sessionScope.backToUrl eq \"adminSupplier\"}">
                             <c:choose>
-                                <c:when test="${categoryList == null || categoryList.size() == 0}">
+                                <c:when test="${supplierList == null || supplierList.size() == 0}">
                                     Not FOUND
                                 </c:when>
                                 <c:otherwise>
                                     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                         <ul class="pagination">
                                             <c:if test="${page > 1}">
-                                                <li class="page-item"><a class="page-link" href="adminCategory?do=CategoryHome&page=${page - 1}">Previous</a></li>
+                                                <li class="page-item"><a class="page-link" href="adminSupplier?do=supplierHome&page=${page - 1}">Previous</a></li>
                                                 </c:if>
                                                 <c:if test="${totalPage != 1}">
                                                     <c:forEach begin="1" end="${totalPage}" var="i">
-                                                    <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminCategory?do=CategoryHome&page=${i}">${i}</a></li>
+                                                    <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminSupplier?do=supplierHome&page=${i}">${i}</a></li>
                                                     </c:forEach>
                                                 </c:if>
                                                 <c:if test="${page < totalPage}">
-                                                <li class="page-item"><a class="page-link" href="adminCategory?do=CategoryHome&page=${page + 1}">Next</a></li>
+                                                <li class="page-item"><a class="page-link" href="adminSupplier?do=supplierHome&page=${page + 1}">Next</a></li>
                                                 </c:if>
                                         </ul>
                                     </nav>
@@ -139,24 +143,24 @@
                             </c:choose>
                         </c:if>
                         <!--Paging Search-->
-                        <c:if test="${sessionScope.backToUrl eq \"adminCategory?do=searchCategory\"}">
+                        <c:if test="${sessionScope.backToUrl eq \"adminSupplier?do=searchSupplier\"}">
                             <c:choose>
-                                <c:when test="${categoryList == null || categoryList.size() == 0}">
+                                <c:when test="${supplierList == null || supplierList.size() == 0}">
                                     Not FOUND
                                 </c:when>
                                 <c:otherwise>
                                     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                         <ul class="pagination">
                                             <c:if test="${page > 1}">
-                                                <li class="page-item"><a class="page-link" href="adminCategory?do=searchCategory&page=${page - 1}&searchKey=${keySearch}">Previous</a></li>
+                                                <li class="page-item"><a class="page-link" href="adminSupplier?do=searchSupplier&page=${page - 1}&searchKey=${keySearch}">Previous</a></li>
                                                 </c:if>
                                                 <c:if test="${totalPage != 1}">
                                                     <c:forEach begin="1" end="${totalPage}" var="i">
-                                                    <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminCategory?do=searchCategory&page=${i}&searchKey=${keySearch}">${i}</a></li>
+                                                    <li class="page-item ${i == page?" active":""}"><a class="page-link" href="adminSupplier?do=searchSupplier&page=${i}&searchKey=${keySearch}">${i}</a></li>
                                                     </c:forEach>
                                                 </c:if>
                                                 <c:if test="${page < totalPage}">
-                                                <li class="page-item"><a class="page-link" href="adminCategory?do=searchCategory&page=${page + 1}&searchKey=${keySearch}">Next</a></li>
+                                                <li class="page-item"><a class="page-link" href="adminSupplier?do=searchSupplier&page=${page + 1}&searchKey=${keySearch}">Next</a></li>
                                                 </c:if>
                                         </ul>
                                     </nav>

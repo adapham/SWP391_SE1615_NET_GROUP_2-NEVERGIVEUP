@@ -1,3 +1,8 @@
+/*
+    Hiển thị danh sách tất cả sản phẩm 
+    Lọc sản phẩm theo Category và phân trang khi lọc
+    Tìm kiếm sản phẩm theo tên sản phẩm và phân trang khi tìm kiếm
+ */
 package Controller;
 
 import Entity.Category;
@@ -29,10 +34,8 @@ public class MenuController extends HttpServlet {
             //Lấy danh sách sản phẩm theo và phân trang
             if (service.equals("menu")) {
                 String pageStr = request.getParameter("page");
-                //Category
+
                 List<Category> listCategory = daoCategory.getAllCategory();
-                System.out.println("Check list Cate");
-                System.out.println(listCategory);
                 session.setAttribute("listCategory", listCategory);
                 //Phân trang
                 String viewPage = request.getParameter("viewPage");
@@ -50,8 +53,7 @@ public class MenuController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
-                System.out.println("Check listProduct");
-                System.out.println(listProduct);
+
                 //Set Data For JSP
                 request.setAttribute("PAGE_SIZE", PAGE_SIZE);
                 session.setAttribute("backToUrl", "menu");
@@ -61,8 +63,7 @@ public class MenuController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
-            //Xử lý lọc theo category
-            if (service.equals("fillCategory")) {
+            if (service.equals("fillCategory")) {//Xử lý lọc theo category
                 String pageStr = request.getParameter("page");
                 String cateId = request.getParameter("categoryID");
                 int iCateId = Integer.parseInt(cateId);
@@ -97,12 +98,11 @@ public class MenuController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
-            //Tìm kiếm và trả về danh sách Product theo key
-            if (service.equals("search")) {
+            if (service.equals("search")) {//Tìm kiếm và trả về danh sách Product theo key
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
 
-                String keySearch = request.getParameter("searchKey");
+                String keySearch = request.getParameter("searchKey").trim();
                 if (keySearch.isEmpty()) {
                     response.sendRedirect("menu");
                     return;
@@ -136,7 +136,7 @@ public class MenuController extends HttpServlet {
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }

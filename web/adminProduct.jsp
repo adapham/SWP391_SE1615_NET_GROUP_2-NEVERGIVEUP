@@ -34,6 +34,7 @@
                 <!-- Topbar -->
                 <%@include file="component/AdminTopbarComponent.jsp" %>
                 <!-- End of Topbar -->
+                <h1 class="text-center text-primary">List All Product</h1>
                 <!--Main COntent-->
                 <div id="content">
                     <div class="d-flex justify-content-between" style="background-color: #ccc; padding:10px 0;">
@@ -41,7 +42,7 @@
                             <!-- Topbar Search -->
                             <form action="adminProduct?do=searchProduct" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                 <div class="input-group">
-                                    <input name="searchKey" type="text" class="form-control bg-light border-2 small" placeholder="Search product name..."
+                                    <input name="searchKey" type="text" value="${keySearch}" class="form-control bg-light border-2 small" placeholder="Search product name..."
                                            aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button name="submit" class="btn btn-primary" type="submit">
@@ -90,27 +91,27 @@
                                             </a>
                                         </c:if>   
                                     </th>
-                                    <th>SupplierID
+                                    <th>Supplier
                                         <c:if test="${typeSup == \"up\"}">
                                             <a href="adminProduct?do=sort&col=SupplierID&type=asc&page=${page}">
-                                                <i class="fas fa-sort-numeric-up"></i>
+                                                <i class="fas fa-sort-alpha-up"></i>
                                             </a>
                                         </c:if>
                                         <c:if test="${typeSup != \"up\"}">
                                             <a href="adminProduct?do=sort&col=SupplierID&type=desc&page=${page}">
-                                                <i class="fas fa-sort-numeric-down"></i>
+                                                <i class="fas fa-sort-alpha-down"></i>
                                             </a>
                                         </c:if>
                                     </th>
-                                    <th>CategoryID
+                                    <th>Category
                                         <c:if test="${typeCate == \"up\"}">
                                             <a href="adminProduct?do=sort&col=CategoryID&type=asc&page=${page}">
-                                                <i class="fas fa-sort-numeric-up"></i>
+                                                <i class="fas fa-sort-alpha-up"></i>
                                             </a>
                                         </c:if>
                                         <c:if test="${typeCate != \"up\"}">
                                             <a href="adminProduct?do=sort&col=CategoryID&type=desc&page=${page}">
-                                                <i class="fas fa-sort-numeric-down"></i>
+                                                <i class="fas fa-sort-alpha-down"></i>
                                             </a>
                                         </c:if>
                                     </th>
@@ -174,8 +175,16 @@
                                     <tr>
                                         <td>${l.productID}</td>
                                         <td>${l.productName}</td>
-                                        <td>${l.supplierID}</td>
-                                        <td>${l.categoryID}</td>
+                                        <c:forEach items="${listSup}" var="ls">
+                                            <c:if test="${l.supplierID == ls.supplierID}">
+                                                <td>${ls.companyName}</td>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach items="${listCate}" var="lc">
+                                            <c:if test="${l.categoryID == lc.categoryID}">
+                                                <td>${lc.categoryName}</td>
+                                            </c:if>
+                                        </c:forEach>
                                         <td>${l.quantity}</td>
                                         <td>${l.unitPrice}$</td>
                                         <td>${l.discount}</td>
@@ -211,8 +220,8 @@
                                                         </div>
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminProduct?do=deleteProduct&pID=${l.productID}">Confirm</a></button>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white;" href="adminProduct?do=deleteProduct&pID=${l.productID}">Yes</a></button>
                                                         </div>
                                                     </div>
                                                 </div>

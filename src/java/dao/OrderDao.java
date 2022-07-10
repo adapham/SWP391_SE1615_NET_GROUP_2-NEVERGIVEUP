@@ -51,6 +51,24 @@ public class OrderDao extends ConnectDB {
         return 0;
     }
 
+    public int getTotalOrder() {
+        String sql = "select COUNT(*) from [Order]";
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
     public List<Order> listAllOrders() {
         List<Order> list = new ArrayList<>();
         try {
@@ -77,7 +95,7 @@ public class OrderDao extends ConnectDB {
     }
 
     public static void main(String[] args) {
-        OrderDao dao = new OrderDao();        
+        OrderDao dao = new OrderDao();
         Order order = Order.builder()
                 .accountID(2)
                 .shipperID(1)
@@ -88,6 +106,7 @@ public class OrderDao extends ConnectDB {
                 .build();
         System.out.println(dao.insertOrderID(order));
     }
+
     public int updateStatus(int status, int orId) {
         int n = 0;
         String sql = "update [Order]set status = ? where OrderID = ?";
