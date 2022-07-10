@@ -6,6 +6,8 @@ import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -40,7 +42,7 @@ public class CheckOut1Controller extends HttpServlet {
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String temp = request.getParameter("temp");
-      
+
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
             Enumeration em = session.getAttributeNames();
@@ -63,12 +65,15 @@ public class CheckOut1Controller extends HttpServlet {
                 total = (double) total / 100;
                 totalMoney = total;
             }
-
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            String formatted = current.format(formatter);
             Order order = Order.builder()
                     .accountID(Integer.parseInt(accountID))
                     .shipperID(1)
                     .address(address.trim())
                     .email(email)
+                    .orderDate(formatted)
                     .status(1)
                     .phone(phone.trim())
                     .build();

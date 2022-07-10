@@ -1,8 +1,7 @@
 package Controller;
 
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import dao.impl.FeedbackDAOImpl;
-
 import dao.impl.CategoryDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.ProductDAOImpl;
@@ -34,7 +33,7 @@ public class AdminHomeController extends HttpServlet {
                 int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
                 int totalOrder = new OrderDAOImpl().getTotalOrder();
                 int totalFeedback = new FeedbackDAOImpl().getTotalFeedBack();
-                int totalCustomer = new AccountDao().getTotalCustomer();
+                int totalCustomer = new AccountDAOImpl().getTotalCustomer();
                 int totalShipper = new ShipperDAOImpl().getTotalShipper();
 
                 request.setAttribute("totalOrder", totalOrder);

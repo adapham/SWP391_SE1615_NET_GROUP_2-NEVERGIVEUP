@@ -2,7 +2,7 @@ package Controller;
 
 import Entity.Account;
 import Entity.Product;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
@@ -67,9 +67,6 @@ public class CheckOutController extends HttpServlet {
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            request.getRequestDispatcher("error500.jsp").forward(request, response);
-        }
-        catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

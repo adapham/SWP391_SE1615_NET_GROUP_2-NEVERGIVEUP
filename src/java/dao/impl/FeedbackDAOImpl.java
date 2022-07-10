@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author admin
  */
-public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO{
+public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
 
     public List ListFeedBackByProductID(int productID) {
         List<FeedBack> list = new ArrayList<>();
@@ -73,15 +73,17 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO{
                 + "           ([Name]\n"
                 + "           ,[Email]\n"
                 + "           ,[Subject]\n"
-                + "           ,[Message])\n"
+                + "           ,[Message]\n"
+                + "           ,[Date])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?)";
+                + "           (?,?,?,?,?)";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, intouch.getName());
             pre.setString(2, intouch.getEmail());
             pre.setString(3, intouch.getSubject());
             pre.setString(4, intouch.getMessage());
+            pre.setString(5, intouch.getDate());
             pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -206,7 +208,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO{
         return 0;
     }
 
-    public int deleteFeedBackByID(String feedbackid) throws Exception{
+    public int deleteFeedBackByID(String feedbackid) throws Exception {
         int n = 0;
         String sql = "delete from Feedback where FeedbackID = ?";
 

@@ -3,7 +3,7 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
+import dao.impl.AccountDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
@@ -35,9 +35,6 @@ public class ConfirmController extends HttpServlet {
         try {
             OrderDAOImpl daoOrder = new OrderDAOImpl();
             OrderDetailsDAOImpl daoOrderDetails = new OrderDetailsDAOImpl();
-            AccountDao daoAccount = new AccountDao();
-            OrderDao daoOrder = new OrderDao();
-            OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
             AccountDAOImpl daoAccount = new AccountDAOImpl();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("Account");
@@ -89,9 +86,6 @@ public class ConfirmController extends HttpServlet {
             request.getRequestDispatcher("confirm.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
-            request.getRequestDispatcher("error500.jsp").forward(request, response);
-        }
-        catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

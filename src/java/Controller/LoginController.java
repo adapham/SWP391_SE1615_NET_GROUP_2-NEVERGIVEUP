@@ -2,7 +2,6 @@ package Controller;
 
 import Entity.Account;
 import dao.impl.AccountDAOImpl;
-import dao.AccountDao;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.OrderDAOImpl;
@@ -169,7 +168,7 @@ public class LoginController extends HttpServlet {
                         int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
                         int totalOrder = new OrderDAOImpl().getTotalOrder();
                         int totalFeedback = new FeedbackDAOImpl().getTotalFeedBack();
-                        int totalCustomer = new AccountDao().getTotalCustomer();
+                        int totalCustomer = new AccountDAOImpl().getTotalCustomer();
                         int totalShipper = new ShipperDAOImpl().getTotalShipper();
 
                         request.setAttribute("totalOrder", totalOrder);

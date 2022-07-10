@@ -9,18 +9,14 @@ import Entity.Account;
 import Entity.OrderDetails;
 import dao.AccountDAO;
 import dao.ConnectDB;
-import dao.ConnectDB;
-import dao.OrderDetailsDao;
+import dao.OrderDetailsDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -856,7 +852,6 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
     }
 
     public List<OrderDetails> getDetailsBill(int accountId) {
-        OrderDetailsDao dao = new OrderDetailsDao();
         List<OrderDetails> list = new ArrayList<>();
         String sql = "select ac.DisplayName, o.[Address], ac.Email, o.Phone, o.OrderDate, od.OrderID, p.ProductName,\n"
                 + "od.Price, od.Quantity, (od.Price*od.Quantity)'Total', s.StatusID,p.ImageURL from [Order] o\n"
@@ -892,4 +887,21 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         return list;
     }
 
+    public int getTotalCustomer() throws Exception{
+        String sql = "select COUNT(*) from Account where Role = 1";
+        try {
+            //Đưa vào prepare
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            //Đưa vào ResultSet
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return 0;
+    }
 }

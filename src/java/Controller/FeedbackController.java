@@ -8,6 +8,8 @@ package Controller;
 import Entity.Intouch;
 import dao.impl.FeedbackDAOImpl;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,11 +65,15 @@ public class FeedbackController extends HttpServlet {
                 request.getRequestDispatcher("contact.jsp").forward(request, response);
                 return;
             }
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            String formatted = current.format(formatter);
             Intouch intouch = Intouch.builder()
                     .name(name.trim())
                     .email(email.trim())
                     .subject(subject.trim())
                     .message(message.trim())
+                    .date(formatted)
                     .build();
             daofeedback.InsertIntouch(intouch);            
             String mess = "Send Intouch success!";

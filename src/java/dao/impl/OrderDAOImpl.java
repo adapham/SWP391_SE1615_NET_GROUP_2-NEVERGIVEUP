@@ -25,21 +25,23 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         String sql = "INSERT INTO [dbo].[Order]\n"
                 + "           ([AccountID]\n"
                 + "           ,[ShipperID]\n"
+                + "           ,[OrderDate]\n"
                 + "           ,[Address]\n"
                 + "           ,[Email]\n"
                 + "           ,[Status]\n"
                 + "           ,[Phone])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?)";
         try {
 
             PreparedStatement pre = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, order.getAccountID());
             pre.setInt(2, order.getShipperID());
-            pre.setString(3, order.getAddress());
-            pre.setString(4, order.getEmail());
-            pre.setInt(5, order.getStatus());
-            pre.setString(6, order.getPhone());
+            pre.setString(3, order.getOrderDate());
+            pre.setString(4, order.getAddress());
+            pre.setString(5, order.getEmail());
+            pre.setInt(6, order.getStatus());
+            pre.setString(7, order.getPhone());
             pre.executeUpdate();
             ResultSet rs = pre.getGeneratedKeys();
             if (rs.next()) {
