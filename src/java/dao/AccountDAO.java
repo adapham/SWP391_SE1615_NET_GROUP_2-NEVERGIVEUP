@@ -84,4 +84,6 @@ public interface AccountDAO {
     public List ListAccountOfShipperWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) throws Exception;
 
     public Account infoAccount(String user, String pass) throws Exception;
+    
+    public int getTotalCustomer() throws Exception;
 }
