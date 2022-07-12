@@ -185,7 +185,8 @@ public class LoginController extends HttpServlet {
             if (service.equals("logout")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute("Account");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                //response.sendRedirect("login.jsp");
             }
             if (service.equals("submitUpdate")) {
 
