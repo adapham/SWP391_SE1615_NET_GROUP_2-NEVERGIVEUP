@@ -68,11 +68,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6 col-md-6" style="margin-top: 15%">
                             <div class="product-details-content pro-details-content-mrg">
                                 <h2>${pro.productName}</h2>
-
                                 <p>${pro.description}</p>
                                 <div class="pro-details-price">
                                     <c:if test="${pro.unitPrice !=pro.priceAferDiscount}">

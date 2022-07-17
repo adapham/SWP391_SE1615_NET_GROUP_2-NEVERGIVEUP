@@ -93,6 +93,54 @@ public class OrderDao extends ConnectDB {
         }
         return list;
     }
+    public List<Order> listAllOrdersID() {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select * from [Order] where OrderID=";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt(1))
+                        .accountID(rs.getInt(2))
+                        .shipperID(rs.getInt(3))
+                        .orderDate(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .status(rs.getInt(7))
+                        .phone(rs.getString(8))
+                        .build();
+                list.add(ord);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public List<Order> listAllOrdersbyID( int AccountID) {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select * from [Order] where AccountID="+AccountID;
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt(1))
+                        .accountID(rs.getInt(2))
+                        .shipperID(rs.getInt(3))
+                        .orderDate(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .status(rs.getInt(7))
+                        .phone(rs.getString(8))
+                        .build();
+                list.add(ord);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         OrderDao dao = new OrderDao();

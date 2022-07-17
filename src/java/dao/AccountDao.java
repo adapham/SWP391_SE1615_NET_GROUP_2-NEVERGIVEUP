@@ -65,7 +65,28 @@ public class AccountDao extends ConnectDB {
         }
         return list;
     }
+    public List ListAllAccountEmpID() {
+        List<Integer> list = new ArrayList<>();
+        String sql = "select * from Account where Role = 2";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                int accountid = rs.getInt("accountid");
+                list.add(accountid);
+            }
+        } catch (SQLException ex) {
+            //ex.printStackTrace();
+             return null;
+        }
+        return list;
+    }
 
+     public int getRandomElemAccountEmpID(List<Integer> list)
+    {
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+    
     public int checkAccount(String username, String password) {
         AccountDao dao = new AccountDao();
         List<Account> list = dao.ListAllAccount();
@@ -212,6 +233,34 @@ public class AccountDao extends ConnectDB {
             ex.printStackTrace();
         }
         return list;
+    }
+    public Account getAccountByIDA(int AccountID) {
+        Account acc ;
+        String sql = "select * from Account where AccountID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, AccountID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                 acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .gender(rs.getInt("gender"))
+                        .build();
+                return (acc);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     public Account getAccountByAccountID(int id){
         String sql = "select * from Account where AccountID =?";
@@ -785,7 +834,8 @@ public class AccountDao extends ConnectDB {
     public static void main(String[] args) {
 
         AccountDao dao = new AccountDao();
-        
+        List<Integer> list=dao.ListAllAccountEmpID();
+        System.out.println(dao.getRandomElemAccountEmpID(list));
     }
     public Account infoAccount(String user, String pass){
         String sql = "select * from Account where UserName = '?' and Password = '?'";
