@@ -212,6 +212,12 @@ public class AdminSupplierController extends HttpServlet {
                     if (createSupplier > 0) {
                         String mess = "Create successfull";
                         request.setAttribute("mess", mess);
+                        //Clear Data after create successfull
+                        request.setAttribute("companyName", "");
+                        request.setAttribute("address", "");
+                        request.setAttribute("phone", "");
+                        request.setAttribute("email", "");
+                        
                         request.getRequestDispatcher("adminSupplierCreate.jsp").forward(request, response);
                     }
                 }
@@ -230,7 +236,7 @@ public class AdminSupplierController extends HttpServlet {
 
                 if (delete > 0) {//Remove Successs
                     mess = "Delete Successfull!";
-                }else {
+                } else {
                     mess = "Can't delete Supplier";
                 }
 

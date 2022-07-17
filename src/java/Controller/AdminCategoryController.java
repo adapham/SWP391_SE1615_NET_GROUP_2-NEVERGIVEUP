@@ -138,6 +138,10 @@ public class AdminCategoryController extends HttpServlet {
 
                     if (createCategory > 0) {
                         String mess = "Create successfull";
+                        //Clear Data after create successfull
+                        request.setAttribute("cateName", "");
+                        request.setAttribute("description", "");
+
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                     }
