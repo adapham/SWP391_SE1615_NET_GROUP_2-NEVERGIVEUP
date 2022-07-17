@@ -167,7 +167,7 @@
                             <div class="product-plr-1">
                                 <div class="single-product-wrap">
                                     <div class="product-img product-img-zoom mb-15">
-                                        <a href="product-details.html">
+                                        <a href="details.jsp">
                                             <img src="${rel.imageURL}" alt="">
                                         </a>
                                         <div class="product-action-2 tooltip-style-2">
@@ -200,12 +200,12 @@
                                             </div>
                                             <span>(2)</span>
                                         </div>
-                                        <h3><a href="product-details.html">${rel.productName}</a></h3>
+                                        <h3><a href="details.jsp">${rel.productName}</a></h3>
                                         <div class="product-price-2">
                                             <span>$${rel.unitPrice}</span>
                                         </div>
                                         <div class="pro-add-to-cart">
-                                            <button title="Add to Cart"><a href="AddToCart?pid=${rel.productID}">Add To Cart</button>
+                                            <button title="Add to Cart"><a href="AddToCart?pid=${rel.productID}" style="color: white">Add To Cart</a></button>
                                         </div>
                                     </div>
                                 </div>

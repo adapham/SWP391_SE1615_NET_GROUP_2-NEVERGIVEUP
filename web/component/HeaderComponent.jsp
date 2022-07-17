@@ -31,9 +31,9 @@
                                             </c:if>
                                         </ul>
                                     </li>
-                                    <li><a href="blog.jsp">BLOG </a>
+                                    <li><a href="home?do=blog">BLOG </a>
                                     </li>
-                                    <li><a href="contact.jsp">CONTACT </a></li>
+                                    <li><a href="home?do=contact">CONTACT </a></li>
                                 </ul>
                             </nav>
                         </div>

@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.impl;
 
 import Entity.Account;
+import Entity.OrderDetails;
+import dao.AccountDAO;
 import dao.ConnectDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,9 +28,9 @@ import javax.mail.internet.MimeMessage;
  *
  * @author admin
  */
-public class AccountDao extends ConnectDB {
+public class AccountDAOImpl extends ConnectDB implements AccountDAO {
 
-    public List ListAllAccount() {
+    public List ListAllAccount() throws Exception {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account";
         ResultSet rs = getData(sql);
@@ -60,8 +62,7 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            //ex.printStackTrace();
-             return null;
+            throw ex;
         }
         return list;
     }
@@ -81,34 +82,34 @@ public class AccountDao extends ConnectDB {
         return list;
     }
 
-     public int getRandomElemAccountEmpID(List<Integer> list)
-    {
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
-    }
-    
-    public int checkAccount(String username, String password) {
-        AccountDao dao = new AccountDao();
-        List<Account> list = dao.ListAllAccount();
-        for (Account account : list) {
-            if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 1) {
-                return 1;
-            }
-            if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 2) {
-                return 2;
-            }
-            if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 3) {
-                return 3;
-            }
-            if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 4) {
-                return 4;
-            }
+    public int checkAccount(String username, String password) throws Exception {
+        AccountDAOImpl dao = new AccountDAOImpl();
+        try {
+            List<Account> list = dao.ListAllAccount();
+            for (Account account : list) {
+                if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 1) {
+                    return 1;
+                }
+                if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 2) {
+                    return 2;
+                }
+                if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 3) {
+                    return 3;
+                }
+                if (account.getUsername().equals(username) && account.getPassword().equals(password) && account.getRole() == 4) {
+                    return 4;
+                }
 
+            }
+        } catch (SQLException ex) {
+            throw ex;
         }
+
         return 0;
     }
+
     //Get Account By User Name
-    public Account GetDisplayAccountByUsername(String username) {
+    public Account GetDisplayAccountByUsername(String username) throws Exception {
         String sql = "select * from Account where UserName =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -129,12 +130,12 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public Account GetDisplayNameByUsername(String username) {
+    public Account GetDisplayNameByUsername(String username) throws Exception {
         String sql = "select DisplayName from Account where UserName =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -147,12 +148,12 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public Account GetImageURLByUsername(String username) {
+    public Account GetImageURLByUsername(String username) throws Exception {
         String sql = "select ImageURL from Account where UserName =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -165,12 +166,12 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public Account GetAccountIDLByUsername(String username) {
+    public Account GetAccountIDLByUsername(String username) throws Exception {
         String sql = "select AccountID from Account where UserName =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -183,12 +184,12 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public Account GetPasswordByUsername(String username) {
+    public Account GetPasswordByUsername(String username) throws Exception {
         String sql = "select Password from Account where UserName =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -201,12 +202,12 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public List getAccountByID(int AccountID) {
+    public List getAccountByID(int AccountID) throws Exception {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account where AccountID =?";
         try {
@@ -230,7 +231,7 @@ public class AccountDao extends ConnectDB {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
@@ -262,7 +263,9 @@ public class AccountDao extends ConnectDB {
         }
         return null;
     }
-    public Account getAccountByAccountID(int id){
+   
+
+    public Account getAccountByAccountID(int id) throws Exception {
         String sql = "select * from Account where AccountID =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -284,12 +287,12 @@ public class AccountDao extends ConnectDB {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
-    public int updateAccount(Account acc) {
+    public int updateAccount(Account acc) throws Exception {
         int n = 0;
         String sql = "update Account set DisplayName=?, Address =?,Email=?, Phone=?,ImageURL=?,Gender=? where AccountID =?";
         try {
@@ -302,13 +305,13 @@ public class AccountDao extends ConnectDB {
             pre.setInt(6, acc.getGender());
             pre.setInt(7, acc.getAccountid());
             n = pre.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            throw ex;
         }
         return n;
     }
 
-    public int changePassword(Account acc) {
+    public int changePassword(Account acc) throws Exception {
         int n = 0;
         String sql = "update Account set Password=? where AccountID =?";
         try {
@@ -317,12 +320,12 @@ public class AccountDao extends ConnectDB {
             pre.setInt(2, acc.getAccountid());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return n;
     }
 
-    public int updatePasswordByEmail(Account acc) {
+    public int updatePasswordByEmail(Account acc) throws Exception {
         int n = 0;
         String sql = "update Account set Password=? where Email =?";
         try {
@@ -331,12 +334,12 @@ public class AccountDao extends ConnectDB {
             pre.setString(2, acc.getEmail());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return n;
     }
 
-    public List ListAllUserName() {
+    public List ListAllUserName() throws Exception {
         List<String> list = new ArrayList<String>();
         String sql = "select UserName from Account";
         ResultSet rs = getData(sql);
@@ -346,12 +349,12 @@ public class AccountDao extends ConnectDB {
                 list.add(username);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public List ListAllEmail() {
+    public List ListAllEmail() throws Exception {
         List<String> list = new ArrayList<String>();
         String sql = "select Email from Account";
         ResultSet rs = getData(sql);
@@ -361,12 +364,12 @@ public class AccountDao extends ConnectDB {
                 list.add(Email);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public List ListAllPhone() {
+    public List ListAllPhone() throws Exception {
         List<String> list = new ArrayList<String>();
         String sql = "select Phone from Account";
         ResultSet rs = getData(sql);
@@ -376,12 +379,12 @@ public class AccountDao extends ConnectDB {
                 list.add(Phone);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public Account GetAccountByEmail(String email) {
+    public Account GetAccountByEmail(String email) throws Exception {
         String sql = "select UserName,Address,Phone from Account where Email =?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -397,7 +400,7 @@ public class AccountDao extends ConnectDB {
                 return acc;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
@@ -431,7 +434,7 @@ public class AccountDao extends ConnectDB {
     }
 
     public String SendMail(Account acc) {
-        AccountDao dao = new AccountDao();
+        AccountDAOImpl dao = new AccountDAOImpl();
         String username = acc.getUsername();
         String Address = acc.getAddress();
         String phone = acc.getPhone();
@@ -455,11 +458,11 @@ public class AccountDao extends ConnectDB {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        AccountDao.send(email, subject, message, "khainnhe151295@fpt.edu.vn", "01688219330Khai");
+        AccountDAOImpl.send(email, subject, message, "", "");
         return password;
     }
 
-    public void RegisterAccount(Account acc) {
+    public void RegisterAccount(Account acc) throws Exception {
 
         String sql = "INSERT INTO [dbo].[Account]"
                 + "           ([UserName]"
@@ -485,8 +488,8 @@ public class AccountDao extends ConnectDB {
             pre.setInt(8, acc.getRole());
             pre.setInt(9, acc.getGender());
             pre.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
 
     }
@@ -497,7 +500,7 @@ public class AccountDao extends ConnectDB {
         return String.format("%06d", number);
     }
 
-    public List ListAccountOfCustomer() {
+    public List ListAccountOfCustomer() throws Exception {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account where Role =1";
         ResultSet rs = getData(sql);
@@ -527,40 +530,70 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public int updateEmailCustomerByEmail(String email) {
+    public int updateEmailCustomerByEmail(String accid) throws Exception {
         int n = 0;
-        String sql = "update Account set Email = '' where Email = ?";
+        String sql = "update Account set Email = '' where AccountID =?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, accid);
+            n = ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return n;
+    }
+
+    public int updateEmailOldCustomerByEmail(String email, String accid) throws Exception {
+        int n = 0;
+        String sql = "update Account set Email = ? where AccountID =?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, email);
+            ps.setString(2, accid);
             n = ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }
 
-    public int updatePhoneCustomerByPhone(String Phone) {
+    public int updatePhoneCustomerByPhone(String accid) throws Exception {
         int n = 0;
-        String sql = "update Account set Phone = '' where Phone = ?";
+        String sql = "update Account set Phone = '' where AccountID =?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, accid);
+            n = ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return n;
+    }
+
+    public int updatePhoneOldCustomerByPhone(String Phone, String accid) throws Exception {
+        int n = 0;
+        String sql = "update Account set Phone = ? where AccountID=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, Phone);
+            ps.setString(2, accid);
             n = ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }
 
-    public int deleteAccountById(String accid) {
+    public int deleteAccountById(String accid) throws Exception {
         int n = 0;
         String sql = "delete from Account where AccountID =?";
 
@@ -568,13 +601,13 @@ public class AccountDao extends ConnectDB {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, accid);
             n = ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return n;
     }
 
-    public List ListAccountOfCustomerWithPagging(int page, int PAGE_SIZE) {
+    public List ListAccountOfCustomerWithPagging(int page, int PAGE_SIZE) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=1\n"
                 + "order by AccountID\n"
@@ -602,12 +635,12 @@ public class AccountDao extends ConnectDB {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public List ListAccountOfEmployeeWithPagging(int page, int PAGE_SIZE) {
+    public List ListAccountOfEmployeeWithPagging(int page, int PAGE_SIZE) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=2\n"
                 + "order by AccountID\n"
@@ -635,11 +668,12 @@ public class AccountDao extends ConnectDB {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
-    public List ListAccountOfShipperWithPagging(int page, int PAGE_SIZE) {
+
+    public List ListAccountOfShipperWithPagging(int page, int PAGE_SIZE) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=4\n"
                 + "order by AccountID\n"
@@ -666,12 +700,12 @@ public class AccountDao extends ConnectDB {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public int TotalAccountOfCustomer() {
+    public int TotalAccountOfCustomer() throws Exception {
         String sql = "select count(AccountID) from Account where Role =1";
 
         try {
@@ -681,13 +715,13 @@ public class AccountDao extends ConnectDB {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
 
-    public int TotalAccountOfEmployee() {
+    public int TotalAccountOfEmployee() throws Exception {
         String sql = "select count(AccountID) from Account where Role =2";
 
         try {
@@ -697,12 +731,13 @@ public class AccountDao extends ConnectDB {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
-     public int TotalAccountOfShipper() {
+
+    public int TotalAccountOfShipper() throws Exception {
         String sql = "select count(AccountID) from Account where Role =4";
 
         try {
@@ -712,13 +747,13 @@ public class AccountDao extends ConnectDB {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
 
-    public int TotalAccountOfCustomerByUserName(String keysearch) {
+    public int TotalAccountOfCustomerByUserName(String keysearch) throws Exception {
         String sql = "select count(AccountID) from Account where Role =1 and UserName like ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -727,13 +762,13 @@ public class AccountDao extends ConnectDB {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
 
-    public List ListAccountOfCustomerWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+    public List ListAccountOfCustomerWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=1 and UserName like ?\n"
                 + "                order by AccountID\n"
@@ -761,12 +796,12 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
-    public List ListAccountOfEmployeeWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+    public List ListAccountOfEmployeeWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=2 and UserName like ?\n"
                 + "                order by AccountID\n"
@@ -794,11 +829,12 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
-     public List ListAccountOfShipperWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) {
+
+    public List ListAccountOfShipperWithPaggingByUserName(int page, int PAGE_SIZE, String keysearch) throws Exception {
         List list = new ArrayList();
         String sql = "select * from Account where Role=4 and UserName like ?\n"
                 + "                order by AccountID\n"
@@ -826,24 +862,25 @@ public class AccountDao extends ConnectDB {
                 list.add(acc);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         return list;
     }
 
     public static void main(String[] args) {
 
-        AccountDao dao = new AccountDao();
-        List<Integer> list=dao.ListAllAccountEmpID();
-        System.out.println(dao.getRandomElemAccountEmpID(list));
+        AccountDAOImpl dao = new AccountDAOImpl();
+        List<OrderDetails> list = dao.getDetailsBill(11);
+        System.out.println(list);
     }
-    public Account infoAccount(String user, String pass){
+
+    public Account infoAccount(String user, String pass) throws Exception {
         String sql = "select * from Account where UserName = '?' and Password = '?'";
         Account ac;
         try {
-            PreparedStatement pre= conn.prepareStatement(sql);
+            PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 return ac = Account.builder()
                         .accountid(rs.getInt("AccountID"))
                         .address(rs.getString("Address"))
@@ -851,13 +888,48 @@ public class AccountDao extends ConnectDB {
                         .phone(rs.getString("Phone"))
                         .build();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return null;
     }
 
-    public int getTotalCustomer() {
+    public List<OrderDetails> getDetailsBill(int accountId) {
+        List<OrderDetails> list = new ArrayList<>();
+        String sql = "select ac.DisplayName, o.[Address], ac.Email, o.Phone, o.OrderDate, od.OrderID, p.ProductName,\n"
+                + "od.Price, od.Quantity, (od.Price*od.Quantity)'Total', s.StatusID,p.ImageURL from [Order] o\n"
+                + "                join Account ac on ac.AccountID = o.AccountID\n"
+                + "                join [Order Details] od on od.OrderID = o.OrderID\n"
+                + "                join Product p on p.ProductID = od.ProductID\n"
+                + "                join [Status] s on s.StatusID = o.Status \n"
+                + "                where ac.AccountID = ?  order by o.OrderID desc";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, accountId);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                OrderDetails od = OrderDetails.builder()
+                        .displayname(rs.getString("DisplayName"))
+                        .address(rs.getString("Address"))
+                        .email(rs.getString("Email"))
+                        .phone(rs.getString("Phone"))
+                        .orderDate(rs.getString("OrderDate"))
+                        .orderID(rs.getInt("OrderID"))
+                        .productName(rs.getString("ProductName"))
+                        .price(rs.getDouble("Price"))
+                        .quantity(rs.getInt("Quantity"))
+                        .total(rs.getDouble("Total"))
+                        .status(rs.getInt("StatusID"))
+                        .imageURL(rs.getString("imageURL"))
+                        .build();
+                list.add(od);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public int getTotalCustomer() throws Exception{
         String sql = "select COUNT(*) from Account where Role = 1";
         try {
             //Đưa vào prepare
@@ -869,11 +941,9 @@ public class AccountDao extends ConnectDB {
                 int count = rs.getInt(1);
                 return count;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return 0;
     }
-    
-    
 }

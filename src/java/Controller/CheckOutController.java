@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Account;
-import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
-import dao.OrderDao;
-import dao.OrderDetailsDao;
+import dao.impl.AccountDAOImpl;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -23,10 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "CheckOutController", urlPatterns = {"/checkOut"})
 public class CheckOutController extends HttpServlet {
 
@@ -42,8 +31,8 @@ public class CheckOutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            AccountDao daoAccount = new AccountDao();
+        try {
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
 //            Account ac = null;
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
@@ -71,13 +60,14 @@ public class CheckOutController extends HttpServlet {
                 total = (double) total / 100;
                 totalMoney = total;
             }
-            //out.print(acc);
-//            int infoAccount = ac.getAccountid();
+
             request.setAttribute("account", account);
             request.setAttribute("totalMoney", totalMoney);
             request.setAttribute("listProductCarts", listProductCarts);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
 
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 
@@ -107,60 +97,49 @@ public class CheckOutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        OrderDao daoOrder = new OrderDao();
-        OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
-        String accountID = request.getParameter("accountID");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String temp = request.getParameter("temp");
-        //out.print(temp);        
-        List<Product> listProductCarts = new ArrayList<Product>();
-        HttpSession session = request.getSession();
-        Enumeration em = session.getAttributeNames();
-        while (em.hasMoreElements()) {
-            String key = em.nextElement().toString();
-            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
-                Product pro = (Product) session.getAttribute(key);
-                if (pro == null) {
-                    listProductCarts = new ArrayList<>();
+        try {
+
+            OrderDAOImpl daoOrder = new OrderDAOImpl();
+            OrderDetailsDAOImpl daoOrderDetails = new OrderDetailsDAOImpl();
+            String accountID = request.getParameter("accountID");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String temp = request.getParameter("temp");
+            //out.print(temp);        
+            List<Product> listProductCarts = new ArrayList<Product>();
+            HttpSession session = request.getSession();
+            Enumeration em = session.getAttributeNames();
+            while (em.hasMoreElements()) {
+                String key = em.nextElement().toString();
+                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
+                    Product pro = (Product) session.getAttribute(key);
+                    if (pro == null) {
+                        listProductCarts = new ArrayList<>();
+                    }
+                    listProductCarts.add(pro);
+                    session.setAttribute(key, pro);
                 }
-                listProductCarts.add(pro);
-                session.setAttribute(key, pro);
             }
-        }
-        double totalMoney = 0;
-        for (Product list : listProductCarts) {
-            totalMoney += list.getUnitPrice() * list.getQuantity();
-            totalMoney *= 100;
-            double total = Math.ceil(totalMoney);
-            total = (double) total / 100;
-            totalMoney = total;
-        }
-
-        Order order = Order.builder()
-                .accountID(Integer.parseInt(accountID))
-                .shipperID(1)
-                .address(address.trim())
-                .email(email)
-                .status(1)
-                .phone(phone.trim())
-                .build();
-        int orderID = new OrderDao().insertOrderID(order);
-        new OrderDetailsDao().saveCart(orderID, listProductCarts);
-
-        while (em.hasMoreElements()) {
-            String key = em.nextElement().toString();
-            if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
-                session.removeAttribute(key);
+            double totalMoney = 0;
+            for (Product list : listProductCarts) {
+                totalMoney += list.getUnitPrice() * list.getQuantity();
+                totalMoney *= 100;
+                double total = Math.ceil(totalMoney);
+                total = (double) total / 100;
+                totalMoney = total;
             }
+
+            while (em.hasMoreElements()) {
+                String key = em.nextElement().toString();
+                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
+                    session.removeAttribute(key);
+                }
+            }
+            request.getRequestDispatcher("confirm").forward(request, response);
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("confirm").forward(request, response);
-//        if(Integer.parseInt(temp)==1){
-//            request.getRequestDispatcher("menu").forward(request, response);
-//        }
-//        request.getRequestDispatcher("login?do=logout").forward(request, response);
     }
 
     /**

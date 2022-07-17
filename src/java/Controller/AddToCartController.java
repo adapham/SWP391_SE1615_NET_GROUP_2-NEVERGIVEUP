@@ -3,7 +3,6 @@ package Controller;
 import Entity.Product;
 import dao.impl.ProductDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,10 +54,6 @@ public class AddToCartController extends HttpServlet {
             }
             session.setAttribute(pid, pro);
             session.setAttribute("size", size);
-//            String urlHistory = (String) session.getAttribute("urlHistory");
-//            if (urlHistory == null) {
-//                urlHistory = "details?do=details&pid=" + iPID;
-//            }
             response.sendRedirect("menu");
         } catch (Exception ex) {
             request.getRequestDispatcher("error500.jsp").forward(request, response);

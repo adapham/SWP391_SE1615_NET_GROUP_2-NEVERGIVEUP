@@ -23,4 +23,5 @@ public class FeedBack {
     private String disPlayName;
     private String imageURL;
     private String timeComment;
+    private String productName;
 }

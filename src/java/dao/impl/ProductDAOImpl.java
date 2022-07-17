@@ -2,8 +2,7 @@ package dao.impl;
 
 import Entity.Product;
 import dao.ConnectDB;
-import dao.FeedbackDao;
-import dao.OrderDetailsDao;
+import dao.OrderDetailsDAO;
 import dao.ProductDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -266,7 +265,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
                         .imageURL(rs.getString(10))
                         .isActive(rs.getInt(11))
                         .priceAferDiscount(price)
-                        .build();
+                        .build();   
                 return pro;
             }
         } catch (Exception ex) {
@@ -528,9 +527,10 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public static void main(String[] args) {
         try {
             ProductDAOImpl dao = new ProductDAOImpl();
-            List list = dao.getProductWithPaging(1, 3);
-            for (Object object : list) {
-                System.out.println(object);
+            List list = dao.getAllProductByProductID(2);
+//            List list = dao.searchProductByNameAndCategoryId("a", 1);
+            for (Object s : list) {
+                System.out.println(s);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -540,10 +540,10 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     public int deleteProduct(int pID) throws Exception{
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
-        FeedbackDao daoFeedback = new FeedbackDao();
-        OrderDetailsDao daoOdDetail = new OrderDetailsDao();
-        daoFeedback.deleteFeedbackByProductID(pID);
-        daoOdDetail.deleteOrderDetailByProductID(pID);
+//        FeedbackDao daoFeedback = new FeedbackDao();
+//        OrderDetailsDao daoOdDetail = new OrderDetailsDao();
+//        daoFeedback.deleteFeedbackByProductID(pID);
+//        daoOdDetail.deleteOrderDetailByProductID(pID);
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -553,5 +553,39 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
             throw ex;
         }
         return n;
+    }
+
+    public List<Product> searchProductByNameAndCategoryId(String searchKey, int cateId, int pId) throws Exception{
+        List<Product> listPro = new ArrayList<>();
+        String sql = "select * from Product where ProductName like ? and CategoryID = ? and ProductID != ?";
+        try {
+            ProductDAOImpl dao = new ProductDAOImpl();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + searchKey + "%");
+            pre.setInt(2, cateId);
+            pre.setInt(3, pId);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return listPro;
     }
 }

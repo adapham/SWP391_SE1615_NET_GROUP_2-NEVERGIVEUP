@@ -46,7 +46,8 @@
                 <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
                 <a class="collapse-item" href="adminCategory"> Categories</a>
                 <a style="padding-left: 30px;" class="collapse-item" href="adminCategory?do=createCategory"><i class="fas fa-plus"></i> Create Category</a>
-                <a class="collapse-item" href="#"> Suppliers</a>
+                <a class="collapse-item" href="adminSupplier"> Suppliers</a>
+                <a style="padding-left: 30px;" class="collapse-item" href="adminSupplier?do=createSupplier"><i class="fas fa-plus"></i> Create Supplier</a>
             </div>
         </div>
     </li>
@@ -71,7 +72,7 @@
                 <a class="collapse-item" href="accountmanager">Customers</a>
                 <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
                 <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
-                <a class="collapse-item" href="adminCreateAccount.jsp">Create Account</a>
+                <a class="collapse-item" href="accountmanager?do=createAccount">Create Account</a>
             </div>
         </div>
     </li>
@@ -93,7 +94,7 @@
         <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Bill Manager</h6>
-                <a class="collapse-item" href="billManager?do=bill">Bills</a>
+                <a class="collapse-item" href="billManager?do=pageBill">Bills</a>
             </div>
         </div>
     </li>
@@ -114,8 +115,8 @@
         <div id="collapseFeedback" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">FeedBack Manager CRUD:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="#">Feekbacks</a>
+                <a class="collapse-item" href="feedbackManager?do=getInTouch">Get in touch</a>
+                <a class="collapse-item" href="feedbackManager?do=listFeedback">Feedbacks</a>
             </div>
         </div>
     </li>

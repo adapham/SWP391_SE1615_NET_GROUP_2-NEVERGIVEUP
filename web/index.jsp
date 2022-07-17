@@ -185,7 +185,7 @@
                                         <h1 class="animated">Leather Simple <br>Backpacks</h1>
                                         <p class="animated">Discover our collection with leather simple backpacks. Less is more never out trend.</p>
                                         <div class="btn-style-1">
-                                            <a class="animated btn-1-padding-1" href="product-details.html">Explore Now</a>
+                                            <a class="animated btn-1-padding-1" href="menu">Explore Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -447,7 +447,7 @@
                                     <h2>Zara Pattern Boxed <br>Underwear</h2>
                                     <p>Stretch, fresh-cool help you alway comfortable</p>
                                     <div class="btn-style-1">
-                                        <a class="animated btn-1-padding-2" href="product-details.html">Shop Now</a>
+                                        <a class="animated btn-1-padding-2" href="menu">Shop Now</a>
                                     </div>
                                 </div>
                             </div>

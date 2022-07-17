@@ -1,9 +1,3 @@
-<%-- 
-    Document   : listBill
-    Created on : Jun 12, 2022, 12:09:19 AM
-    Author     : Window 10
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -43,13 +37,26 @@
                     <!-- End of Topbar -->
 
                     <!-- Begin Page Content -->
-                    <p><h3 style="color: black"><b>List bills</b></h3></p> 
+                    <div class="card-header py-3">
+                        <h1 class="m-0 font-weight-bold text-primary" style="text-align: center">List bills</h1>
+                    </div>
+                    <form action="billManager?do=searchBill" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search bill by address..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button name="submit" class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Order ID</th>
-                                <th scope="col">Account ID</th>
-                                <th scope="col">Shipper ID</th>
+                                <th scope="col">Display name</th>
+                                <th scope="col">Shipper name</th>
                                 <th scope="col">Order date</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Email</th>
@@ -59,16 +66,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${list}" var="l">
+                            <c:forEach items="${listOrder}" var="l">
                                 <tr>
                                     <th scope="row">${l.orderID}</th>
-                                    <td>${l.accountID}</td>
-                                    <td>${l.shipperID}</td>
+                                    <td>${l.displayName}</td>
+                                    <td>${l.shipperName}</td>
                                     <td>${l.orderDate}</td>
                                     <td>${l.address}</td>
                                     <td>${l.email}</td>
                                     <td>
-                                        <form action="billManager?do=updateStatus" method="POST">
+                                        <form action="billManager?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
                                             <input type="hidden" name="odId" value="${l.orderID}">
                                             <select name="status" onchange="this.form.submit()">
                                                 <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
@@ -84,7 +91,41 @@
                         </tbody>
                     </table>
                     <!-- /.container-fluid -->
-
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination" style="display: flex; justify-content: center;">
+                            <c:choose>
+                                        <c:when test="${search!=null}">
+                                            <c:choose>
+                                                <c:when test="${listOrder ==null || listOrder.size() ==0}">
+                                                    <h2 style="color: red">NOT FOUND</h2>
+                                                </c:when> 
+                                                <c:otherwise>
+                                                    <c:if test="${page!=1}">
+                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
+                                                        </c:if>
+                                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=searchBill&page=${i}&keySearch=${keySearch}">${i}</a></li>
+                                                        </c:forEach>
+                                                        <c:if test="${page !=totalPage}">
+                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page+1}&keySearch=${keySearch}">Next</a></li>
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${page!=1}">
+                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page-1}">Previous</a></li>   
+                                                </c:if>
+                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=pageBill&page=${i}">${i}</a></li>
+                                                </c:forEach>
+                                                <c:if test="${page !=totalPage}">
+                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page+1}">Next</a></li>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                        </ul>
+                    </nav>
                 </div>
                 <!-- End of Main Content -->
 
@@ -123,7 +164,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

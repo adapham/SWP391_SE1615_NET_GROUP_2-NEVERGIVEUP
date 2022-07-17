@@ -80,7 +80,7 @@
                                                     </div>
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="DisplayName">Display Name</label>
+                                                        <label class="small mb-1" for="DisplayName">Display Name <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="displayname" class="form-control" id="DisplayName" type="text" placeholder="Enter your new display name..." value="${l.displayname}">
                                                     </div>
                                                 </div>
@@ -88,12 +88,12 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="Address">Address</label>
+                                                        <label class="small mb-1" for="Address">Address <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="address" class="form-control" id="Address" type="text" placeholder="Enter your Address..." value="${l.address}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="Email">Email</label>
+                                                        <label class="small mb-1" for="Email">Email <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="email" class="form-control" id="Email" type="text" placeholder="Enter your Email..." value="${l.email}">
                                                     </div>
                                                 </div>
@@ -101,12 +101,12 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="Phone">Phone</label>
+                                                        <label class="small mb-1" for="Phone">Phone <span style="color: red;">(*)</span></label>
                                                         <input maxlength="10" name="phone" class="form-control" id="Phone" type="text" placeholder="Enter your Phone..." value="${l.phone}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="ImageURL">ImageURL</label>
+                                                        <label class="small mb-1" for="ImageURL">ImageURL <span style="color: red;">(*)</span></label>
                                                         <input maxlength="10000" name="imageURL" class="form-control" id="ImageURL" type="text" placeholder="Enter your url image..." value="${l.imageURL}">
                                                     </div>
                                                 </div>
@@ -130,24 +130,24 @@
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (first name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="oldPassword">Old Password</label>
-                                                        <input maxlength="50" name="oldPassword" class="form-control" id="oldPassword" type="password" placeholder="Enter your old password" value="">
+                                                        <label class="small mb-1" for="oldPassword">Old Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="oldPassword" class="form-control" id="oldPassword" type="password" placeholder="Enter your old password" value="${oldPass}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="newPassword">New Password</label>
-                                                        <input maxlength="50" name="newPassword" class="form-control" id="newPassword" type="password" placeholder="Enter your new password" value="">
+                                                        <label class="small mb-1" for="newPassword">New Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="newPassword" class="form-control" id="newPassword" type="password" placeholder="Enter your new password" value="${newPass}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="comfirmPassword">Comfirm Password</label>
-                                                        <input maxlength="50" name="comfirmPassword" class="form-control" id="comfirmPassword" type="password" placeholder="Enter your password comfirm" value="">
+                                                        <label class="small mb-1" for="comfirmPassword">Comfirm Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="comfirmPassword" class="form-control" id="comfirmPassword" type="password" placeholder="Enter your password comfirm" value="${confirmpassword}">
                                                     </div>
                                                 </div>
                                                 <!-- Save changes button-->

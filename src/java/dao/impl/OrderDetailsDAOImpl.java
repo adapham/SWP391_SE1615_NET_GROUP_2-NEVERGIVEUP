@@ -1,21 +1,25 @@
 
-package dao;
+package dao.impl;
 
 import Entity.OrderDetails;
 import Entity.Product;
+import dao.ConnectDB;
+import dao.OrderDetailsDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Window 10
  */
-public class OrderDetailsDao extends ConnectDB {
+public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
 
-    public void saveCart(int orderID, List<Product> listProductCarts) {
+    public void saveCart(int orderID, List<Product> listProductCarts) throws Exception{
         try {
             String sql = "INSERT INTO [FoodOrderOnline].[dbo].[Order Details]\n"
                     + "           ([OrderID]\n"
@@ -32,10 +36,10 @@ public class OrderDetailsDao extends ConnectDB {
                 pre.setDouble(3, list.getUnitPrice());
                 pre.setInt(4, list.getQuantity());
                 pre.setDouble(5, list.getDiscount());
-                int i = pre.executeUpdate();
+                pre.executeUpdate();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
     public List<OrderDetails> getListAllDetail(int OrderID) {
@@ -66,8 +70,8 @@ public class OrderDetailsDao extends ConnectDB {
         return list;
     }
 
-    public List<OrderDetails> getDetailsBill(int OrderID) {
-        OrderDetailsDao dao = new OrderDetailsDao();
+    public List<OrderDetails> getDetailsBill(int OrderID) throws Exception{
+        OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
         List<OrderDetails> list = new ArrayList<>();
         String sql = "select ac.DisplayName, ac.[Address], ac.Email, ac.Phone, o.OrderDate, od.OrderID, p.ProductName, od.Price, od.Quantity, od.Discount, (od.Price*od.Quantity)'Total', s.StatusID from [Order] o\n"
                 + "join Account ac on ac.AccountID = o.AccountID\n"
@@ -97,24 +101,24 @@ public class OrderDetailsDao extends ConnectDB {
                 list.add(od);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
         return list;
     }
 
-    public void deleteOrderDetailByProductID(int pID) {
+    public void deleteOrderDetailByProductID(int pID) throws Exception{
         String sql = "delete from [Order Details] where ProductID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, pID);
             pre.executeUpdate();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
-    //    public static void main(String[] args) {
+//        public static void main(String[] args) {
 //        List<Product> listProductCarts = new ArrayList<>();
-//        OrderDetailsDao dao = new OrderDetailsDao();
+//        OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
 //        Product pro = Product.builder()
 //                .productID(11)
 //                .priceAferDiscount(25.3)
@@ -122,11 +126,14 @@ public class OrderDetailsDao extends ConnectDB {
 //                .discount(2.5)
 //                .build();
 //        listProductCarts.add(pro);
-//        int i = dao.saveCart(125, listProductCarts);
-//        System.out.println(i);
+//        try {
+//            dao.saveCart(17, listProductCarts);
+//        } catch (Exception ex) {
+//            Logger.getLogger(OrderDetailsDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //    }
-    public OrderDetails getInfoBill(int OrderID) {
-        OrderDetailsDao dao = new OrderDetailsDao();
+    public OrderDetails getInfoBill(int OrderID) throws Exception{
+        OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
         String sql = "select ac.DisplayName, ac.[Address], ac.Email, ac.Phone, o.OrderDate, od.OrderID, p.ProductName, od.Price, od.Quantity, od.Discount, (od.Price*od.Quantity)'Total', s.StatusID from [Order] o\n"
                 + "join Account ac on ac.AccountID = o.AccountID\n"
                 + "join [Order Details] od on od.OrderID = o.OrderID\n"
@@ -150,7 +157,7 @@ public class OrderDetailsDao extends ConnectDB {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
         return null;
     }

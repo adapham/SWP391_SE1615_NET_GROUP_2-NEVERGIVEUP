@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -18,10 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
 
@@ -37,15 +27,9 @@ public class CartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        try {
             List<Product> listProductCarts = new ArrayList<>();
             HttpSession session = request.getSession();
-//            Product prod = Product.builder()
-//                    .productName("alo")
-//                    .quantity(123)
-//                    .build();
-//            listProductCarts.add(prod);
 
             Enumeration em = session.getAttributeNames();
             int sum = 0;
@@ -59,10 +43,6 @@ public class CartController extends HttpServlet {
                 }
             }
 
-//            for(Product list : listProductCarts){
-//                out.print(list);
-//            }
-            //session.setAttribute("size", sum);
             double totalMoney = 0;
             for (Product list : listProductCarts) {
                 totalMoney += list.getUnitPrice() * list.getQuantity();
@@ -75,6 +55,8 @@ public class CartController extends HttpServlet {
             request.setAttribute("totalMoney", totalMoney);
             request.setAttribute("listProductCarts", listProductCarts);
             request.getRequestDispatcher("cart.jsp").forward(request, response);
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

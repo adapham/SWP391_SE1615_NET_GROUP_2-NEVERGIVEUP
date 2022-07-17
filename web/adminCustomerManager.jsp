@@ -91,7 +91,7 @@
                                                 <td style="color: black">${l.phone}</td>
                                                 <td> <img src="${l.imageURL}" height="50px"></td>
                                                 <td><a href="accountmanager?do=updateCustomer&accountid=${l.accountid}"><i class="fas fa-user-edit"></i></a></td>
-                                                
+
                                             </tr>
                                         </tbody>
                                     </c:forEach>
@@ -182,7 +182,7 @@
                             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" href="login.html">Logout</a>
+                                <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -205,8 +205,9 @@
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
                 <script src="js/demo/chart-bar-demo.js"></script>
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!--                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+                
                 </body>
                 </html>

@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
-import dao.OrderDao;
-import dao.OrderDetailsDao;
+import dao.impl.AccountDAOImpl;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -23,12 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "confirm", urlPatterns = {"/confirm"})
-public class confirm extends HttpServlet {
+public class ConfirmController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +32,10 @@ public class confirm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            OrderDao daoOrder = new OrderDao();
-            OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
-            AccountDao daoAccount = new AccountDao();
+        try {
+            OrderDAOImpl daoOrder = new OrderDAOImpl();
+            OrderDetailsDAOImpl daoOrderDetails = new OrderDetailsDAOImpl();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("Account");
             int accountid = acc.getAccountid();
@@ -82,20 +72,21 @@ public class confirm extends HttpServlet {
             }
             request.setAttribute("totalMoney", totalMoney);
             Order order = Order.builder()
+                    .accountID(accountid)
                     .shipperID(1)
                     .address(address.trim())
                     .email(email)
                     .status(1)
                     .phone(phone.trim())
                     .build();
-            int orderID = new OrderDao().insertOrderID(order);
-
-            new OrderDetailsDao().saveCart(orderID, listProductCarts);
 
             request.setAttribute("listProductCarts", listProductCarts);
             session.setAttribute("order", order);
             request.setAttribute("account", account);
             request.getRequestDispatcher("confirm.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

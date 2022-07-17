@@ -1,9 +1,13 @@
+/*
+    Hiển thị danh sách tất cả Category có trong DB
+    Thêm sửa xoa tìm kiếm và phân trang khi tìm kiếm
+    Check valid cho các method update and create
+ */
 package Controller;
 
 import Entity.Category;
 import dao.impl.CategoryDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,6 +23,8 @@ public class AdminCategoryController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
             String service = request.getParameter("do");
             CategoryDAOImpl daoCategory = new CategoryDAOImpl();
@@ -26,7 +32,7 @@ public class AdminCategoryController extends HttpServlet {
             if (service == null) {
                 service = "CategoryHome";
             }
-            if (service.equals("CategoryHome")) {
+            if (service.equals("CategoryHome")) {//Home Category and paging
                 String pageStr = request.getParameter("page");
 
                 int page = 1;
@@ -47,7 +53,7 @@ public class AdminCategoryController extends HttpServlet {
                 request.setAttribute("categoryList", categoryList);
                 request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
             }
-            if (service.equals("updateCategory")) {
+            if (service.equals("updateCategory")) {//Update Category and Paging
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     String sCateID = request.getParameter("cateID");
@@ -58,8 +64,8 @@ public class AdminCategoryController extends HttpServlet {
                     request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                 } else {
                     int cateId = Integer.parseInt(request.getParameter("cateID"));
-                    String cateName = request.getParameter("cateName");
-                    String description = request.getParameter("description");
+                    String cateName = request.getParameter("cateName").trim();
+                    String description = request.getParameter("description").trim();
 
                     Category cateBefor = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryID(cateId)
@@ -73,28 +79,13 @@ public class AdminCategoryController extends HttpServlet {
 
                     if (cateName == null || cateName.isEmpty()) {//Check Name
                         String mess = "Category name is not empty";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                         return;
                     }
-                    if (cateName != cateName.trim()) {//Check Name
-                        String mess = "Category name invalid";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
-                        return;
-                    }
+                    
                     if (description == null || description.isEmpty()) {//Check Address
                         String mess = "Decription is not empty";
-
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
-                        return;
-                    }
-                    if (description != description.trim()) {//Check Address
-                        String mess = "Decription invalid";
-
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                         return;
@@ -105,23 +96,21 @@ public class AdminCategoryController extends HttpServlet {
                             .categoryName(cateName.trim())
                             .description(description.trim())
                             .build();
-                    System.out.println("Check Cate");
-                    System.out.println(cate);
+
                     String mess = "Update successfull";
                     int updateCategory = daoCategory.updateCategory(cate);
-                    System.out.println(updateCategory);
                     request.setAttribute("mess", mess);
                     request.setAttribute("categoryList", categoryList);
                     request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                 }
             }
-            if (service.equals("createCategory")) {
+            if (service.equals("createCategory")) {//Create new Category and check validate
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                 } else {
-                    String cateName = request.getParameter("cateName");
-                    String description = request.getParameter("description");
+                    String cateName = request.getParameter("cateName").trim();
+                    String description = request.getParameter("description").trim();
 
                     request.setAttribute("cateName", cateName);
                     request.setAttribute("description", description);
@@ -132,24 +121,14 @@ public class AdminCategoryController extends HttpServlet {
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (cateName != cateName.trim()) {//Check Name
-                        String mess = "Category name invalid";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
-                        return;
-                    }
+                   
                     if (description == null || description.isEmpty()) {//Check Address
                         String mess = "Description is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                    if (description != description.trim()) {//Check Address
-                        String mess = "Description invalid";
-                        request.setAttribute("mess", mess);
-                        request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
-                        return;
-                    }
+                   
 
                     Category cate = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryName(cateName.trim())
@@ -162,17 +141,45 @@ public class AdminCategoryController extends HttpServlet {
                         String mess = "Create successfull";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
-                    } 
+                    }
                 }
 
             }
-            if (service.equals("deleteCategory")) {
+            if (service.equals("deleteCategory")) {//Delete Category and Pagings
+                String sCateID = request.getParameter("cateID");
+                int cateID = Integer.parseInt(sCateID);
+                int delete = daoCategory.deleteCategory(cateID);
 
+                String mess;
+                if (delete > 0) {//Remove Successs
+                    String pageStr = request.getParameter("page");
+
+                    int page = 1;
+                    final int PAGE_SIZE = 4;
+                    if (pageStr != null) {
+                        page = Integer.parseInt(pageStr);
+                    }
+                    List<Category> categoryList = daoCategory.getAllCategoryWithPaging(page, PAGE_SIZE);
+                    int totalProduct = daoCategory.getTotalCategory();//Get total All Product
+                    int totalPage = totalProduct / PAGE_SIZE;
+                    if (totalProduct % PAGE_SIZE != 0) {
+                        totalPage += 1;
+                    }
+                    mess = "Delete successfull";
+
+                    session.setAttribute("backToUrl", "adminCategory");
+                    request.setAttribute("totalProduct", totalProduct);
+                    request.setAttribute("page", page);
+                    request.setAttribute("mess", mess);
+                    request.setAttribute("totalPage", totalPage);
+                    request.setAttribute("categoryList", categoryList);
+                    request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
+                }
             }
-            if (service.equals("searchCategory")) {
+            if (service.equals("searchCategory")) {//Search Category and paging
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
-                String keySearch = request.getParameter("searchKey");
+                String keySearch = request.getParameter("searchKey").trim();
                 if (keySearch.isEmpty()) {
                     response.sendRedirect("adminCategory");
                     return;
@@ -200,6 +207,7 @@ public class AdminCategoryController extends HttpServlet {
                 request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
             }
         } catch (Exception ex) {
+            request.setAttribute("error", ex);
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

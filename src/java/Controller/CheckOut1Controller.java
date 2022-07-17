@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.Order;
 import Entity.Product;
-import dao.OrderDao;
-import dao.OrderDetailsDao;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -21,12 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Window 10
- */
 @WebServlet(name = "checkout1", urlPatterns = {"/checkout1"})
-public class checkout1 extends HttpServlet {
+public class CheckOut1Controller extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,16 +33,16 @@ public class checkout1 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
-            OrderDao daoOrder = new OrderDao();
-            OrderDetailsDao daoOrderDetails = new OrderDetailsDao();
+            OrderDAOImpl daoOrder = new OrderDAOImpl();
+            OrderDetailsDAOImpl daoOrderDetails = new OrderDetailsDAOImpl();
             String accountID = request.getParameter("accountID");
             String address = request.getParameter("address");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String temp = request.getParameter("temp");
-            //out.print(temp);        
+
             List<Product> listProductCarts = new ArrayList<Product>();
             HttpSession session = request.getSession();
             Enumeration em = session.getAttributeNames();
@@ -72,17 +65,20 @@ public class checkout1 extends HttpServlet {
                 total = (double) total / 100;
                 totalMoney = total;
             }
-
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            String formatted = current.format(formatter);
             Order order = Order.builder()
                     .accountID(Integer.parseInt(accountID))
                     .shipperID(1)
                     .address(address.trim())
                     .email(email)
+                    .orderDate(formatted)
                     .status(1)
                     .phone(phone.trim())
                     .build();
-            int orderID = new OrderDao().insertOrderID(order);
-            new OrderDetailsDao().saveCart(orderID, listProductCarts);
+            int orderID = new OrderDAOImpl().insertOrderID(order);
+            new OrderDetailsDAOImpl().saveCart(orderID, listProductCarts);
 
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();
@@ -94,6 +90,8 @@ public class checkout1 extends HttpServlet {
                 request.getRequestDispatcher("menu").forward(request, response);
             }
             request.getRequestDispatcher("login?do=logout").forward(request, response);
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

@@ -6,9 +6,10 @@
 package Controller;
 
 import Entity.Intouch;
-import dao.FeedbackDao;
+import dao.impl.FeedbackDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,22 +35,52 @@ public class FeedbackController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            FeedbackDao daofeedback = new FeedbackDao();
-           String name = request.getParameter("name");
-           String email = request.getParameter("email");
-           String subject = request.getParameter("subject");
-           String message = request.getParameter("message");
+        try {
+            FeedbackDAOImpl daofeedback = new FeedbackDAOImpl();
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String subject = request.getParameter("subject");
+            String message = request.getParameter("message");
+            if(name == null || name.isEmpty()){
+                String mess = "Name is not empty";
+                request.setAttribute("mess", mess);
+                request.getRequestDispatcher("contact.jsp").forward(request, response);
+                return;
+            }
+            if(email == null || email.isEmpty()){
+                String mess = "Email is not empty";
+                request.setAttribute("mess", mess);
+                request.getRequestDispatcher("contact.jsp").forward(request, response);
+                return;
+            }
+            if(subject == null || subject.isEmpty()){
+                String mess = "Subject is not empty";
+                request.setAttribute("mess", mess);
+                request.getRequestDispatcher("contact.jsp").forward(request, response);
+                return;
+            }
+            if(message == null || message.isEmpty()){
+                String mess = "Message is not empty";
+                request.setAttribute("mess", mess);
+                request.getRequestDispatcher("contact.jsp").forward(request, response);
+                return;
+            }
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            String formatted = current.format(formatter);
             Intouch intouch = Intouch.builder()
-                    .name(name)
-                    .email(email)
-                    .subject(subject)
-                    .message(message)
+                    .name(name.trim())
+                    .email(email.trim())
+                    .subject(subject.trim())
+                    .message(message.trim())
+                    .date(formatted)
                     .build();
-            daofeedback.InsertIntouch(intouch);
+            daofeedback.InsertIntouch(intouch);            
             String mess = "Send Intouch success!";
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("contact.jsp").forward(request, response);
+        } catch (Exception ex) {
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

@@ -18,6 +18,7 @@
             rel="stylesheet">
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body id="page-top">
 
@@ -37,8 +38,13 @@
                     <!-- Topbar -->
                     <%@include file="component/AdminTopbarComponent.jsp" %>
                     <!-- End of Topbar -->
-                    <div>
-                        <span><a href="billManager?do=bill" style="float: left;"><h3>List bills/</h3></a></span><span>Detail bill</span>
+                    <div class="breadcrumb-content text-center">
+                        <ul>
+                            <li>
+                                <a href="billManager?do=pageBill"><h3>List bills</h3></a>
+                            </li>
+                            <li class="active">Detail bill</li>
+                        </ul>
                     </div>
                     <!-- Begin Page Content -->
                     <main class="main-content position-relative border-radius-lg ">
@@ -78,17 +84,15 @@
                                         <c:forEach items="${list}" var="l">
                                             <tr>
                                                 <td style="color: black">${l.productName}</td>
-                                                <td style="color: black">${l.price}</td>
+                                                <td style="color: black">$${l.price}</td>
                                                 <td style="color: black">${l.quantity}</td>
                                                 <td style="color: black">${l.discount}</td>                                                
-                                                <td style="color: black">${Math.round(l.total*100)/100}</td>
+                                                <td style="color: black">$${Math.round(l.total*100)/100}</td>
                                             </tr> 
                                         </c:forEach>
                                     </tbody>
-
                                 </table>
-
-
+                                <td colspan="2" ><h4>Total Amount: $${totalMoney}</h4></td>
                             </div>
                         </div>
                     </main>
@@ -132,7 +136,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

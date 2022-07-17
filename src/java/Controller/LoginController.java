@@ -7,7 +7,10 @@ import dao.AccountDao;
 import dao.FeedbackDao;
 import dao.MessDAO;
 import dao.OrderDao;
+import dao.impl.AccountDAOImpl;
+import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
+import dao.impl.OrderDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
@@ -32,7 +35,7 @@ public class LoginController extends HttpServlet {
         try {
             String service = request.getParameter("do");
 
-            AccountDao daoAccount = new AccountDao();
+            AccountDAOImpl daoAccount = new AccountDAOImpl();
             ProductDAOImpl daoProduct = new ProductDAOImpl();
             CategoryDAOImpl daoCategory = new CategoryDAOImpl();
 
@@ -47,7 +50,7 @@ public class LoginController extends HttpServlet {
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-                    int checkAccount = daoAccount.checkAccount(username, password);
+                    int checkAccount = daoAccount.checkAccount(username.trim().toLowerCase(), password);
                     String r = request.getParameter("rem");
                     if (checkAccount == 0) {
                         request.setAttribute("mess", "wrong user or pass");
@@ -182,9 +185,9 @@ public class LoginController extends HttpServlet {
                         int totalProduct = daoProduct.getTotalProduct();//Get total All Product
                         int totalCategory = daoCategory.getTotalCategory();
                         int totalSupplier = new SupplierDAOImpl().getTotalSupplier();
-                        int totalOrder = new OrderDao().getTotalOrder();
-                        int totalFeedback = new FeedbackDao().getTotalFeedBack();
-                        int totalCustomer = new AccountDao().getTotalCustomer();
+                        int totalOrder = new OrderDAOImpl().getTotalOrder();
+                        int totalFeedback = new FeedbackDAOImpl().getTotalFeedBack();
+                        int totalCustomer = new AccountDAOImpl().getTotalCustomer();
                         int totalShipper = new ShipperDAOImpl().getTotalShipper();
 
                         request.setAttribute("totalOrder", totalOrder);
@@ -201,7 +204,8 @@ public class LoginController extends HttpServlet {
             if (service.equals("logout")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute("Account");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                //response.sendRedirect("login.jsp");
             }
             if (service.equals("submitUpdate")) {
 
