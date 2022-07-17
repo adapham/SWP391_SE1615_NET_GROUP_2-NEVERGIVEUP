@@ -66,6 +66,21 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         }
         return list;
     }
+    public List ListAllAccountEmpID() {
+        List<Integer> list = new ArrayList<>();
+        String sql = "select * from Account where Role = 2";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                int accountid = rs.getInt("accountid");
+                list.add(accountid);
+            }
+        } catch (SQLException ex) {
+            //ex.printStackTrace();
+             return null;
+        }
+        return list;
+    }
 
     public int checkAccount(String username, String password) throws Exception {
         AccountDAOImpl dao = new AccountDAOImpl();

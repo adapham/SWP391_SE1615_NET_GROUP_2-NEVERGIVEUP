@@ -2,11 +2,12 @@ package Controller;
 
 import Entity.Account;
 import Entity.Product;
+import dao.AccountDao;
 import dao.MessDAO;
-import dao.impl.AccountDAOImpl;
-import dao.impl.MessDAOImpl;
 import dao.impl.ProductDAOImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -27,22 +28,22 @@ public class HomeController extends HttpServlet {
             if (service == null) {
                 service = "home";
             }
-            if (service.equals("home")) {//Chuyển đến trang home
+            if (service.equals("home")) {
                 String fresh = request.getParameter("fresh");
                 if (fresh == null) {
                     Account acc = (Account) session.getAttribute("Account");
                     System.out.println(acc);
-                    AccountDAOImpl dao = new AccountDAOImpl();
-                    MessDAOImpl daoMess = new MessDAOImpl();
+                    AccountDao dao = new AccountDao();
+                    MessDAO daoMess = new MessDAO();
                     List<Integer> list = dao.ListAllAccountEmpID();
                     int employeeID = 0;
                     ///
                     List<Integer> listIdCusCheck = daoMess.getIdCus();
                     boolean check = false;
                     for (Integer integer : listIdCusCheck) {
-
+                        
                         if (integer == acc.getAccountid()) {
-
+                            
                             check = true;
                         }
                     }
@@ -57,11 +58,16 @@ public class HomeController extends HttpServlet {
                     for (String a : arrOfStr) {
                         listMess.add(a);
                     }
-
+                   
                     request.setAttribute("listMess", listMess);
                     System.out.println(listMess.size());
                     request.setAttribute("employeeID", employeeID);
                 }
+                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
+                request.setAttribute("listProduct", listProduct);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+            if (service.equals("fresh")) {
                 List<Product> listProduct = daoProduct.getTopNumberProduct(4);
                 request.setAttribute("listProduct", listProduct);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
