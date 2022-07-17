@@ -120,6 +120,12 @@ public class AdminProductController extends HttpServlet {
                         request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                         return;
                     }
+                    if (images == null != images.isEmpty()) {//Check Name
+                        mess = "Image url is not empty";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
+                        return;
+                    }
                     if (des == null != des.isEmpty()) {//Check Name
                         mess = "Description is not empty";
                         request.setAttribute("mess", mess);

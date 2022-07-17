@@ -83,7 +83,7 @@ public class AdminCategoryController extends HttpServlet {
                         request.getRequestDispatcher("adminCategoryUpdate.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     if (description == null || description.isEmpty()) {//Check Address
                         String mess = "Decription is not empty";
                         request.setAttribute("mess", mess);
@@ -121,14 +121,13 @@ public class AdminCategoryController extends HttpServlet {
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                   
+
                     if (description == null || description.isEmpty()) {//Check Address
                         String mess = "Description is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCategoryCreate.jsp").forward(request, response);
                         return;
                     }
-                   
 
                     Category cate = Category.builder()//Lưu giữ lại giá trị lỗi
                             .categoryName(cateName.trim())
@@ -148,33 +147,41 @@ public class AdminCategoryController extends HttpServlet {
             if (service.equals("deleteCategory")) {//Delete Category and Pagings
                 String sCateID = request.getParameter("cateID");
                 int cateID = Integer.parseInt(sCateID);
-                int delete = daoCategory.deleteCategory(cateID);
-
                 String mess;
-                if (delete > 0) {//Remove Successs
-                    String pageStr = request.getParameter("page");
-
-                    int page = 1;
-                    final int PAGE_SIZE = 4;
-                    if (pageStr != null) {
-                        page = Integer.parseInt(pageStr);
-                    }
-                    List<Category> categoryList = daoCategory.getAllCategoryWithPaging(page, PAGE_SIZE);
-                    int totalProduct = daoCategory.getTotalCategory();//Get total All Product
-                    int totalPage = totalProduct / PAGE_SIZE;
-                    if (totalProduct % PAGE_SIZE != 0) {
-                        totalPage += 1;
-                    }
-                    mess = "Delete successfull";
-
-                    session.setAttribute("backToUrl", "adminCategory");
-                    request.setAttribute("totalProduct", totalProduct);
-                    request.setAttribute("page", page);
-                    request.setAttribute("mess", mess);
-                    request.setAttribute("totalPage", totalPage);
-                    request.setAttribute("categoryList", categoryList);
-                    request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
+                int delete = 0;
+                try {
+                    delete = daoCategory.deleteCategory(cateID);
+                } catch (Exception e) {
+                    mess = "Can't delete Category";
                 }
+
+                if (delete > 0) {//Remove Successs
+                    mess = "Delete Successfull";
+                } else {
+                    mess = "Can't delete Category";
+                }
+
+                String pageStr = request.getParameter("page");
+
+                int page = 1;
+                final int PAGE_SIZE = 4;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+                List<Category> categoryList = daoCategory.getAllCategoryWithPaging(page, PAGE_SIZE);
+                int totalProduct = daoCategory.getTotalCategory();//Get total All Product
+                int totalPage = totalProduct / PAGE_SIZE;
+                if (totalProduct % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+
+                session.setAttribute("backToUrl", "adminCategory");
+                request.setAttribute("totalProduct", totalProduct);
+                request.setAttribute("page", page);
+                request.setAttribute("mess", mess);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("categoryList", categoryList);
+                request.getRequestDispatcher("adminCategory.jsp").forward(request, response);
             }
             if (service.equals("searchCategory")) {//Search Category and paging
                 request.setCharacterEncoding("UTF-8");

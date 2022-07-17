@@ -54,10 +54,7 @@
                                                 <!-- Form Row-->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (Username)-->
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="supID">Supplier ID</label>
-                                                        <input name="supID" readonly="" class="form-control" id="supID" type="text" placeholder="" value="${l.supplierID}">
-                                                    </div>
+                                                    <input name="supID" readonly="" class="form-control" id="supID" type="hidden" placeholder="" value="${l.supplierID}">
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="cpName">Company Name <span style="color: red;">(*)</span></label>
@@ -71,6 +68,9 @@
                                                         <label class="small mb-1" for="address">Address <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="address" class="form-control" id="address" type="text" placeholder="Enter your new address..." value="${l.address}">
                                                     </div>
+                                                </div>
+                                                <!-- Form Row-->
+                                                <div class="row gx-3 mb-3">
                                                     <!-- Form Group (Username)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="phone">Phone <span style="color: red;">(*)</span></label>

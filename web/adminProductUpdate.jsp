@@ -74,14 +74,16 @@
                                                 <!-- Form Row-->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (Username)-->
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="pID">Product ID</label>
-                                                        <input name="pID" readonly="" class="form-control" id="pID" type="text" placeholder="" value="${l.productID}">
-                                                    </div>
+                                                    <input name="pID" readonly="" class="form-control" id="pID" type="hidden" placeholder="" value="${l.productID}">
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="productName">Product Name <span style="color: red;">(*)</span></label>
                                                         <input maxlength="50" name="productName" class="form-control" id="productName" type="text" placeholder="Enter your new product name..." value="${l.productName}">
+                                                    </div>
+                                                    <!-- Form Group (organization name)-->
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="imageURL">Images URL <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="10000" name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -110,7 +112,7 @@
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="quantity">Quantity <span style="color: red;">(*)</span></label>
-                                                        <input min="0" max="1000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
+                                                        <input min="0" max="10000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
@@ -128,7 +130,7 @@
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="unitInStock">UnitInStock <span style="color: red;">(*)</span></label>
-                                                        <input min="0" max="1000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
+                                                        <input min="0" max="10000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
@@ -138,7 +140,7 @@
                                                         <label class="small mb-1" for="description">Description <span style="color: red;">(*)</span></label>
                                                         <textarea maxlength="100"  style="height: 100px;" name="description" class="form-control" id="description" type="text" placeholder="Enter your Description..." value="">${l.description}</textarea>
                                                     </div>
-                                                    <!-- Form Group (location)-->
+                                                    <!-- Form Group (location)-->   
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="isActive">Is Active <span style="color: red;">(*)</span></label>
                                                         <br>
@@ -148,14 +150,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Form Row        -->
-                                                <div class="row gx-3 mb-3">
-                                                    <!-- Form Group (organization name)-->
-                                                    <div class="col-md-12">
-                                                        <label class="small mb-1" for="imageURL">Images URL <span style="color: red;">(*)</span></label>
-                                                        <input maxlength="10000" name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
-                                                    </div>
-                                                </div>
+
                                                 <!-- Save changes button-->
                                                 <button name="submit" class="btn btn-primary" type="submit">Save changes</button>
                                             </form>

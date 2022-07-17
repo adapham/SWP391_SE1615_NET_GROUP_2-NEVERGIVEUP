@@ -36,18 +36,6 @@
                     </div>
                     <div class="col-xl-2 col-lg-3">
                         <div class="header-action header-action-flex header-action-mrg-right">
-                            <div class="same-style-2 header-search-1">
-                                <a class="search-toggle" href="#">
-                                    <i class="icon-magnifier s-open"></i>
-                                    <i class="icon_close s-close"></i>
-                                </a>
-                                <div class="search-wrap-1">
-                                    <form action="#">
-                                        <input placeholder="Search products?" type="text">
-                                        <button class="button-search"><i class="icon-magnifier"></i></button>
-                                    </form>
-                                </div>
-                            </div>
                             <div class="same-style-2">
                                 <a href="cart">
                                     <c:if test="${sessionScope.size==null}">

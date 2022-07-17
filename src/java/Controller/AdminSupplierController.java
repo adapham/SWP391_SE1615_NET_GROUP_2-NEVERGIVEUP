@@ -87,7 +87,7 @@ public class AdminSupplierController extends HttpServlet {
                         request.getRequestDispatcher("adminSupplierUpdate.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     if (address == null || address.isEmpty()) {//Địa chỉ không được null
                         String mess = "Address is not null";
 
@@ -102,7 +102,7 @@ public class AdminSupplierController extends HttpServlet {
                         request.getRequestDispatcher("adminSupplierUpdate.jsp").forward(request, response);
                         return;
                     }
-                   
+
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
                             + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
                     if (!phone.matches(reg)) {
@@ -128,7 +128,6 @@ public class AdminSupplierController extends HttpServlet {
                         request.getRequestDispatcher("adminSupplierUpdate.jsp").forward(request, response);
                         return;
                     }
-                    
 
                     Supplier sup = Supplier.builder()//Lưu giữ lại giá trị hoàn thành
                             .supplierID(supID)
@@ -191,7 +190,7 @@ public class AdminSupplierController extends HttpServlet {
                         request.getRequestDispatcher("adminSupplierCreate.jsp").forward(request, response);
                         return;
                     }
-                   
+
                     String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|"
                             + "(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";//Format Phone
                     if (!phone.matches(reg)) {
@@ -220,33 +219,42 @@ public class AdminSupplierController extends HttpServlet {
             if (service.equals("deleteSupplier")) {
                 String sSupID = request.getParameter("supID");
                 int supID = Integer.parseInt(sSupID);
-                int delete = daoSupplier.deleteSupplier(supID);
-
+                //int delete = daoSupplier.deleteSupplier(supID);
                 String mess;
-                if (delete > 0) {//Remove Successs
-                    String pageStr = request.getParameter("page");
-
-                    int page = 1;
-                    final int PAGE_SIZE = 4;
-                    if (pageStr != null) {
-                        page = Integer.parseInt(pageStr);
-                    }
-                    List<Supplier> supplierList = daoSupplier.getAllSupplierWithPaging(page, PAGE_SIZE);
-                    int totalSupplier = daoSupplier.getTotalSupplier();//Get total All Product
-                    int totalPage = totalSupplier / PAGE_SIZE;
-                    if (totalSupplier % PAGE_SIZE != 0) {
-                        totalPage += 1;
-                    }
-                    mess = "Delete successfull";
-
-                    request.setAttribute("mess", mess);
-                    session.setAttribute("backToUrl", "adminSupplier");
-                    request.setAttribute("totalSupplier", totalSupplier);
-                    request.setAttribute("page", page);
-                    request.setAttribute("totalPage", totalPage);
-                    request.setAttribute("supplierList", supplierList);
-                    request.getRequestDispatcher("adminSupplier.jsp").forward(request, response);
+                int delete = 0;
+                try {
+                    delete = daoSupplier.deleteSupplier(supID);
+                } catch (Exception e) {
+                    mess = "Can't delete Supplier";
                 }
+
+                if (delete > 0) {//Remove Successs
+                    mess = "Delete Successfull!";
+                }else {
+                    mess = "Can't delete Supplier";
+                }
+
+                String pageStr = request.getParameter("page");
+
+                int page = 1;
+                final int PAGE_SIZE = 4;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+                List<Supplier> supplierList = daoSupplier.getAllSupplierWithPaging(page, PAGE_SIZE);
+                int totalSupplier = daoSupplier.getTotalSupplier();//Get total All Product
+                int totalPage = totalSupplier / PAGE_SIZE;
+                if (totalSupplier % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+
+                request.setAttribute("mess", mess);
+                session.setAttribute("backToUrl", "adminSupplier");
+                request.setAttribute("totalSupplier", totalSupplier);
+                request.setAttribute("page", page);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("supplierList", supplierList);
+                request.getRequestDispatcher("adminSupplier.jsp").forward(request, response);
             }
             if (service.equals("searchSupplier")) {
                 request.setCharacterEncoding("UTF-8");

@@ -169,7 +169,7 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                     return;
                 } else if (confirmpassword == null || confirmpassword.isEmpty()) {
-                    String mess1 = "confirmpassword not empty";
+                    String mess1 = "Confirmpassword not empty";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess1", mess1);
@@ -177,7 +177,7 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                     return;
                 } else if (!newPass.equals(confirmpassword)) {
-                    String mess1 = "New Password not same ConfirmPassword";
+                    String mess1 = "New Password not same Confirm Password";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess1", mess1);
