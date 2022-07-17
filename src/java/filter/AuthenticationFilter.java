@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/adminProduct", "/adminSupplier","/adminHome", "/adminCategory", "/adminProfile"})
+@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {""})
 public class AuthenticationFilter implements Filter {
 
     @Override
@@ -26,6 +26,11 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = req.getSession();
         Account acc = (Account) session.getAttribute("Account");
         if(acc != null && acc.getRole() == 3){
+            chain.doFilter(request, response);
+            return;
+        }
+        
+        if(acc != null && acc.getRole() == 2){
             chain.doFilter(request, response);
             return;
         }
