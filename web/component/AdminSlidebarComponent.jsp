@@ -70,6 +70,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Account Manager CRUD:</h6>
                 <a class="collapse-item" href="accountmanager">Customers</a>
+                
                 <a class="collapse-item" href="accountmanager?do=listAccountEmployee">Employees</a>
                 <a class="collapse-item" href="accountmanager?do=listAccountShipper">Shippers</a>
                 <a class="collapse-item" href="accountmanager?do=createAccount">Create Account</a>

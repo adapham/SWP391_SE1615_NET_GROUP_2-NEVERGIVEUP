@@ -220,6 +220,34 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         }
         return list;
     }
+    public Account getAccountByIDA(int AccountID) throws Exception{
+        Account acc ;
+        String sql = "select * from Account where AccountID =?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, AccountID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                 acc = Account.builder()
+                        .accountid(rs.getInt("accountid"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .displayname(rs.getString("displayname"))
+                        .address(rs.getString("address"))
+                        .email(rs.getString("email"))
+                        .phone(rs.getString("phone"))
+                        .imageURL(rs.getString("imageURL"))
+                        .role(rs.getInt("role"))
+                        .gender(rs.getInt("gender"))
+                        .build();
+                return (acc);
+
+            }
+        } catch (SQLException ex) {
+            throw  ex;
+        }
+        return null;
+    }
 
     public Account getAccountByAccountID(int id) throws Exception {
         String sql = "select * from Account where AccountID =?";
@@ -901,5 +929,27 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
             throw ex;
         }
         return 0;
+    }
+
+    public List ListAllAccountEmpID() {
+        List<Integer> list = new ArrayList<>();
+        String sql = "select * from Account where Role = 2";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                int accountid = rs.getInt("accountid");
+                list.add(accountid);
+            }
+        } catch (SQLException ex) {
+            //ex.printStackTrace();
+             return null;
+        }
+        return list;
+    }
+
+     public int getRandomElemAccountEmpID(List<Integer> list)
+    {
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
     }
 }

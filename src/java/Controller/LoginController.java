@@ -74,7 +74,8 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                        //request.getRequestDispatcher("index.jsp").forward(request, response);
+                        response.sendRedirect("home");
                     } else if (checkAccount == 2) {
 
                         Cookie cu = new Cookie("us", username);
