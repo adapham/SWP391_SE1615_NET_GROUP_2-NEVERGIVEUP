@@ -1,6 +1,12 @@
 package Controller;
 
 import Entity.Account;
+import Entity.Order;
+import Entity.Product;
+import dao.AccountDao;
+import dao.FeedbackDao;
+import dao.MessDAO;
+import dao.OrderDao;
 import dao.impl.AccountDAOImpl;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
@@ -9,6 +15,8 @@ import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,7 +85,6 @@ public class LoginController extends HttpServlet {
                         //request.getRequestDispatcher("index.jsp").forward(request, response);
                         response.sendRedirect("home");
                     } else if (checkAccount == 2) {
-
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
@@ -104,7 +111,16 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("employee.jsp").forward(request, response);
+                        MessDAO daoMess = new MessDAO();
+                        List<Integer> listCus = daoMess.getIdCusByEmployee(accountID.getAccountid());
+                        AccountDao daoAcc = new AccountDao();
+                        List<Account> listAccByEm = new ArrayList<>();
+                        for (Integer id : listCus) {
+                            //listAccByEm.add(daoAcc.getAccountByAccountID(id));
+                        }
+                       
+                        request.setAttribute("listAccByEm", listAccByEm);
+                        request.getRequestDispatcher("chatOfEmployee1.jsp").forward(request, response);
 
                     } else if (checkAccount == 4) {
                         Cookie cu = new Cookie("us", username);
@@ -133,7 +149,10 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("Shipper.jsp").forward(request, response);
+                        OrderDao dao = new OrderDao();
+                        List<Order> list = dao.listAllOrders();
+                        request.setAttribute("list", list);
+                        request.getRequestDispatcher("shipper.jsp").forward(request, response);
                     } else {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
@@ -186,7 +205,8 @@ public class LoginController extends HttpServlet {
             if (service.equals("logout")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute("Account");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                //response.sendRedirect("login.jsp");
             }
             if (service.equals("submitUpdate")) {
 

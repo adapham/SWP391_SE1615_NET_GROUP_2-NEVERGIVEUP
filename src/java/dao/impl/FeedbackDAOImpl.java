@@ -41,7 +41,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
                         .build();
                 list.add(feedback);
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw ex;
         }
         return list;

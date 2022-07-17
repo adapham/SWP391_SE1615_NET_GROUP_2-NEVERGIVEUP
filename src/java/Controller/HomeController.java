@@ -57,7 +57,6 @@ public class HomeController extends HttpServlet {
                     for (String a : arrOfStr) {
                         listMess.add(a);
                     }
-
                     request.setAttribute("listMess", listMess);
                     System.out.println(listMess.size());
                     request.setAttribute("employeeID", employeeID);

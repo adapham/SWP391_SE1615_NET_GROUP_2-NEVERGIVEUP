@@ -81,6 +81,10 @@
                                         <th scope="row">Image</th>
                                         <td colspan="2">
                                             <img src="${product2.imageURL}" alt="" style="min-height: 300px; max-height: 300px;  ">
+                                            <div style="margin-top: 20px;">
+                                                <button style="background-color: orange; border-radius: 20px;"  title="Add to Cart"><a href="AddToCart?pid=${product2.productID}" style="text-decoration: none; font-size: 20px;">Add To Cart</a></button>
+                                                <button style="background-color: orange; border-radius: 20px; font-size: 20px;" title="Quick View" data-toggle="modal" data-target="#exampleModal${product2.productID}">View</button>
+                                            </div>
                                         </td>
                                     </tr>
                                     <c:if test="${product2.quantity != product1.quantity}">
@@ -119,6 +123,46 @@
                                         <th scope="row">Price After Discount</th>
                                         <td colspan="2">${product2.priceAferDiscount} $</td>
                                     </tr>
+                                    <!--Modal-->
+                                <div class="modal fade" id="exampleModal${product2.productID}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-6 col-12 col-sm-12">
+                                                        <div class="tab-content quickview-big-img">
+                                                            <div id="pro-1" class="tab-pane fade show active">
+                                                                <img src="${product2.imageURL}" alt="" style="min-height: 400px;">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-6 col-12 col-sm-12">
+                                                        <div class="product-details-content quickview-content">
+                                                            <h2>${product2.productName}</h2>
+                                                            <p>${product2.description}</p>
+                                                            <div class="pro-list-price product-price-2 pro-details-price">
+                                                                <c:if test="${product2.unitPrice !=product2.priceAferDiscount}">
+                                                                    <span class="text-muted old-price">$${product2.unitPrice}</span>
+                                                                </c:if>
+                                                                <spam class="new-price">$${product2.priceAferDiscount}</spam>
+                                                            </div>
+                                                            <div class="pro-details-action-wrap">
+                                                                <div class="pro-details-add-to-cart">
+                                                                    <a title="Add to Cart" href="AddToCart?pid=${product2.productID}">Add To Cart </a>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
                                 </tbody>
                             </table>
                         </div>
@@ -134,6 +178,10 @@
                                         <th scope="row">Image</th>
                                         <td colspan="2">
                                             <img src="${product1.imageURL}" alt="" style="min-height: 300px; max-height: 300px;  ">
+                                            <div style="margin-top: 20px;">
+                                                <button style="background-color: orange; border-radius: 20px;"  title="Add to Cart"><a href="AddToCart?pid=${product1.productID}" style="text-decoration: none; font-size: 20px;">Add To Cart</a></button>
+                                                <button style="background-color: orange; border-radius: 20px; font-size: 20px;" title="Quick View" data-toggle="modal" data-target="#exampleModal${product1.productID}">View</button>
+                                            </div>
                                         </td>
                                     </tr>
                                     <c:if test="${product2.quantity != product1.quantity}">
@@ -172,6 +220,46 @@
                                         <th scope="row">Price After Discount</th>
                                         <td colspan="2">${product1.priceAferDiscount} $</td>
                                     </tr>
+                                    <!--Modal-->
+                                <div class="modal fade" id="exampleModal${product1.productID}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-6 col-12 col-sm-12">
+                                                        <div class="tab-content quickview-big-img">
+                                                            <div id="pro-1" class="tab-pane fade show active">
+                                                                <img src="${product1.imageURL}" alt="" style="min-height: 400px;">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-6 col-12 col-sm-12">
+                                                        <div class="product-details-content quickview-content">
+                                                            <h2>${product1.productName}</h2>
+                                                            <p>${product1.description}</p>
+                                                            <div class="pro-list-price product-price-2 pro-details-price">
+                                                                <c:if test="${product1.unitPrice !=product1.priceAferDiscount}">
+                                                                    <span class="text-muted old-price">$${product1.unitPrice} </span>
+                                                                </c:if>
+                                                                <spam class="new-price"> $${product1.priceAferDiscount}</spam>
+                                                            </div>
+                                                            <div class="pro-details-action-wrap">
+                                                                <div class="pro-details-add-to-cart">
+                                                                    <a title="Add to Cart" href="AddToCart?pid=${product1.productID}">Add To Cart </a>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
                                 </tbody>
                             </table>
                         </div>
