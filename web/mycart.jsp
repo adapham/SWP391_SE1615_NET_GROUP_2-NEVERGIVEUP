@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Norda - Minimal eCommerce HTML Template</title>
+        <title>ADA-Shop</title>
         <meta name="robots" content="noindex, follow" />
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,10 +29,10 @@
         <link rel="stylesheet" href="assets/css/plugins/magnific-popup.css">
         <link rel="stylesheet" href="assets/css/plugins/jquery-ui.css">
         <link rel="stylesheet" href="assets/css/style.css">
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
     </head>
 
     <body>
@@ -46,20 +46,30 @@
                             <li>
                                 <a href="home">Home</a>
                             </li>
-                            <li class="active">Cart Page </li>
+                            <li class="active">My Orders</li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="cart-main-area pt-115 pb-120">
+            <div class="">
                 <div class="container">
-                    <h3 class="cart-page-title">Your Orders</h3>
+                    <h3 class="cart-page-title">My Orders</h3>
+                    <form action="MyCartController" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input name="keySearch" value="" type="date" class="form-control bg-light border-2 small" placeholder="Search by address..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+
+                                <button name="submit" value="submit" class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="table-content table-responsive cart-table-content">
                                 <table id="table_id">
                                     <thead> 
-                                        
+
                                         <tr>
                                             <th>ID</th>
                                             <th>Date</th>
@@ -68,37 +78,65 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+
                                         <c:forEach items="${list}" var="pro">
                                             <tr>
                                                 <td ><a href="MyCartController?do=ordersDetail&orderID=${pro.orderID}">${pro.orderID}</a> </td>
-                                            <td>${pro.orderDate}</td>
-                                            <td >${pro.address}</td>
-                                            <td > 
-                                                <c:if test="${pro.status == 1 }">    
-                                                    ${pro.status == 1 ? " new" : ""}
-                                                </c:if>
-                                                <c:if test="${pro.status == 2 }">
-                                                    ${pro.status == 2 ? " process" : ""}
-                                                </c:if>
-                                                <c:if test="${pro.status == 3 }">
-                                                    ${pro.status == 3 ? " done" : ""}
-                                                </c:if>
+                                                <td>${pro.orderDate}</td>
+                                                <td >${pro.address}</td>
+                                                <td > 
+                                                    <c:if test="${pro.status == 1 }">    
+                                                        <b>${pro.status == 1 ? " New" : ""}</b>
+                                                    </c:if>
+                                                    <c:if test="${pro.status == 2 }">
+                                                        <b>${pro.status == 2 ? " Process" : ""}</b>
+                                                    </c:if>
+                                                    <c:if test="${pro.status == 3 }">
+                                                        <b>${pro.status == 3 ? " Done" : ""}</b>
+                                                    </c:if>
                                                 </td>
                                             </tr>
-                                        
+
                                         </c:forEach>
-                                    
-                                    
-                                            
-                                            
+
+
+
+
                                     </tbody>
-                                    
+
                                 </table>
                             </div>
-                                                     
+
                         </div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination" style="display: flex; justify-content: center;">
+                            <c:choose>
+                                <c:when test="${keySearch != null}">
+                                    <c:if test="${page!=1}">
+                                        <li class="page-item"><a class="page-link" href="MyCartController?page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
+                                        </c:if>
+                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="MyCartController?page=${i}&keySearch=${keySearch}">${i}</a></li>
+                                        </c:forEach>
+                                        <c:if test="${page!=totalPage}">
+                                        <li class="page-item"><a class="page-link" href="MyCartController?page=${page+1}&keySearch=${keySearch}">Next</a></li>
+                                        </c:if>
+                                    </c:when><c:otherwise>
+                                        <c:if test="${page!=1}">
+                                        <li class="page-item"><a class="page-link" href="MyCartController?page=${page-1}">Previous</a></li>   
+                                        </c:if>
+                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="MyCartController?page=${i}">${i}</a></li>
+                                        </c:forEach>
+                                        <c:if test="${page!=totalPage}">
+                                        <li class="page-item"><a class="page-link" href="MyCartController?page=${page+1}">Next</a></li>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
+
+                        </ul>
+                    </nav>
                 </div>
             </div>            
             <%@include file="component/FooterComponent.jsp" %>
@@ -123,7 +161,7 @@
         <script src="assets/js/plugins/easyzoom.js"></script>
         <script src="assets/js/plugins/scrollup.js"></script>
         <script src="assets/js/plugins/ajax-mail.js"></script>
-        
+
         <!-- Use the minified version files listed below for better performance and remove the files listed above  
     <script src="assets/js/vendor/vendor.min.js"></script>
     <script src="assets/js/plugins/plugins.min.js"></script>  -->

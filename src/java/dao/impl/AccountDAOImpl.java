@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -30,6 +32,46 @@ import javax.mail.internet.MimeMessage;
  */
 public class AccountDAOImpl extends ConnectDB implements AccountDAO {
 
+    public List<Account> searchAccountByName(String searchKey, int CustomerID) throws Exception{
+        List<Account> list = new ArrayList<>();
+        String sql = "select * from Account where DisplayName like ? and IdEmployee = ?";
+        try {
+            ProductDAOImpl dao = new ProductDAOImpl();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + searchKey + "%");
+            pre.setInt(2, CustomerID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int accountid = rs.getInt("accountid");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String displayname = rs.getString("displayname");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String imageurl = rs.getString("imageURL");
+                int roll = rs.getInt("role");
+                int gender = rs.getInt("gender");
+                Account acc = Account.builder()
+                        .accountid(accountid)
+                        .username(username)
+                        .password(password)
+                        .displayname(displayname)
+                        .address(address)
+                        .email(email)
+                        .phone(phone)
+                        .imageURL(imageurl)
+                        .role(roll)
+                        .gender(gender)
+                        .build();
+
+                list.add(acc);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return list;
+    }
     public List ListAllAccount() throws Exception {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account";
@@ -66,7 +108,7 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         }
         return list;
     }
-    public List ListAllAccountEmpID() {
+    public List ListAllAccountEmpID() throws Exception{
         List<Integer> list = new ArrayList<>();
         String sql = "select * from Account where Role = 2";
         ResultSet rs = getData(sql);
@@ -76,8 +118,7 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
                 list.add(accountid);
             }
         } catch (SQLException ex) {
-            //ex.printStackTrace();
-             return null;
+            throw ex;
         }
         return list;
     }
@@ -869,8 +910,11 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
     public static void main(String[] args) {
 
         AccountDAOImpl dao = new AccountDAOImpl();
-        List<OrderDetails> list = dao.getDetailsBill(11);
-        System.out.println(list);
+        try {
+            System.out.println(dao.searchAccountByName("d",6));
+        } catch (Exception ex) {
+            Logger.getLogger(AccountDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Account infoAccount(String user, String pass) throws Exception {
@@ -919,7 +963,7 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
                         .quantity(rs.getInt("Quantity"))
                         .total(rs.getDouble("Total"))
                         .status(rs.getInt("StatusID"))
-                        .imageURL(rs.getString("imageURL"))
+                        .ImageURL(rs.getString("imageURL"))
                         .build();
                 list.add(od);
             }
@@ -946,21 +990,21 @@ public class AccountDAOImpl extends ConnectDB implements AccountDAO {
         return 0;
     }
 
-    public List ListAllAccountEmpID() {
-        List<Integer> list = new ArrayList<>();
-        String sql = "select * from Account where Role = 2";
-        ResultSet rs = getData(sql);
-        try {
-            while (rs.next()) {
-                int accountid = rs.getInt("accountid");
-                list.add(accountid);
-            }
-        } catch (SQLException ex) {
-            //ex.printStackTrace();
-             return null;
-        }
-        return list;
-    }
+//    public List ListAllAccountEmpID() {
+//        List<Integer> list = new ArrayList<>();
+//        String sql = "select * from Account where Role = 2";
+//        ResultSet rs = getData(sql);
+//        try {
+//            while (rs.next()) {
+//                int accountid = rs.getInt("accountid");
+//                list.add(accountid);
+//            }
+//        } catch (SQLException ex) {
+//            //ex.printStackTrace();
+//             return null;
+//        }
+//        return list;
+//    }
 
      public int getRandomElemAccountEmpID(List<Integer> list)
     {

@@ -43,7 +43,7 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
         }
     }
     public List<OrderDetails> getListAllDetail(int OrderID) {
-        OrderDetailsDao dao = new OrderDetailsDao();
+        OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
         List<OrderDetails> list = new ArrayList<>();
         String sql = "select p.ProductName,p.ImageURL,od.Price,od.Quantity,(od.Price*od.Quantity)'Total' from [Order] o\n" +
 "                join [Order Details] od on od.OrderID = o.OrderID\n" +
@@ -162,9 +162,9 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
         return null;
     }
     public static void main(String[] args) {
-       OrderDetailsDao dao = new OrderDetailsDao();
-       OrderDetails info = dao.getInfoBill(1);
-        System.out.println(info);
+//       OrderDetailsDao dao = new OrderDetailsDao();
+//       OrderDetails info = dao.getInfoBill(1);
+//        System.out.println(info);
     }
 
 }

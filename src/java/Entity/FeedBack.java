@@ -24,4 +24,5 @@ public class FeedBack {
     private String imageURL;
     private String timeComment;
     private String productName;
+    private double price;
 }

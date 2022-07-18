@@ -29,6 +29,11 @@
         <link rel="stylesheet" href="assets/css/plugins/magnific-popup.css">
         <link rel="stylesheet" href="assets/css/plugins/jquery-ui.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
     </head>
 
     <body>
@@ -79,33 +84,27 @@
                     </div>
                 </div>
             </header>
-            <div class="breadcrumb-area bg-gray">
-                <div class="container">
-
-                    <div class="breadcrumb-content text-center">
-                        <ul>
-                            <li>
-                                <a href="home">Home</a>
-                            </li>
-                            <li class="active">Cart Page </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="cart-main-area pt-115 pb-120">
                 <div class="container">
                     <div class="row">
-                      <div class="col-md-6"></div>
-                    
-                        <form action="#">
-                            <button class=""><i class="icon-magnifier"></i></button>
-                            <input placeholder="Search products?" type="text">
-                            <input style="submit" name="submit">
-                        </form>
-                     
+                        <div class="col-md-6"></div>
+
+
+
                     </div>
-                    
-                    <h1 class="cart-page-title">Status of orders:</h1>
+
+                    <h1 class="cart-page-title" style="text-align: center; padding-bottom: 5%">Status of orders</h1>
+                    <form action="shipperController?do=searchOrder" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input name="keySearch" type="text" class="form-control bg-light border-2 small" placeholder="Search by address..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button name="submit" class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="table-content table-responsive cart-table-content">
@@ -130,9 +129,9 @@
                                                 <td>${l.address}</td>
                                                 <td>${l.email}</td>
                                                 <td >
-                                                    <form action="shipperController?do=updateStatus" method="POST">
+                                                    <form action="shipperController?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
                                                         <input type="hidden" name="odId" value="${l.orderID}">
-                                                        <select name="status" onchange="this.form.submit()" style="background-color: whitesmoke;color: black">
+                                                        <select name="status" onchange="this.form.submit()" style="background-color: whitesmoke;color: black;border: 1px solid black; width: 55%">
                                                             <option value="1" ${l.status == 1 ? " selected" : ""}><b style="color: red">Wait</b></option>
                                                             <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
 
@@ -146,7 +145,41 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination" style="display: flex; justify-content: center;">
+                                    <c:choose>
+                                        <c:when test="${search!=null}">
+                                            <c:choose>
+                                                <c:when test="${list ==null || list.size() ==0}">
+                                                    <h2 style="color: red">NOT FOUND</h2>
+                                                </c:when> 
+                                                <c:otherwise>
+                                                    <c:if test="${page!=1}">
+                                                        <li class="page-item"><a class="page-link" href="shipperController?do=searchOrder&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
+                                                        </c:if>
+                                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="shipperController?do=searchOrder&page=${i}&keySearch=${keySearch}">${i}</a></li>
+                                                        </c:forEach>
+                                                        <c:if test="${page !=totalPage}">
+                                                        <li class="page-item"><a class="page-link" href="shipperController?do=searchOrder&page=${page+1}&keySearch=${keySearch}">Next</a></li>
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${page!=1}">
+                                                <li class="page-item"><a class="page-link" href="shipperController?do=load&page=${page-1}">Previous</a></li>   
+                                                </c:if>
+                                                <c:forEach begin="1" end="${totalPage}" var="i">
+                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="shipperController?do=load&page=${i}">${i}</a></li>
+                                                </c:forEach>
+                                                <c:if test="${page!=totalPage}">
+                                                <li class="page-item"><a class="page-link" href="shipperController?do=load&page=${page+1}">Next</a></li>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

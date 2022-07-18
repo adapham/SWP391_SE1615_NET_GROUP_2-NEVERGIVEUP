@@ -3,13 +3,12 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.Product;
-import dao.AccountDao;
-import dao.FeedbackDao;
 import dao.MessDAO;
-import dao.OrderDao;
+import dao.OrderDAO;
 import dao.impl.AccountDAOImpl;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
+import dao.impl.MessDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
@@ -111,17 +110,7 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        MessDAO daoMess = new MessDAO();
-                        List<Integer> listCus = daoMess.getIdCusByEmployee(accountID.getAccountid());
-                        AccountDao daoAcc = new AccountDao();
-                        List<Account> listAccByEm = new ArrayList<>();
-                        for (Integer id : listCus) {
-                            //listAccByEm.add(daoAcc.getAccountByAccountID(id));
-                        }
-                       
-                        request.setAttribute("listAccByEm", listAccByEm);
-                        request.getRequestDispatcher("chatOfEmployee1.jsp").forward(request, response);
-
+                        request.getRequestDispatcher("employee.jsp").forward(request, response);
                     } else if (checkAccount == 4) {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
@@ -149,9 +138,24 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        OrderDao dao = new OrderDao();
-                        List<Order> list = dao.listAllOrders();
-                        request.setAttribute("list", list);
+                        OrderDAOImpl dao = new OrderDAOImpl();
+                String pageStr = request.getParameter("page");
+                int page = 1;
+                final int PAGE_SIZE = 3;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+                List<Order> list = dao.getOrderWithPaging(page, PAGE_SIZE);
+                int totalOrder = dao.getTotalOrder();
+                int totalPage = totalOrder / PAGE_SIZE;
+                if (totalOrder % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+                System.out.println(list);
+                request.setAttribute("page", page);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("shipper.jsp").forward(request, response);
                         request.getRequestDispatcher("shipper.jsp").forward(request, response);
                     } else {
                         Cookie cu = new Cookie("us", username);

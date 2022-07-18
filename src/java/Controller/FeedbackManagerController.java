@@ -174,16 +174,16 @@ public class FeedbackManagerController extends HttpServlet {
                 request.setAttribute("listFeedBack", listFeedBack);
                 request.getRequestDispatcher("feedbackManager.jsp").forward(request, response);
             }
-//            if (service.equals("detailFeedBack")) {
-//                FeedbackDAOImpl dao = new FeedbackDAOImpl();
-//                String id = request.getParameter("iD");
-//                int iD = Integer.parseInt(id);
-//                //List<FeedBack> listFeedBack = dao.getDetailsFeedBack(iD);
-//
-//                //request.setAttribute("listFeedBack", listFeedBack);
-//                request.setAttribute("iD", iD);
-//                request.getRequestDispatcher("detailFeedBack.jsp").forward(request, response);
-//            }
+            if (service.equals("detailFeedBack")) {
+                FeedbackDAOImpl dao = new FeedbackDAOImpl();
+                String id = request.getParameter("iD");
+                int iD = Integer.parseInt(id);
+                List<FeedBack> listFeedBack = dao.getDetailsFeedBack(iD);
+
+                request.setAttribute("listFeedBack", listFeedBack);
+                request.setAttribute("iD", iD);
+                request.getRequestDispatcher("detailFeedBack.jsp").forward(request, response);
+            }
             if(service.equals("deleteFeedback")){
                 FeedbackDAOImpl dao = new FeedbackDAOImpl();
                 String keySearch = request.getParameter("keySearch");

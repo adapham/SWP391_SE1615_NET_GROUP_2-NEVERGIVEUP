@@ -1,8 +1,10 @@
 package Controller;
 
 import Entity.Account;
-import dao.AccountDao;
+
 import dao.MessDAO;
+import dao.impl.AccountDAOImpl;
+import dao.impl.MessDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,18 +23,16 @@ public class chat extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int CustomerID = Integer.parseInt(request.getParameter("CustomerID"));
-
-        try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("do");
-            if (service == null) {
-
-                AccountDao daoAcc = new AccountDao();
+        String service = request.getParameter("do");
+        if (service == null) {
+            AccountDAOImpl daoAcc = new AccountDAOImpl();
 //            List<Integer> list = dao.ListAllAccountEmpID();
 //            int employeeID = dao.getRandomElemAccountEmpID(list);
 //            request.setAttribute("employeeID", employeeID); 
-                HttpSession session = request.getSession();
-                Account acc = (Account) session.getAttribute("Account");
-                MessDAO daoMess = new MessDAO();
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("Account");
+            MessDAOImpl daoMess = new MessDAOImpl();
+            try {
                 List<Integer> listCus = daoMess.getIdCusByEmployee(acc.getAccountid());
 
                 List<Account> listAccByEm = new ArrayList<>();
@@ -49,6 +49,8 @@ public class chat extends HttpServlet {
                 request.setAttribute("listMess", listMess);
                 request.setAttribute("listAccByEm", listAccByEm);
                 request.getRequestDispatcher("chatOfEmp.jsp").forward(request, response);
+            } catch (Exception e) {
+                
             }
 
         }

@@ -13,8 +13,16 @@
                         <div class="main-menu main-menu-padding-1 main-menu-lh-1">
                             <nav>
                                 <ul>
-                                    <li><a href="home?do=home&fresh=1">HOME </a>
-                                    </li>
+                                    
+                                    <c:if test="${sessionScope.Account ==null}">
+                                             <li><a href="home?do=home&fresh=1">HOME </a>
+                                    </li>  
+                                    </c:if>
+                                    
+                                     <c:if test="${sessionScope.Account !=null}">
+                                             <li><a href="home">HOME </a>
+                                    </li>  
+                                    </c:if>
                                     <c:if test="${sessionScope.Account !=null}">
                                                 <li><a href="MyCartController">MY CART</a> 
                                                 </li>

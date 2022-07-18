@@ -7,12 +7,9 @@ package Controller;
 
 import Entity.Order;
 import Entity.OrderDetails;
-import Entity.Product;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

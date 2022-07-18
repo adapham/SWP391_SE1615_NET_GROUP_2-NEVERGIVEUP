@@ -90,5 +90,5 @@ public interface AccountDAO {
     public int getTotalCustomer() throws Exception;
    public List ListAllAccountEmpID() throws Exception;
    public int getRandomElemAccountEmpID(List<Integer> list) throws Exception;
-   
+    public List<Account> searchAccountByName(String searchKey, int CustomerID) throws Exception;
 }

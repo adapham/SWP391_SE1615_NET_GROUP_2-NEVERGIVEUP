@@ -222,4 +222,30 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
         }
         return n;
     }
+
+    public List<FeedBack> getDetailsFeedBack(int iD) throws Exception{
+        List<FeedBack> list = new ArrayList<>();
+        String sql = "select p.ImageURL, p.ProductName, (p.UnitPrice-(p.UnitPrice*p.Discount))Price, a.DisplayName, f.FeedbackContent, f.Feedbacktime from Feedback f\n"
+                + "join Account a on a.AccountID = f.AccountID\n"
+                + "join Product p on p.ProductID = f.ProductID where f.FeedbackID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, iD);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                FeedBack feedback = FeedBack.builder()
+                        .imageURL(rs.getString("ImageURL"))
+                        .productName(rs.getString("ProductName"))
+                        .disPlayName(rs.getString("DisplayName"))
+                        .feedbackContent(rs.getString("FeedbackContent"))
+                        .timeComment(rs.getString("Feedbacktime"))
+                        .price(rs.getDouble("Price"))
+                        .build();
+                list.add(feedback);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return list;
+    }
 }

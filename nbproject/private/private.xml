@@ -3,18 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/HomeController.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/css/main.css</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/component/HeaderComponent.jsp</file>
             <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/dao/AccountDAO.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/ChatRoomServerEndpoint.java</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/component/AdminFooterComponent.jsp</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/dao/impl/ProductDAOImpl.java</file>
             <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/chatController.java</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/compareProduct.jsp</file>
             <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/dao/impl/AccountDAOImpl.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/filter/HomeFilter.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/chatOfEmployee1.jsp</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/filter/AuthenticationFilter.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/dao/impl/MessDAOImpl.java</file>
-            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/index.jsp</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/chat.java</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/searchUserAjax.java</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Controller/SearchByAjaxCompareController.java</file>
             <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/web/chatOfEmp.jsp</file>
+            <file>file:/D:/Univer/SWP/SWP391_SE1615_NET_GROUP_2-NEVERGIVEUP/src/java/Entity/Account.java</file>
         </group>
     </open-files>
 </project-private>
