@@ -118,7 +118,7 @@ public class AdminProfileController extends HttpServlet {
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     Account accupdate = Account.builder()
                             .accountid(AccountID)
                             .displayname(DisplayName.trim())
@@ -198,13 +198,18 @@ public class AdminProfileController extends HttpServlet {
                             .build();
                     session.setAttribute("Account", accChangePass);
                     int n = daoAccount.changePassword(accChangePass);
+                    if (n > 0) {
+                        String mess1 = "Change Password Success!";
+                        List ListAccount = daoAccount.getAccountByID(AccountID);
 
-                    String mess1 = "Change Password Success!";
-                    List ListAccount = daoAccount.getAccountByID(AccountID);
+                        request.setAttribute("oldPass", "");
+                        request.setAttribute("newPass", "");
+                        request.setAttribute("confirmpassword", "");
 
-                    request.setAttribute("mess1", mess1);
-                    request.setAttribute("list", ListAccount);
-                    request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        request.setAttribute("mess1", mess1);
+                        request.setAttribute("list", ListAccount);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                    }
                 }
             }
         } catch (Exception ex) {
