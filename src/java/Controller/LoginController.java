@@ -310,7 +310,7 @@ public class LoginController extends HttpServlet {
             if (service.equals("Register")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("register.jsp");
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
@@ -451,7 +451,7 @@ public class LoginController extends HttpServlet {
             if (service.equals("forgetpassword")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("forgetpassword.jsp");
+                    request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
                 } else {
                     String email = request.getParameter("email");
                     List list = daoAccount.ListAllEmail();
