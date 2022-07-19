@@ -22,7 +22,7 @@ public class searchUserAjax extends HttpServlet {
        
         String searchKey = request.getParameter("keySearch");
         PrintWriter out = response.getWriter();
-//        int CustomerID = Integer.parseInt(request.getParameter("CustomerID"));
+        int CustomerID = Integer.parseInt(request.getParameter("CustomerID"));
         AccountDAOImpl daoAcc = new AccountDAOImpl();
 //            List<Integer> list = dao.ListAllAccountEmpID();
 //            int employeeID = dao.getRandomElemAccountEmpID(list);

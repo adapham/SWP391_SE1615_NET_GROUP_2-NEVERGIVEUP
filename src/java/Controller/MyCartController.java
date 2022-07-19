@@ -6,8 +6,6 @@ import Entity.OrderDetails;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,7 +71,7 @@ public class MyCartController extends HttpServlet {
                 request.getRequestDispatcher("listOrderDetail.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-
+            request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
 
     }
