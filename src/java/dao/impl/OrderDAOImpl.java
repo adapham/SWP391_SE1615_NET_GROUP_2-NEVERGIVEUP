@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -107,6 +109,31 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
+        OrderDAOImpl dao = new OrderDAOImpl();
+        List<Order> list = null;
+        try {
+            list = dao.getOrderWithPaging(1, 3);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//        for (Order o : list) {
+//            Order order = Order.builder()
+//                    .orderDate(o.getOrderDate())
+//                    .address(o.getAddress())
+//                    .email(o.getEmail())
+//                    .status(1)
+//                    .phone(o.getPhone())
+//                    .build();
+//            list.add(order);
+//        }
+        System.out.println(list.size());
+//        try {
+//            System.out.println(dao.listAllOrders());
+//        } catch (Exception ex) {
+//            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        
     }
 
     public int updateStatus(int status, int orId) throws Exception {
@@ -203,7 +230,55 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return listOrd;
     }
-
+    public List<Order> getSearchOrderPagingByDate(String keySearch, int page, int PAGE_SIZE) throws Exception {
+        List<Order> listOrd = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY OrderID)\n"
+                + "AS Seq FROM [Order] where [OrderDate] like ? )t WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
+        OrderDAOImpl dao = new OrderDAOImpl();
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keySearch + "%");
+            pre.setInt(2, page);
+            pre.setInt(3, PAGE_SIZE);
+            pre.setInt(4, page);
+            pre.setInt(5, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt("OrderID"))
+                        .accountID(rs.getInt("AccountID"))
+                        .shipperID(rs.getInt("ShipperID"))
+                        .orderDate(rs.getString("OrderDate"))
+                        .address(rs.getString("Address"))
+                        .email(rs.getString("Email"))
+                        .status(rs.getInt("Status"))
+                        .phone(rs.getString("Phone"))
+                        .build();
+                listOrd.add(ord);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return listOrd;
+    }
+    public int getTotalOrderByDate(String keySearch) throws Exception {
+        
+        String sql = "select COUNT(*) from [Order] where [OrderDate] like ?";
+        try {
+            
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keySearch + "%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return 0;
+    }
+    
     public int getTotalOrderByAddress(String keySearch) throws Exception {
         String sql = "select COUNT(*) from [Order] where [Address] like ?";
         try {
@@ -256,6 +331,27 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
             }
         } catch (SQLException e) {
             throw e;
+    public List<Order> listAllOrdersbyID(int AccID) throws Exception {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select * from [Order] where AccountID=" + AccID;
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt(1))
+                        .accountID(rs.getInt(2))
+                        .shipperID(rs.getInt(3))
+                        .orderDate(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .status(rs.getInt(7))
+                        .phone(rs.getString(8))
+                        .build();
+                list.add(ord);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }

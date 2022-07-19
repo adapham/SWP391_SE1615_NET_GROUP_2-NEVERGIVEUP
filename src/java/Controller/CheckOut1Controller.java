@@ -79,7 +79,7 @@ public class CheckOut1Controller extends HttpServlet {
                     .build();
             int orderID = new OrderDAOImpl().insertOrderID(order);
             new OrderDetailsDAOImpl().saveCart(orderID, listProductCarts);
-
+            session.removeAttribute("size");
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();
                 if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {

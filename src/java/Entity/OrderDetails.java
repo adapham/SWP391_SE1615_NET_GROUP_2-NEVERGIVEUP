@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import java.util.Date;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +30,7 @@ public class OrderDetails {
     private double total;
     private int status;
     private int productID;
-    private String imageURL;
+    private String ImageURL;
+    private String  OrderDate;
+    
 }

@@ -51,18 +51,19 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Feedback ID</th>
-                                <th scope="col">Display name</th>
-                                <th scope="col">Product name</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Delete</th>
-                                <th scope="col">Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <c:if test="${mess != null}"><h4>${mess}</h4></c:if>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Feedback ID</th>
+                                    <th scope="col">Display name</th>
+                                    <th scope="col">Product name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             <c:forEach items="${listFeedBack}" var="l">
                                 <tr>
                                     <th scope="row">${l.feedbackID}</th>

@@ -13,6 +13,9 @@ import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
+import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,6 +66,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.setAttribute("page", page);
                 request.setAttribute("totalPage", totalPage);
                 response.sendRedirect("billManager?do=pageBill&page=" + page);
@@ -145,6 +150,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
             }
         } catch (Exception ex) {

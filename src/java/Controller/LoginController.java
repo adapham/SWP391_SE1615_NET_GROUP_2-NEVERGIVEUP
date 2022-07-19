@@ -1,6 +1,8 @@
 package Controller;
 
 import Entity.Account;
+import Entity.Product;
+import Entity.Order;
 import dao.impl.AccountDAOImpl;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
@@ -9,6 +11,8 @@ import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -74,9 +78,48 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
-                    } else if (checkAccount == 2) {
+                        int size = 0;
+                        String sizeStr;
+                        try {
+                            sizeStr = session.getAttribute("size").toString();
+                        } catch (Exception e) {
+                            sizeStr = null;
+                        }
+                        if (sizeStr == null) {
+                            size = 0;
+                        } else {
+                            size = Integer.parseInt(sizeStr);
+                        }
 
+                        if (size != 0) {
+                            List<Product> listProductCarts = new ArrayList<>();
+                            Enumeration em = session.getAttributeNames();
+                            int sum = 0;
+                            while (em.hasMoreElements()) {
+                                String key = em.nextElement().toString();
+                                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("Account") && !key.equals("size") && !key.equals("listCategory")) {
+                                    Product pro = (Product) session.getAttribute(key);
+                                    sum += pro.getQuantity();
+                                    listProductCarts.add(pro);
+                                    session.setAttribute(key, pro);
+                                }
+                            }
+                            double totalMoney = 0;
+                            for (Product list : listProductCarts) {
+                                totalMoney += list.getUnitPrice() * list.getQuantity();
+                                totalMoney *= 100;
+                                double total = Math.ceil(totalMoney);
+                                total = (double) total / 100;
+                                totalMoney = total;
+
+                            }
+                            request.setAttribute("totalMoney", totalMoney);
+                            request.setAttribute("listProductCarts", listProductCarts);
+                            request.getRequestDispatcher("cart.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        }
+                    } else if (checkAccount == 2) {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
                         Cookie cr = new Cookie("rem", r);
@@ -132,7 +175,25 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("Shipper.jsp").forward(request, response);
+                        OrderDAOImpl dao = new OrderDAOImpl();
+                String pageStr = request.getParameter("page");
+                int page = 1;
+                final int PAGE_SIZE = 3;
+                if (pageStr != null) {
+                    page = Integer.parseInt(pageStr);
+                }
+                List<Order> list = dao.getOrderWithPaging(page, PAGE_SIZE);
+                int totalOrder = dao.getTotalOrder();
+                int totalPage = totalOrder / PAGE_SIZE;
+                if (totalOrder % PAGE_SIZE != 0) {
+                    totalPage += 1;
+                }
+                System.out.println(list);
+                request.setAttribute("page", page);
+                request.setAttribute("totalPage", totalPage);
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("shipper.jsp").forward(request, response);
+                        request.getRequestDispatcher("shipper.jsp").forward(request, response);
                     } else {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
@@ -185,7 +246,8 @@ public class LoginController extends HttpServlet {
             if (service.equals("logout")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute("Account");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                //response.sendRedirect("login.jsp");
             }
             if (service.equals("submitUpdate")) {
 
@@ -450,7 +512,7 @@ public class LoginController extends HttpServlet {
             if (service.equals("forgetpassword")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("forgetpassword.jsp");
+                    request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
                 } else {
                     String email = request.getParameter("email");
                     List list = daoAccount.ListAllEmail();

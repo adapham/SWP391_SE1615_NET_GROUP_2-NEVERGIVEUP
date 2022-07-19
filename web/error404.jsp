@@ -1,47 +1,42 @@
-<%-- 
-    Document   : error404
-    Created on : Jun 11, 2022, 2:17:49 PM
-    Author     : ADA
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Flashy Error Page a Flat Responsive Widget Template :: w3layouts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Smart Error Page Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- font files -->
-<link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
-<!-- /font files -->
-<!-- css files -->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<!-- /css files -->
-<!-- js files -->
 
-<!-- /js files -->
-<body>
-<div class="container demo-2">
-	<div class="content">
-        <div id="large-header" class="large-header">
-			<h1 class="header-w3ls">Flashy Error Page</h1>
-			<p class="w3-agileits1">Oops!</p>
-            <canvas id="demo-canvas"></canvas>
-			<img src="images/owl.gif" alt="flashy" class="w3l">
-            <h2 class="main-title"><span>404</span></h2>
-			<p class="w3-agileits2">We can't seem to find the page you're looking for.</p>
-                       
-                        <p class="copyright">  <a style="font-size: larger" href="home" target="_blank">Back to Home</a></p>
-                        
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <title>404 HTML Template by Colorlib</title>
+
+        <!-- Google font -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,700" rel="stylesheet">
+
+        <!-- Custom stlylesheet -->
+        <link type="text/css" rel="stylesheet" href="css/style1.css" />
+
+    </head>
+
+    <body>
+
+        <div id="notfound">
+            <div class="notfound">
+                <div class="notfound-404">
+                    <h1>4<span></span>4</h1>
+                </div>
+                <h2>Oops! Page Not Be Found</h2>
+                <p></p>
+                <c:if test="${sessionScope.Account ==null}">
+                   <a href="home?do=home&fresh=1">Back to homepage </a>
+                </c:if>
+
+                <c:if test="${sessionScope.Account !=null}">
+                   <a href="home">Back to homepage </a>
+                </c:if>
+            </div>
         </div>
-	</div>
-</div>	
-<!-- js files -->
-<script src="js/rAF.js"></script>
-<script src="js/demo-2.js"></script>
-<!-- /js files -->
-</body>
+    </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

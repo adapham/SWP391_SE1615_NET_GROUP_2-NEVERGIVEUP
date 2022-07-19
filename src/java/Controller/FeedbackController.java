@@ -80,6 +80,7 @@ public class FeedbackController extends HttpServlet {
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("contact.jsp").forward(request, response);
         } catch (Exception ex) {
+            ex.printStackTrace();
             request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }

@@ -82,6 +82,10 @@
                                             <th scope="row">Image</th>
                                             <td colspan="2">
                                                 <img src="${l.imageURL}" alt="" style="min-height: 300px; max-height: 300px;  ">
+                                                <div style="margin-top: 20px;">
+                                                    <button style="background-color: orange; border-radius: 20px;"  title="Add to Cart"><a href="AddToCart?pid=${l.productID}" style="text-decoration: none; font-size: 20px;">Add To Cart</a></button>
+                                                    <button style="background-color: orange; border-radius: 20px; font-size: 20px;" title="Quick View" data-toggle="modal" data-target="#exampleModal${l.productID}">View</button>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -100,7 +104,49 @@
                                             <th scope="row">Price After Discount</th>
                                             <td colspan="2">${l.priceAferDiscount} $</td>
                                         </tr>
-                                    </c:forEach>
+                                        <!--Modal-->
+                                    <div class="modal fade" id="exampleModal${l.productID}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-6 col-12 col-sm-12">
+                                                            <div class="tab-content quickview-big-img">
+                                                                <div id="pro-1" class="tab-pane fade show active">
+                                                                    <img src="${l.imageURL}" alt="" style="min-height: 400px;">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-lg-7 col-md-6 col-12 col-sm-12">
+                                                            <div class="product-details-content quickview-content">
+                                                                <h2>${l.productName}</h2>
+                                                                <p>${l.description}</p>
+                                                                <div class="pro-list-price product-price-2 pro-details-price">
+                                                                    <c:if test="${l.unitPrice !=l.priceAferDiscount}">
+                                                                        <span class="text-muted old-price">$${pro.unitPrice}</span>
+                                                                    </c:if>
+                                                                    <spam class="new-price">$${l.priceAferDiscount}</spam>
+                                                                </div>
+
+
+                                                                <div class="pro-details-action-wrap">
+                                                                    <div class="pro-details-add-to-cart">
+                                                                        <a title="Add to Cart" href="AddToCart?pid=${l.productID}">Add To Cart </a>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -112,7 +158,7 @@
                                     <div class="sidebar-search" style="margin-top: 0;">
                                         <form class="sidebar-search-form" action="" method="POST">
                                             <input oninput="searchByName(this,${product.categoryID},${product.productID})" name="searchKey" type="text" placeholder="Search here..." value="${keySearch}">
-                                            <button type="submit"><i class="icon-magnifier"></i></button>
+                                            <button type="button"><i class="icon-magnifier"></i></button>
                                         </form>
                                     </div>  
                                 </div>
@@ -123,7 +169,7 @@
                                         <!--Shop 1-->
                                         <div id="shop-1" class="tab-pane active">
                                             <div id="contentCompare"  style="">
-                                                
+
                                             </div>
                                         </div>
                                         <!--end shop 1-->
@@ -138,62 +184,62 @@
         <!--Footer-->
         <%@include file="component/FooterComponent.jsp" %>
 
-    
-    <!-- All JS is here
-============================================ -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        function searchByName(param, param1, param2, param3) {
-            var keySearch = param.value.trim();
-            var cateId = param1;
-            var pId = param2;
-            var x = location.origin;
-            var s = "<%= getServletContext().getContextPath() %>"
-            console.log(x);
-            console.log(s);
-            $.ajax({
-                url: x+s+"/searchCompare",
-                type: "get", //send it through get method
-                data: {
-                    keySearch: keySearch,
-                    cateId: cateId,
-                    pId: pId
-                },
-                success: function (data) {
-                    var row = document.getElementById("contentCompare");
-                    row.innerHTML = data;
 
-                },
-                error: function (xhr) {
-                    //Do Something to handle error
-                }
-            });
-        }
-        ;
-    </script>
-    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
-    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins/slick.js"></script>
-    <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="assets/js/plugins/jquery.instagramfeed.min.js"></script>
-    <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
-    <script src="assets/js/plugins/wow.js"></script>
-    <script src="assets/js/plugins/jquery-ui-touch-punch.js"></script>
-    <script src="assets/js/plugins/jquery-ui.js"></script>
-    <script src="assets/js/plugins/magnific-popup.js"></script>
-    <script src="assets/js/plugins/sticky-sidebar.js"></script>
-    <script src="assets/js/plugins/easyzoom.js"></script>
-    <script src="assets/js/plugins/scrollup.js"></script>
-    <script src="assets/js/plugins/ajax-mail.js"></script>
+        <!-- All JS is here
+    ============================================ -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function searchByName(param, param1, param2, param3) {
+                var keySearch = param.value.trim();
+                var cateId = param1;
+                var pId = param2;
+                var x = location.origin;
+                var s = "<%= getServletContext().getContextPath()%>"
+                console.log(x);
+                console.log(s);
+                $.ajax({
+                    url: x + s + "/searchCompare",
+                    type: "get", //send it through get method
+                    data: {
+                        keySearch: keySearch,
+                        cateId: cateId,
+                        pId: pId
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("contentCompare");
+                        row.innerHTML = data;
 
-    <!-- Use the minified version files listed below for better performance and remove the files listed above  
-<script src="assets/js/vendor/vendor.min.js"></script>
-<script src="assets/js/plugins/plugins.min.js"></script>  -->
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+            ;
+        </script>
+        <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+        <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
+        <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+        <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/plugins/slick.js"></script>
+        <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
+        <script src="assets/js/plugins/jquery.instagramfeed.min.js"></script>
+        <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
+        <script src="assets/js/plugins/wow.js"></script>
+        <script src="assets/js/plugins/jquery-ui-touch-punch.js"></script>
+        <script src="assets/js/plugins/jquery-ui.js"></script>
+        <script src="assets/js/plugins/magnific-popup.js"></script>
+        <script src="assets/js/plugins/sticky-sidebar.js"></script>
+        <script src="assets/js/plugins/easyzoom.js"></script>
+        <script src="assets/js/plugins/scrollup.js"></script>
+        <script src="assets/js/plugins/ajax-mail.js"></script>
 
-</body>
+        <!-- Use the minified version files listed below for better performance and remove the files listed above  
+    <script src="assets/js/vendor/vendor.min.js"></script>
+    <script src="assets/js/plugins/plugins.min.js"></script>  -->
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+
+    </body>
 
 </html>

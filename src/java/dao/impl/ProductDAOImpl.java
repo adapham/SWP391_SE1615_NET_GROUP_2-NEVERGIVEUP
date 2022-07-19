@@ -486,7 +486,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return n;
     }
-
+    //Create new Product
     public int createProduct(Product pro) throws Exception{
         int n = 0;
         String sql = "INSERT INTO [Product]\n"
@@ -536,7 +536,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
             ex.printStackTrace();
         }
     }
-
+    //delete Product By ID
     public int deleteProduct(int pID) throws Exception{
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
@@ -554,7 +554,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return n;
     }
-
+    //Search Product By Name and Category ID
     public List<Product> searchProductByNameAndCategoryId(String searchKey, int cateId, int pId) throws Exception{
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where ProductName like ? and CategoryID = ? and ProductID != ?";

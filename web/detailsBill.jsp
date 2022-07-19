@@ -50,7 +50,7 @@
                     <main class="main-content position-relative border-radius-lg ">
                         <div class="container-fluid py-4">
                             <div class="col-lg-4 mb-lg-0 mb-4">
-
+                                <c:if test="${mess != null}"><h4>${mess}</h4></c:if>
                                 <p><h3 style="color: black"><b> Information customer:  </b></h3></p> 
                                 <p style="color: black"><b>Order date: </b>${info.orderDate}</p> 
                                 <p style="color: black"><b>Customer name: </b>${info.displayname}</p> 
@@ -60,7 +60,7 @@
 
                                 <form action="billManager?do=updateStatusDetails" method="POST">
                                     <input type="hidden" name="odId" value="${orderID}">
-                                    <select name="status" onchange="this.form.submit()">
+                                    <select style="width: 25%; border: 1px solid black; color: black" name="status" onchange="this.form.submit()">
                                         <option value="1" ${info.status == 1 ? " selected" : ""}>Wait</option>
                                         <option value="2" ${info.status == 2 ? " selected" : ""}>Process</option>
                                         <option value="3" ${info.status == 3 ? " selected" : ""}>Done</option>
