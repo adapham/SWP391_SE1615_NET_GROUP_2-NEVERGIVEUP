@@ -14,6 +14,8 @@ import java.util.List;
  * @author admin
  */
 public interface AccountDAO {
+   
+     public Account getAccountByIDA(int AccountID) throws Exception;
 
     public List ListAllAccount() throws Exception;
 
@@ -86,4 +88,7 @@ public interface AccountDAO {
     public Account infoAccount(String user, String pass) throws Exception;
     
     public int getTotalCustomer() throws Exception;
+   public List ListAllAccountEmpID() throws Exception;
+   public int getRandomElemAccountEmpID(List<Integer> list) throws Exception;
+    public List<Account> searchAccountByName(String searchKey, int CustomerID) throws Exception;
 }

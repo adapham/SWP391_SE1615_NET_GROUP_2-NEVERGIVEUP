@@ -12,9 +12,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;  
 
-@WebFilter(filterName = "HomeFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "HomeFilter", urlPatterns = {""})
 public class HomeFilter implements Filter {
 
     private static final boolean debug = true;
@@ -53,7 +53,7 @@ public class HomeFilter implements Filter {
 
         String url = req.getServletPath();
         if (url.endsWith(".jsp")) {
-            res.sendRedirect("home");
+            request.getRequestDispatcher("error404.jsp").forward(request, response);
             return;
         }
 

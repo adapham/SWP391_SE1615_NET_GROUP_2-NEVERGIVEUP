@@ -12,4 +12,6 @@ public interface OrderDAO {
     public List<Order> getOrderWithPaging(int page, int PAGE_SIZE) throws Exception;
     public List<Order> getSearchOrderPagingByAddress(String keySearch, int page, int PAGE_SIZE) throws Exception;
     public int getTotalOrderByAddress(String keySearch) throws Exception;
+     public List<Order> listAllOrdersbyID(int AccID) throws Exception;
+     public int getTotalOrderByDate(String keySearch) throws Exception;
 }

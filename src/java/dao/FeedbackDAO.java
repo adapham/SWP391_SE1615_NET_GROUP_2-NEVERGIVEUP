@@ -16,7 +16,7 @@ import java.util.List;
 public interface FeedbackDAO {
 
     public List ListFeedBackByProductID(int productID) throws Exception;
-
+    
     public void InsertFeedBack(FeedBack feeback) throws Exception;
 
     public void InsertIntouch(Intouch intouch) throws Exception;
