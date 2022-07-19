@@ -96,7 +96,7 @@
                                                         <!-- Form Group (Username)-->
                                                         <div class="col-md-6">
                                                             <label class="small mb-1" >User Name</label>
-                                                            <input name="username" readonly="" class="form-control"  type="text" placeholder="" value="${l.username}">
+                                                            <input maxlength="50" name="username" readonly="" class="form-control"  type="text" placeholder="" value="${l.username}">
                                                         </div>
                                                         <!-- Form Group (last name)-->
                                                         <div class="col-md-6">
@@ -109,12 +109,12 @@
                                                         <!-- Form Group (organization name)-->
                                                         <div class="col-md-6">
                                                             <label class="small mb-1" >Address</label>
-                                                            <input name="address" class="form-control" type="text" placeholder="Enter your Address..." value="${l.address}">
+                                                            <input maxlength="50" name="address" class="form-control" type="text" placeholder="Enter your Address..." value="${l.address}">
                                                         </div>
                                                         <!-- Form Group (location)-->
                                                         <div class="col-md-6">
                                                             <label class="small mb-1" >Email</label>
-                                                            <input  name="email" class="form-control"  type="email" placeholder="Enter your Email..." value="${l.email}">
+                                                            <input maxlength="50"  name="email" class="form-control"  type="email" placeholder="Enter your Email..." value="${l.email}">
                                                         </div>
                                                     </div>
                                                     <!-- Form Row        -->

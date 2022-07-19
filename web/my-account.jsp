@@ -79,7 +79,7 @@
                                                                     <div class="col-lg-6">
                                                                         <div class="single-input-item">
                                                                             <label  class="required">DisplayName</label>
-                                                                            <input type="text" id="last-name" value="${l.displayname}" name="displayname" />
+                                                                            <input maxlength="50" type="text" id="last-name" value="${l.displayname}" name="displayname" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -87,20 +87,20 @@
                                                                     <div class="col-lg-6">
                                                                         <div class="single-input-item">
                                                                             <label  class="required">Address</label>
-                                                                            <input type="text" id="first-name" value="${l.address}" name="address"/>
+                                                                            <input maxlength="50"  type="text" id="first-name" value="${l.address}" name="address"/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="single-input-item">
                                                                             <label  class="required">Email</label>
-                                                                            <input type="text" id="last-name" value="${l.email}" name="email" />
+                                                                            <input maxlength="50"  type="text" id="last-name" value="${l.email}" name="email" />
                                                                         </div>
                                                                     </div>
                                                                 </div><div class="row">
                                                                     <div class="col-lg-6">
                                                                         <div class="single-input-item">
                                                                             <label  class="required">Phone</label>
-                                                                            <input type="text" id="first-name" value="${l.phone}" name="phone" />
+                                                                            <input maxlength="10"  type="number" id="first-name" value="${l.phone}" name="phone" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
@@ -121,19 +121,19 @@
                                                                     <c:if test="${mess1 != null}"><h3 style="color: red">${mess1}</h3> </c:if>
                                                                         <div class="single-input-item">
                                                                             <label for="current-pwd" class="required">Current Password</label>
-                                                                            <input type="password" id="current-pwd" name="password"/>
+                                                                            <input maxlength="50"  type="password" id="current-pwd" name="password"/>
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-lg-6">
                                                                                 <div class="single-input-item">
                                                                                     <label for="new-pwd" class="required">New Password</label>
-                                                                                    <input type="password" id="new-pwd" name="newpassword" />
+                                                                                    <input maxlength="50"  type="password" id="new-pwd" name="newpassword" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-6">
                                                                                 <div class="single-input-item">
                                                                                     <label for="confirm-pwd" class="required">Confirm Password</label>
-                                                                                    <input type="password" id="confirm-pwd" name="confirmpassword" />
+                                                                                    <input maxlength="50" type="password" id="confirm-pwd" name="confirmpassword" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>

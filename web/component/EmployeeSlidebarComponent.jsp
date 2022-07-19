@@ -3,7 +3,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminHome">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="employeeaccount?do=AccountCustomer">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -16,28 +16,9 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Product Manager
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
-           aria-expanded="true" aria-controls="collapseProduct">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Product Manager</span>
-        </a>
-        <div id="collapseProduct" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Product Manager Crud:</h6>
-                <a class="collapse-item" href="adminProduct"> Products</a>
-                <a style="padding-left: 30px;" class="collapse-item" href="adminProduct?do=createProduct"><i class="fas fa-plus"></i> Create Product</a>
-            </div>
-        </div>
-    </li>
+  
     <!-- Divider -->
-    <hr class="sidebar-divider">
+
 
     <!-- Heading -->
     <div class="sidebar-heading">
@@ -79,28 +60,7 @@
         </div>
     </li>
     <!-- Divider -->
-    <hr class="sidebar-divider">
     <!-- Heading -->
-    <div class="sidebar-heading">
-        User Feedback Manager
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeedback"
-           aria-expanded="true" aria-controls="collapseFeedback">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Feedback Manager</span>
-        </a>
-        <div id="collapseFeedback" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">FeedBack Manager CRUD:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="#">Feekbacks</a>
-            </div>
-        </div>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

@@ -103,7 +103,7 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("employee.jsp").forward(request, response);
+                        request.getRequestDispatcher("employeeaccount?do=AccountCustomer").forward(request, response);
 
                     } else if (checkAccount == 4) {
                         Cookie cu = new Cookie("us", username);
@@ -309,7 +309,7 @@ public class LoginController extends HttpServlet {
             if (service.equals("Register")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("register.jsp");
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");

@@ -98,20 +98,15 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
     }
 
     public static void main(String[] args) {
-        OrderDAOImpl dao = new OrderDAOImpl();
-        Order order = Order.builder()
-                .accountID(3)
-                .shipperID(1)
-                .address("nike")
-                .email("abcd@gmail.com")
-                .status(1)
-                .phone("0362568456")
-                .build();
-        try {
-            System.out.println(dao.insertOrderID(order));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            OrderDAOImpl dao = new OrderDAOImpl();
+//            List list = dao.listTotalByOrderID(17);
+//            for (Object object : list) {
+//                System.out.println(object);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
     }
 
     public int updateStatus(int status, int orId) throws Exception {
@@ -223,6 +218,46 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
             throw e;
         }
         return 0;
+    }
+
+    public List<Order> listAllOrdersByOderDate(String orderDate) throws Exception {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select OrderID,OrderDate,Status from [Order] where OrderDate like ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + orderDate + "%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt("orderID"))
+                        .orderDate(rs.getString("orderDate"))
+                        .status(rs.getInt("status"))
+                        .build();
+                list.add(ord);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return list;
+    }
+
+    public List<Order> listTotalByOrderID(int OrderID) throws Exception {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select (Quantity * Price)'Total' from [Order Details] where OrderID = ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, OrderID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .total(rs.getDouble("total"))
+                        .build();
+                list.add(ord);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return list;
     }
 
 }
