@@ -119,13 +119,16 @@
                                             <a href="menu">Continue Shopping</a>
                                         </div>
                                         <div class="cart-clear">
-                                            <c:if test="${sessionScope.Account !=null}">
-                                                <a href="checkOut">Check Out</a>
+                                            <c:if test="${sessionScope.size!=0 && sessionScope.size!=null}">
+                                                <c:if test="${sessionScope.Account !=null}">
+                                                    <a href="checkOut">Check Out</a>
+                                                </c:if>
+                                                <c:if test="${sessionScope.Account ==null}">
+                                                    <a href="login">Check Out</a>
+                                                </c:if>
                                             </c:if>
-                                            <c:if test="${sessionScope.Account ==null}">
-                                                <a href="login">Check Out</a>
-                                            </c:if>
-                                            
+
+
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalall">
                                                 <a style="color: black">Clear Cart</a>
                                             </button>
@@ -181,9 +184,9 @@
         <script src="assets/js/plugins/easyzoom.js"></script>
         <script src="assets/js/plugins/scrollup.js"></script>
         <script src="assets/js/plugins/ajax-mail.js"></script>
-<!--        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+        <!--        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
 
         <!-- Use the minified version files listed below for better performance and remove the files listed above  
     <script src="assets/js/vendor/vendor.min.js"></script>
