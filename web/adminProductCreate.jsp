@@ -90,7 +90,7 @@
                                                 <!-- Form Group (organization name)-->
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="quantity">Quantity <span style="color: red;">(*)</span></label>
-                                                    <input min="0" max="1000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${quantity == null?'0':quantity}">
+                                                    <input min="0" max="10000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${quantity == null?'0':quantity}">
                                                 </div>
                                                 <!-- Form Group (location)-->
                                                 <div class="col-md-6">
@@ -108,7 +108,7 @@
                                                 <!-- Form Group (location)-->
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="unitInStock">Unit In Stock <span style="color: red;">(*)</span></label>
-                                                    <input min="0" max="1000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${uInStock == null?'0':uInStock}">
+                                                    <input min="0" max="10000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${uInStock == null?'0':uInStock}">
                                                 </div>
                                             </div>
                                             <!-- Form Row        -->

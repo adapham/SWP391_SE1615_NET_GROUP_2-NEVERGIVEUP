@@ -1,5 +1,6 @@
 package filter;
 
+import Entity.Account;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -12,51 +13,53 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;  
-
-@WebFilter(filterName = "HomeFilter", urlPatterns = {"/*"})
-public class HomeFilter implements Filter {
-
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+//Nhập controller cần check vào urlPatterns: /...
+@WebFilter(filterName = "EmployeeFilter", urlPatterns = {""})
+public class EmployeeFilter implements Filter {
+    
     private static final boolean debug = true;
 
     private FilterConfig filterConfig = null;
-
-    public HomeFilter() {
-    }
-
+    
+    public EmployeeFilter() {
+    }    
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("HomeFilter:DoBeforeProcessing");
+            log("EmployeeFilter:DoBeforeProcessing");
         }
-    }
-
+    }    
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("HomeFilter:DoAfterProcessing");
+            log("EmployeeFilter:DoAfterProcessing");
         }
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
+        
         if (debug) {
-            log("HomeFilter:doFilter()");
+            log("EmployeeFilter:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
-
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-
-        String url = req.getServletPath();
-        if (url.endsWith(".jsp")) {
-            request.getRequestDispatcher("error404.jsp").forward(request, response);
-            return;
+        
+        HttpSession session = req.getSession();
+        Account acc = (Account) session.getAttribute("Account");
+        
+        if(acc == null || acc.getRole() != 2){
+            request.getRequestDispatcher("error403.jsp").forward(request, response);
         }
-
+        
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -64,9 +67,11 @@ public class HomeFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
+        
         doAfterProcessing(request, response);
 
+        // If there was a problem, we want to rethrow it if it is
+        // a known type, otherwise log it.
         if (problem != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
@@ -78,50 +83,67 @@ public class HomeFilter implements Filter {
         }
     }
 
+    /**
+     * Return the filter configuration object for this filter.
+     */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
 
+    /**
+     * Set the filter configuration object for this filter.
+     *
+     * @param filterConfig The filter configuration object
+     */
     public void setFilterConfig(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
     }
 
-    public void destroy() {
+    /**
+     * Destroy method for this filter
+     */
+    public void destroy() {        
     }
 
-    public void init(FilterConfig filterConfig) {
+    /**
+     * Init method for this filter
+     */
+    public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {
-                log("HomeFilter:Initializing filter");
+            if (debug) {                
+                log("EmployeeFilter:Initializing filter");
             }
         }
     }
 
+    /**
+     * Return a String representation of this object.
+     */
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("HomeFilter()");
+            return ("EmployeeFilter()");
         }
-        StringBuffer sb = new StringBuffer("HomeFilter(");
+        StringBuffer sb = new StringBuffer("EmployeeFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);
-
+        String stackTrace = getStackTrace(t);        
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);
+                PrintWriter pw = new PrintWriter(ps);                
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
-                pw.print(stackTrace);
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
+                pw.print(stackTrace);                
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -138,7 +160,7 @@ public class HomeFilter implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -152,9 +174,9 @@ public class HomeFilter implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);
+        filterConfig.getServletContext().log(msg);        
     }
-
+    
 }

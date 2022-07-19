@@ -109,7 +109,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img" style="height: 270px;">
-                                    <img src="https://scontent.fhan4-3.fna.fbcdn.net/v/t1.6435-9/65283213_452725832223607_2321629019776221184_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=oTMbMuOtRIkAX-6lCgq&_nc_ht=scontent.fhan4-3.fna&oh=00_AT--4L3nCJUrYtL0Jw68k7nqhS3b1QYQHein9q_rwobUDQ&oe=62C81961" alt="">
+                                    <img src="https://scontent.fhan4-3.fna.fbcdn.net/v/t1.6435-9/65283213_452725832223607_2321629019776221184_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=CChsmhHpVvYAX-_prCE&_nc_ht=scontent.fhan4-3.fna&oh=00_AT80uz3vbrNnFx2-kUOslUA-hqwhfuidtwb1Ul6Uael-Hg&oe=62FB83E1" alt="Imnage profile">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/khacbao07">
                                             <i class="social_facebook"></i>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package filter;
 
 import Entity.Account;
@@ -20,11 +15,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-/**
- *
- * @author KhacBao
- */
+//Nhập controller cần check vào urlPatterns: /...
 @WebFilter(filterName = "AuthenticationFilters", urlPatterns = {"/adminProduct", "/adminSupplier","/adminHome", "/adminCategory", "/adminProfile"})
 public class AuthenticationFilter implements Filter {
     
