@@ -8,6 +8,7 @@ import dao.OrderDetailsDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
                     + "           ,[Price]\n"
                     + "           ,[Quantity]\n"
                     + "           ,[Discount])\n"
-                    + "     VALUES\n"
+                    + "     VALUES\n"   
                     + "           (?,?,?,?,?)";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, orderID);
@@ -40,6 +41,33 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
         } catch (Exception e) {
             throw e;
         }
+    }
+    public List<OrderDetails> getListAllDetail(int OrderID) {
+        OrderDetailsDAOImpl dao = new OrderDetailsDAOImpl();
+        List<OrderDetails> list = new ArrayList<>();
+        String sql = "select p.ProductName,p.ImageURL,od.Price,od.Quantity,(od.Price*od.Quantity)'Total' from [Order] o\n" +
+"                join [Order Details] od on od.OrderID = o.OrderID\n" +
+"                join Product p on p.ProductID = od.ProductID\n" +
+"				join Status s on s.StatusID = o.[Status]\n" +
+"                where o.OrderID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, OrderID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                OrderDetails od1 = OrderDetails.builder()
+                        .productName(rs.getString("ProductName"))
+                        .ImageURL(rs.getString("ImageURL"))
+                        .price(rs.getDouble("Price"))
+                        .quantity(rs.getInt("Quantity"))
+                        .total(rs.getDouble("Total"))
+                        .build();
+                list.add(od1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public List<OrderDetails> getDetailsBill(int OrderID) throws Exception{
@@ -132,6 +160,11 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
             throw e;
         }
         return null;
+    }
+    public static void main(String[] args) {
+//       OrderDetailsDao dao = new OrderDetailsDao();
+//       OrderDetails info = dao.getInfoBill(1);
+//        System.out.println(info);
     }
 
 }

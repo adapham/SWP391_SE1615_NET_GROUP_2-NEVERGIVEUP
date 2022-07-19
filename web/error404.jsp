@@ -1,8 +1,4 @@
-<%-- 
-    Document   : error404
-    Created on : Jun 11, 2022, 2:17:49 PM
-    Author     : ADA
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -33,7 +29,13 @@
                 </div>
                 <h2>Oops! Page Not Be Found</h2>
                 <p></p>
-                <a href="home">Back to homepage</a>
+                <c:if test="${sessionScope.Account ==null}">
+                   <a href="home?do=home&fresh=1">Back to homepage </a>
+                </c:if>
+
+                <c:if test="${sessionScope.Account !=null}">
+                   <a href="home">Back to homepage </a>
+                </c:if>
             </div>
         </div>
     </body><!-- This templates was made by Colorlib (https://colorlib.com) -->

@@ -31,7 +31,7 @@ public class AdminProfileController extends HttpServlet {
             if (service.equals("logout")) {//Logout
                 HttpSession session = request.getSession();
                 session.invalidate();
-                response.sendRedirect("home");
+                response.sendRedirect("home?do=home&fresh=1");
             }
             if (service.equals("updateAdminProfile")) {//Update Profile and Check valid
                 String submit = request.getParameter("submit");
