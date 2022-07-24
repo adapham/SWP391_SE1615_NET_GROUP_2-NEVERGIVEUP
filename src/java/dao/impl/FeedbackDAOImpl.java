@@ -21,7 +21,7 @@ import dao.FeedbackDAO;
  */
 public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
 
-    public List ListFeedBackByProductID(int productID) throws Exception{
+    public List ListFeedBackByProductID(int productID) throws Exception {
         List<FeedBack> list = new ArrayList<>();
         String sql = "select Account.DisplayName ,Account.ImageURL,Feedback.FeedbackContent,"
                 + "Account.AccountID, Feedback.Feedbacktime from Feedback join Account \n"
@@ -47,7 +47,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
         return list;
     }
 
-    public void InsertFeedBack(FeedBack feeback) throws Exception{
+    public void InsertFeedBack(FeedBack feeback) throws Exception {
 
         String sql = "INSERT INTO [dbo].[Feedback]\n"
                 + "           ([FeedbackContent]\n"
@@ -68,7 +68,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
         }
     }
 
-    public void InsertIntouch(Intouch intouch) throws Exception{
+    public void InsertIntouch(Intouch intouch) throws Exception {
 
         String sql = "INSERT INTO [dbo].[InTouch]\n"
                 + "           ([Name]\n"
@@ -87,11 +87,11 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
             pre.setString(5, intouch.getDate());
             pre.executeUpdate();
         } catch (SQLException ex) {
-           throw ex;
+            throw ex;
         }
     }
 
-    public void deleteFeedbackByProductID(int pID) throws Exception{
+    public void deleteFeedbackByProductID(int pID) throws Exception {
         String sql = "delete from Feedback where ProductID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -101,7 +101,8 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
             throw ex;
         }
     }
-    public int getTotalFeedBack() throws Exception{
+
+    public int getTotalFeedBack() throws Exception {
         String sql = "select COUNT(*) from Feedback";
         try {
             //Đưa vào prepare
@@ -130,7 +131,6 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
 //        System.out.println(dao.InsertIntouch(in));
 //        
 //    }
-
     public List<FeedBack> getFeedBackWithPaging(int page, int PAGE_SIZE) throws Exception {
         List<FeedBack> listFeedBack = new ArrayList<>();
         String sql = "select f.FeedbackID, ac.DisplayName ,p.ProductName , f.Feedbacktime from Feedback f\n"
@@ -154,7 +154,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
                         .build();
                 listFeedBack.add(feeback);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
         return listFeedBack;
@@ -184,7 +184,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
                         .build();
                 listFeedBack.add(feeback);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
         return listFeedBack;
@@ -203,7 +203,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
                 int count = rs.getInt(1);
                 return count;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
         return 0;
@@ -217,7 +217,7 @@ public class FeedbackDAOImpl extends ConnectDB implements FeedbackDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, feedbackid);
             n = ps.executeUpdate();
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw ex;
         }
         return n;

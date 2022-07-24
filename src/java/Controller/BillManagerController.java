@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Window 10
  */
 @WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
-public class BillManagerController extends HttpServlet {
+public class billManagerController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,6 +51,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.setAttribute("page", page);
                 request.setAttribute("totalPage", totalPage);
                 response.sendRedirect("billManager?do=pageBill&page=" + page);
@@ -133,6 +135,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
             }
         } catch (Exception ex) {
