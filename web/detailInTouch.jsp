@@ -38,7 +38,7 @@
                     <!-- End of Topbar -->
 
                     <!-- Begin Page Content -->
-                    
+
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
@@ -47,37 +47,44 @@
                             <li class="active">Detail get in touch</li>
                         </ul>
                     </div>
-                
+
                     <div class="get-in-touch-wrap">
                         <div class="contact-from contact-shadow">
-                                <div class="row">
+
+                            <div class="col-md-12">
+                                <h3>Detail get in touch</h3>
+                                <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
                                     <c:forEach items="${listInTouch}" var="l">
-                                        <div class="col-lg-6 col-md-6">
-                                            <h4>Name</h4>
-                                            <input style="border: 1px solid #000000" name="name" value="${l.name}" readonly="">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <h4>Email</h4>
-                                            <input style="border: 1px solid #000000" name="email" value="${l.email}" readonly="">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <h4>Date</h4>
-                                            <input style="border: 1px solid #000000" name="date" value="${l.date}" readonly="">
-                                        </div>
-                                        <div class="col-lg-7 col-md-8">
-                                            <h4>Subject</h4>
-                                            <input style="border: 1px solid #000000" name="subject" value="${l.subject}" readonly="">
-                                        </div>
-                                        <div class="col-lg-7 col-md-8">
-                                            <h4>Message</h4>
-                                            <textarea style="border: 1px solid #000000" name="message"  readonly="">${l.message}</textarea>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <button class="submit" type="submit"><a href="feedbackManager?do=reply&email=${l.email}" style="color: white">Reply</a></button>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>${l.name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>${l.email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date</td>
+                                            <td>${l.date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subject</td>
+                                            <td>${l.subject}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Message</td>
+                                            <td>${l.message}</td>
+                                        </tr>
+
+                                    </c:forEach>  
+                                </table>
+                                <c:forEach items="${listInTouch}" var="l">
+                                    <div>
+                                        <button class="submit" type="submit"><a href="feedbackManager?do=reply&email=${l.email}" style="color: white">Reply</a></button>
+                                    </div>
+                                </c:forEach>
+                            </div>
+
 
                             <p class="form-messege"></p>
                         </div>

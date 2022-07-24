@@ -53,12 +53,12 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="table-content table-responsive cart-table-content">
-                                <table>
+                                <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
                                     <thead>
                                         <tr>
-                                            <th>ProductID</th>
+                                            <th>Product ID</th>
                                             <th>Image</th>
-                                            <th>ProductName</th>
+                                            <th style="text-transform: inherit">Product name</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
@@ -70,14 +70,14 @@
                                         <form method="post" action="updateQuantity">
                                             <tr>
                                             <input hidden="" value="${pro.productID}" name="pid"/>
-                                            <td>${pro.productID}</td>
+                                            <td style="text-align: right">${pro.productID}</td>
                                             <td class="product-thumbnail">
                                                 <img src="${pro.imageURL}" alt="" style="height: 150px; width: 100%">
                                             </td>
                                             <td class="product-name">${pro.productName}</td>
-                                            <td class="product-price-cart"><span class="amount">$${pro.unitPrice}</span></td>                                                       
-                                            <td><input onchange="this.form.submit()" type="number" value="${pro.quantity}" min="1" name="quantity" oninput="this.value = Math.abs(this.value)"></td>
-                                            <td class="product-subtotal">$${Math.round((pro.unitPrice * pro.quantity)*100)/100}</td>
+                                            <td class="product-price-cart" style="text-align: right"><span class="amount">$${pro.unitPrice}</span></td>                                                       
+                                            <td><input style="text-align: right; width: 50%" onchange="this.form.submit()" type="number" value="${pro.quantity}" min="1" name="quantity" oninput="this.value = Math.abs(this.value)"></td>
+                                            <td style="text-align: right" class="product-subtotal">$${Math.round((pro.unitPrice * pro.quantity)*100)/100}</td>
                                             <td class="product-remove">                                                
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${pro.productID}">
                                                     <i class="icon_close"></i>
@@ -109,8 +109,8 @@
                                         </form>
                                     </c:forEach>
                                     </tbody>
-                                    <td colspan="2" ><h3>Total Amount: $${totalMoney}</h3></td>
                                 </table>
+                                    <td colspan="2" ><h3>Total Amount: $${totalMoney}</h3></td>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">

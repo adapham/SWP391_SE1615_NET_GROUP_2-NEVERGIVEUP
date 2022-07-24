@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Window 10
  */
 @WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
-public class billManagerController extends HttpServlet {
+public class BillManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

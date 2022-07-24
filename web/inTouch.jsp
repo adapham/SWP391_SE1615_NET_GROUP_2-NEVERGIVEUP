@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table">
+                    <table class="border table table-striped table-hover table-bordered border-primary" style="color: black">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>

@@ -53,7 +53,7 @@
                     </form>
                     <div>
                         <c:if test="${mess != null}"><h4>${mess}</h4></c:if>
-                            <table class="table">
+                        <table class="border table table-striped table-hover table-bordered border-primary" style="color: black">
                                 <thead>
                                     <tr>
                                         <th scope="col">Order ID</th>
@@ -70,21 +70,22 @@
                                 <tbody>
                                 <c:forEach items="${listOrder}" var="l">
                                     <tr>
-                                        <th scope="row">${l.orderID}</th>
+                                        <th scope="row" style="text-align: right">${l.orderID}</th>
                                         <td>${l.displayName}</td>
                                         <td>${l.shipperName}</td>
                                         <td>${l.orderDate}</td>
                                         <td>${l.address}</td>
                                         <td>${l.email}</td>
                                         <td>
-                                            <form action="billManager?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
-                                                <input type="hidden" name="odId" value="${l.orderID}">
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
-                                                    <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
-                                                    <option value="3" ${l.status == 3 ? " selected" : ""}>Done</option>
-                                                </select>
-                                            </form>
+                                            <c:if test="${l.status == 1}">
+                                                <b>${l.status == 1 ? " Wait" : ""}</b>
+                                            </c:if>
+                                            <c:if test="${l.status == 2}">
+                                                <b>${l.status == 2 ? " Process" : ""}</b>
+                                            </c:if>
+                                            <c:if test="${l.status == 3}">
+                                                <b>${l.status == 3 ? " Done" : ""}</b>
+                                            </c:if>
                                         </td>
                                         <td>${l.phone}</td>
                                         <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
