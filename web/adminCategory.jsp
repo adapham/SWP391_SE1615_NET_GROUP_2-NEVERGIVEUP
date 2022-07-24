@@ -77,9 +77,9 @@
                             <tbody>
                                 <c:forEach items="${categoryList}" var="l">
                                     <tr>
-                                        <td>${l.categoryID}</td>
-                                        <td>${l.categoryName}</td>
-                                        <td>${l.description}</td>
+                                        <td style="text-align: right;">${l.categoryID}</td>
+                                        <td style="text-align: left;">${l.categoryName}</td>
+                                        <td style="text-align: left;">${l.description}</td>
                                         <td><a href="adminCategory?do=updateCategory&cateID=${l.categoryID}"><i class="fas fa-edit"></i></a></td>
                                         <td>
                                             <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.categoryID}">

@@ -309,10 +309,6 @@
                         </div>
                         <div class="tab-style-1 nav">
                             <a class="active" href="#product-1" data-toggle="tab">Best Seller</a>
-                            <a href="#product-2" data-toggle="tab"> Trending</a>
-
-                            <a href="chat"> chat</a>
-
                         </div>
                     </div>
                 </div>

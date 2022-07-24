@@ -147,7 +147,7 @@ public class AdminProductController extends HttpServlet {
                             .isActive(isActive)
                             .build();
 
-                    mess = "Update successfull";
+                    mess = "Update successful";
                     int updateProduct = daoProduct.updateProducts(pro);
 
                     request.setAttribute("mess", mess);
@@ -228,7 +228,7 @@ public class AdminProductController extends HttpServlet {
 
                     int createProduct = daoProduct.createProduct(pro);
                     if (createProduct > 0) {
-                        mess = "Create successfull";
+                        mess = "Create successful";
                         //Clear Data after create successfull
                         request.setAttribute("pName", "");
                         request.setAttribute("supID", 1);
@@ -261,7 +261,7 @@ public class AdminProductController extends HttpServlet {
                 }
 
                 if (delete > 0) {//Remove Successs
-                    mess = "Delete Successfull!";
+                    mess = "Delete Successful!";
                 } else {
                     mess = "Can't delete Product";
                 }

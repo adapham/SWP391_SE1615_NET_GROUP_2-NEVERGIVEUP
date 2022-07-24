@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAOImpl extends ConnectDB implements ProductDAO{
+public class ProductDAOImpl extends ConnectDB implements ProductDAO {
 
     //Trả về danh sách tất cả sản phẩm
-    public List<Product> getAllProduct() throws Exception{
+    public List<Product> getAllProduct() throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product";
         ProductDAOImpl dao = new ProductDAOImpl();
@@ -46,7 +46,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về danh sách tất cả sản phẩm theo ProductID
-    public List<Product> getAllProductByProductID(int ProductID) throws Exception{
+    public List<Product> getAllProductByProductID(int ProductID) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where ProductID = ?";
         ProductDAOImpl dao = new ProductDAOImpl();
@@ -80,7 +80,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về danh sách sản phẩm theo categoryID
-    public List<Product> getProductsByCateID(int iCateId) throws Exception{
+    public List<Product> getProductsByCateID(int iCateId) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where CategoryID = ?";
         try {
@@ -111,8 +111,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return listPro;
     }
+
     //Lấy ra 4 sản phẩm đầu tiên theo CateID
-    public List<Product> getProductsByCateIDTop4(int iCateId) throws Exception{
+    public List<Product> getProductsByCateIDTop4(int iCateId) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "select top 4 * from Product where CategoryID = ? and Quantity >=2";
         try {
@@ -145,12 +146,12 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về 1 danh sách phần trang theo kích thước
-    public List<Product> getProductWithPaging(int page, int PAGE_SIZE) throws Exception{
+    public List<Product> getProductWithPaging(int page, int PAGE_SIZE) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *,\n"
-                + " ROW_NUMBER() OVER (ORDER BY ProductID) AS Seq\n"
-                + " FROM Product )t\n"
-                + " WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
+                + "ROW_NUMBER() OVER (ORDER BY ProductID) AS Seq\n"
+                + "FROM Product where IsActive = 1 )t\n"
+                + "WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
         ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -184,13 +185,13 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về 1 danh sách phân trang theo tăng dần, giảm dần
-    public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) throws Exception{
+    public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "                              OVER (ORDER BY ProductID) AS Seq FROM Product \n"
                 + "                              )t \n"
                 + "                              WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?\n"
-                + "                              order by "+col+ " " + type;
+                + "                              order by " + col + " " + type;
         ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -218,13 +219,13 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
                 listPro.add(pro);
             }
         } catch (SQLException ex) {
-           throw ex;
+            throw ex;
         }
         return listPro;
     }
 
     //Trả về tổng số sản phẩm
-    public int getTotalProduct() throws Exception{
+    public int getTotalProduct() throws Exception {
         String sql = "select COUNT(*) from Product";
         try {
             //Đưa vào prepare
@@ -243,7 +244,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về Product theo Product ID
-    public Product getProductByProductID(int ProductID) throws Exception{
+    public Product getProductByProductID(int ProductID) throws Exception {
         ProductDAOImpl dao = new ProductDAOImpl();
         String sql = "select * from Product where ProductID =?";
         try {
@@ -265,7 +266,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
                         .imageURL(rs.getString(10))
                         .isActive(rs.getInt(11))
                         .priceAferDiscount(price)
-                        .build();   
+                        .build();
                 return pro;
             }
         } catch (Exception ex) {
@@ -275,9 +276,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về danh sách tất cả sản phẩm theo sản phầm theo số nhập vào
-    public List<Product> getTopNumberProduct(int number) throws Exception{
+    public List<Product> getTopNumberProduct(int number) throws Exception {
         List<Product> listPro = new ArrayList<>();
-        String sql = "select top(?) * from Product where Quantity > 5";
+        String sql = "select top(?) * from Product where Quantity > 2";
         ProductDAOImpl dao = new ProductDAOImpl();
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -308,7 +309,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về Giá sau khi discount
-    public double PriceArterDiscount(int ProductID) throws Exception{
+    public double PriceArterDiscount(int ProductID) throws Exception {
         double price = 0;
         String sql = "select UnitPrice,Discount from Product where ProductID =?";
         try {
@@ -330,11 +331,11 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về danh sách phần trang theo category
-    public List<Product> getAllProductsWithPagingByCateID(int iCateId, int page, int PAGE_SIZE) throws Exception{
+    public List<Product> getAllProductsWithPagingByCateID(int iCateId, int page, int PAGE_SIZE) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "OVER (ORDER BY ProductID) AS Seq FROM Product \n"
-                + "where CategoryID = ?\n"
+                + "where CategoryID = ? and IsActive = 1\n"
                 + ")t \n"
                 + "WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
         ProductDAOImpl dao = new ProductDAOImpl();
@@ -371,7 +372,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về tổng sản phẩm theo category
-    public int getTotalProductByCate(int iCateId) throws Exception{
+    public int getTotalProductByCate(int iCateId) throws Exception {
         String sql = "select COUNT(*) from Product where CategoryID = ?";
         try {
             //Đưa vào prepare
@@ -390,11 +391,11 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về danh sách phần trang theo Search Key
-    public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) throws Exception{
+    public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "                OVER (ORDER BY ProductID) AS Seq FROM Product \n"
-                + "                where ProductName like ?\n"
+                + "                where ProductName like ? and IsActive = 1\n"
                 + "                )t \n"
                 + "                WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
         ProductDAOImpl dao = new ProductDAOImpl();
@@ -431,7 +432,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Trả về tổng sản phẩm theo Search Key
-    public int getTotalProductByPName(String keySearch) throws Exception{
+    public int getTotalProductByPName(String keySearch) throws Exception {
         String sql = "select COUNT(*) from Product where ProductName like ?";
         try {
             //Đưa vào prepare
@@ -450,7 +451,7 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
     }
 
     //Update Product
-    public int updateProducts(Product pro) throws Exception{
+    public int updateProducts(Product pro) throws Exception {
         int n = 0;
         String sql = "UPDATE [Product]\n"
                 + "   SET [ProductName] = ?\n"
@@ -486,8 +487,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return n;
     }
+
     //Create new Product
-    public int createProduct(Product pro) throws Exception{
+    public int createProduct(Product pro) throws Exception {
         int n = 0;
         String sql = "INSERT INTO [Product]\n"
                 + "           ([ProductName]\n"
@@ -536,8 +538,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
             ex.printStackTrace();
         }
     }
+
     //delete Product By ID
-    public int deleteProduct(int pID) throws Exception{
+    public int deleteProduct(int pID) throws Exception {
         int n = 0;
         String sql = "delete from Product where ProductID = ?";
 //        FeedbackDao daoFeedback = new FeedbackDao();
@@ -554,8 +557,9 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO{
         }
         return n;
     }
+
     //Search Product By Name and Category ID
-    public List<Product> searchProductByNameAndCategoryId(String searchKey, int cateId, int pId) throws Exception{
+    public List<Product> searchProductByNameAndCategoryId(String searchKey, int cateId, int pId) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "select * from Product where ProductName like ? and CategoryID = ? and ProductID != ?";
         try {

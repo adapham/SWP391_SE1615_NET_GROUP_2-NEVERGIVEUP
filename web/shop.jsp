@@ -55,7 +55,12 @@
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="home">Home</a>
+                                <c:if test="${sessionScope.Account ==null}">
+                                    <a href="home?do=home&fresh=1">Home</a>
+                                </c:if>
+                                <c:if test="${sessionScope.Account !=null}">
+                                    <a href="home">Home</a>
+                                </c:if>
                             </li>
                             <li class="active">Shop </li>
                         </ul>
