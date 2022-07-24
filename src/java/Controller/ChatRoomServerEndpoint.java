@@ -83,7 +83,7 @@ public class ChatRoomServerEndpoint {
                 String[] arrOfStr = message.split("~");
 //            char[] charID = message.toCharArray();
                 int idCustomer = Integer.parseInt(String.valueOf(arrOfStr[0]));// and employee
-                int idEmployee = daoMess.getIdEmByIdCus(idCustomer); // customer
+                int idEmployee = Integer.parseInt( arrOfStr[arrOfStr.length-1]); //daoMess.getIdEmByIdCus(idCustomer); // customer
                 boolean checkEmployee = false;
                 for (Integer integer : listAcc) {
                     if (integer == idCustomer) {
@@ -104,7 +104,7 @@ public class ChatRoomServerEndpoint {
                     message = arrOfStr[1];
                     tempStringbox = arrOfStr[1];
                     String temp = daoMess.getMessByID(idCustomer, idEmployee);
-                    temp += (username + message + "~");
+                    temp += (username + message + idEmployee + "~");
                     daoMess.updateMess(idCustomer, idEmployee, temp);
                 }
                 boolean checkBefor = false;
@@ -127,7 +127,11 @@ public class ChatRoomServerEndpoint {
                                 + "                                    <p> " + temp + ".</p>\n"
                                 + "                                </div>\n"
                                 + "                            </div>\n"
-                                + "                        </div>";
+                                + "                        </div>" + "~"
+                                + "<div id=\"innerdiv\" class=\"chat-bubble me\">"+tempStringbox+"</div>"
+                                ;
+
+                       
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -140,7 +144,7 @@ public class ChatRoomServerEndpoint {
                     listBefor.add(idEmployee);
                     listBefor.add(idCustomer);
                     for (Session session : users) {
-                        session.getBasicRemote().sendText(username + message);
+                        session.getBasicRemote().sendText(username + message+arrOfStr[2]);
                     }
                 }
 

@@ -55,7 +55,7 @@
                 <div class="mesgs">
                     <div class="msg_history">
 
-
+                        
                     </div>
                     <div class="type_msg">
                          <div class="input_msg_write">

@@ -3,6 +3,7 @@ package Controller;
 import Entity.Account;
 import Entity.Order;
 import Entity.OrderDetails;
+import Entity.Product;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class MyCartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String service = request.getParameter("do");
+            String del = request.getParameter("del");
             OrderDAOImpl dao = new OrderDAOImpl();
             OrderDAOImpl daoOrder = new OrderDAOImpl();
             OrderDetailsDAOImpl daoDetail = new OrderDetailsDAOImpl();
@@ -59,6 +61,11 @@ public class MyCartController extends HttpServlet {
                     request.setAttribute("page", page);
                     request.setAttribute("totalPage", totalPage);
                     request.setAttribute("list", list);
+                    if(del!=null){
+                      String mess = "Deleted successful";
+                    request.setAttribute("mess", mess);  
+                    }
+                    
                     request.getRequestDispatcher("mycart.jsp").forward(request, response);
                 
             }
@@ -70,10 +77,34 @@ public class MyCartController extends HttpServlet {
 //                for (OrderDetails orderDetails : listOrderDetail) {
 //                    out.print(orderDetails);
 //                }
+                double totalMoney = 0;
+            for (OrderDetails l : list) {
+                totalMoney += l.getPrice()*l.getQuantity();
+                totalMoney *= 100;
+                double total = Math.ceil(totalMoney);
+                total = (double) total / 100;
+                totalMoney = total;
+
+            }
+            request.setAttribute("totalMoney", totalMoney);
                 request.getRequestDispatcher("listOrderDetail.jsp").forward(request, response);
             }
+            if(service.equals("delete")){
+                String orderid = request.getParameter("id");
+                String keySearch = request.getParameter("keySearch");
+                int id  = Integer.parseInt(orderid);
+                String page = request.getParameter("page");
+                int m = dao.deleteOrderDetailsByID(id);
+                int n = dao.deleteOrderByID(id);
+                
+                if (keySearch != null) {
+                    response.sendRedirect("MyCartController?do=orders&page=" + page + "&keySearch=" + keySearch+"&del=dell");
+                } else {
+                    response.sendRedirect("MyCartController?do=orders&page=" + page+"&del=dell");
+                }
+            }
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
 
     }

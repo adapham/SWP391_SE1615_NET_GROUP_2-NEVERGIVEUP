@@ -311,4 +311,32 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         return list;
     }
 
+    public int deleteOrderByID(int id) throws Exception{
+        int n = 0;
+        String sql = "delete from [Order] where OrderID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            n = ps.executeUpdate();
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return n;
+    }
+
+    public int deleteOrderDetailsByID(int id) throws Exception{
+        int n = 0;
+        String sql = "delete from [Order Details] where OrderID = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            n = ps.executeUpdate();
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return n;
+        
+    }
+
 }

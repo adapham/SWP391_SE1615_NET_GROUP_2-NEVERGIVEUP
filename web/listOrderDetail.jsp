@@ -8,7 +8,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Norda - Minimal eCommerce HTML Template</title>
+        <title>ADA List Detail</title>
         <meta name="robots" content="noindex, follow" />
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -80,9 +80,18 @@
 
                                         </tr> 
                                         <%  }%>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th> 
+                                            <th></th> 
+                                            <th style="text-align: right">Total amount:</th> 
+                                            <th style="text-align: center">$${totalMoney}</th>
+                                        </tr>
                                     </tbody>
 
                                 </table>
+                                    
                             </div>
 
                         </div>

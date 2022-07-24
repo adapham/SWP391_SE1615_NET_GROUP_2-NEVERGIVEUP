@@ -40,10 +40,12 @@
         <link href="css/timeline.css" rel="stylesheet" type="text/css" />
             
         <style type="text/css">
-            div.b {
-                word-wrap: break-word;
+            #innerdiv {
+                width: 50%;
+                word-break: break-all;
             }
             #croll{
+                width: 100%;
                 overflow-x: hidden;
                 overflow-y: scroll;
             }
@@ -126,10 +128,10 @@
                     <%if(list.size()!=1){%>
                         <% for (String elem : list)
                             if (elem.startsWith(String.valueOf(acc.getAccountid()))) {%>
-                    <div id="innerdiv" class="chat-bubble me"><%=elem.substring(Integer.toString(acc.getAccountid()).length(), elem.length())%></div>
+                    <div id="innerdiv" class="chat-bubble me"><%=elem.substring(Integer.toString(acc.getAccountid()).length(), elem.length()-1)%></div>
                     <%} else {%> 
 
-                    <div id="innerdiv" class="chat-bubble you"><%="CSKH"+employeeID+": "+elem.substring(Integer.toString(employeeID1).length(), elem.length()-Integer.toString(acc.getAccountid()).length())%></div>
+                    <div id="innerdiv" class="chat-bubble you"><%=elem.substring(Integer.toString(employeeID1).length(), elem.length()-Integer.toString(acc.getAccountid()).length())%></div>
 
                     <%}%>
                    <%}%>
@@ -309,10 +311,6 @@
                         </div>
                         <div class="tab-style-1 nav">
                             <a class="active" href="#product-1" data-toggle="tab">Best Seller</a>
-                            <a href="#product-2" data-toggle="tab"> Trending</a>
-
-                            <a href="chat"> chat</a>
-
                         </div>
                     </div>
                 </div>
@@ -521,19 +519,30 @@
 //                $(document).ready(function () {
 //                    $('#croll').append('<div id="innerdiv" class="chat-bubble me">Hi there!</div>');
 //                });
+                 console.log(message);
             }
             function processMessage(message) {
-                console.log(message);
+                console.log(message.data);
+                  
 
-                if (message.data.startsWith("${sessionScope.Account.accountid}") && ${employeeID}) {
-                    var mess = message.data.replace("${sessionScope.Account.accountid}", "");
-                    $('#croll').append('<div id="innerdiv" class="chat-bubble me">' + mess + '</div>');
-
+                if (message.data.startsWith("${sessionScope.Account.accountid}") && message.data.endsWith("${employeeID}")) {
+                    //var mess = message.data.replace("${CustomerID}", "");
+                    var mess = message.data.substr(${lengthcus}, message.data.length-${lengthemployee}-1);
+                    //if (message.data.startsWith("${CustomerID}") && ${sessionScope.Account.accountid})
+                       $('#croll').append('<div id="innerdiv" class="chat-bubble me">' + mess + '</div>');
                 }
-                if (message.data.startsWith("${employeeID}")&& ${sessionScope.Account.accountid}){
-                    var mess = message.data.replace("${employeeID}", "CSKH${employeeID}: ");
-                    $('#croll').append('<div id="innerdiv" class="chat-bubble you">' + mess + '</div>');
-
+                if (message.data.startsWith("${employeeID}") && message.data.endsWith("${sessionScope.Account.accountid}")) {
+                    //var mess = message.data.replace("${CustomerID}", "");
+                   var mess = message.data.substr(${lengthemployee}, message.data.length-${lengthcus}-1);
+                    //if (message.data.startsWith("${CustomerID}") && ${sessionScope.Account.accountid})
+                     $('#croll').append('<div id="innerdiv" class="chat-bubble you">' + mess + '</div>');
+                }
+               
+		if (message.data.startsWith("<div") && ${sessionScope.Account.accountid}) {
+                    
+                    const myArray = message.data.split("~");
+//$('#cha').append('<div class="chat_list active_chat"><div class="chat_people"><div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="chat_ib"> <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5><p>'+message.data+'.</p></div></div></div>');
+                    document.getElementById("croll").insertAdjacentHTML('beforeend', myArray[1]);
                 }
                
                 
@@ -550,7 +559,7 @@
 
             function sendMessage() {
                 if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
-                    var mess = "${sessionScope.Account.accountid}" +"~"+ textMessage.value;
+                    var mess = "${sessionScope.Account.accountid}" +"~"+ textMessage.value+"~"+"${employeeID}";
                     if (!isNaN(textMessage.value)) {
                         websocket.send(textMessage.value);
                     } else {

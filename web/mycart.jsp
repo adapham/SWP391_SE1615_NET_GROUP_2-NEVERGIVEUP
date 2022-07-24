@@ -54,6 +54,7 @@
             <div class="">
                 <div class="container">
                     <h3 class="cart-page-title">My Orders</h3>
+                    <c:if test="${mess !=null}"><h4 style="color: red">${mess}</h4></c:if>
                     <form action="MyCartController" method="POST" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input name="keySearch" value="" type="date" class="form-control bg-light border-2 small" placeholder="Search by address..."
@@ -73,8 +74,14 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Date</th>
-                                            <th>address</th>
-                                            <th>status</th>
+                                            <th>Address</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Status</th>
+
+
+                                            <th>Delete</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -84,20 +91,50 @@
                                                 <td ><a href="MyCartController?do=ordersDetail&orderID=${pro.orderID}">${pro.orderID}</a> </td>
                                                 <td>${pro.orderDate}</td>
                                                 <td >${pro.address}</td>
+                                                <td >${pro.email }</td>
+                                                <td >${pro.phone}</td>
+
                                                 <td > 
                                                     <c:if test="${pro.status == 1 }">    
                                                         <b>${pro.status == 1 ? " New" : ""}</b>
-                                                    </c:if>
-                                                    <c:if test="${pro.status == 2 }">
-                                                        <b>${pro.status == 2 ? " Process" : ""}</b>
-                                                    </c:if>
-                                                    <c:if test="${pro.status == 3 }">
-                                                        <b>${pro.status == 3 ? " Done" : ""}</b>
-                                                    </c:if>
-                                                </td>
-                                            </tr>
+                                                    <td >  
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModa${pro.orderID}">
+                                                            Delete
+                                                        </button>
+                                                        <!-- The Modal -->
 
-                                        </c:forEach>
+                                                        <div class="modal" id="myModa${pro.orderID}">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content" style="width: 60%;margin: auto;text-align: center;">
+                                                                    <!-- Modal Header -->
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Delete order</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    </div>
+                                                                    <!-- Modal body -->
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to delete the order?
+                                                                    </div>
+                                                                    <!-- Modal footer -->
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                        <button type="button" class="btn btn-danger"><a href="MyCartController?do=delete&page=${page}&id=${pro.orderID}&keySearch=${keySearch}">OK</a></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td> 
+                                                </c:if>
+                                                <c:if test="${pro.status == 2 }">
+                                            <b>${pro.status == 2 ? " Process" : ""}</b>
+                                        </c:if>
+                                        <c:if test="${pro.status == 3 }">
+                                            <b>${pro.status == 3 ? " Done" : ""}</b>
+                                        </c:if>
+                                        </td>
+                                        </tr>
+
+                                    </c:forEach>
 
 
 
