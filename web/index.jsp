@@ -40,10 +40,12 @@
         <link href="css/timeline.css" rel="stylesheet" type="text/css" />
             
         <style type="text/css">
-            div.b {
-                word-wrap: break-word;
+            #innerdiv {
+                width: 50%;
+                word-break: break-all;
             }
             #croll{
+                width: 100%;
                 overflow-x: hidden;
                 overflow-y: scroll;
             }

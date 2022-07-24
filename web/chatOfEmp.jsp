@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style type="text/css">
+            #innerdiv {
+                width: auto;
+                word-break: break-all;
+            }
+        </style>
     </head>
     <body onload="sendMessage()">
 
@@ -57,8 +63,8 @@
 
                         <%}%>
                     </div>
-                    
-                    
+
+
                 </div>
                 <div class="mesgs">
                     <div class="msg_history" id="croll">
@@ -67,8 +73,8 @@
                         <% for (String elem : list)
 
                                 if (elem.startsWith(String.valueOf(acc.getAccountid()))) {%>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
+                        <div id="innerdiv" class="outgoing_msg">
+                            <div style="width:50%; word-break:break-all;" class="sent_msg">
                                 <p><%= elem.substring(Integer.toString(acc.getAccountid()).length(), elem.length() - Integer.toString(CustomerID).length())%></p>
                                 <span class="time_date"> 11:01 AM    |    June 9</span> </div>
                         </div>
@@ -77,7 +83,7 @@
 
                         <div class="incoming_msg">
                             <div class="incoming_msg_img"> <img src="<%=accCus.getImageURL()%>" alt="img"> </div>
-                            <div class="received_msg">
+                            <div id="innerdiv" class="received_msg">
                                 <div class="received_withd_msg">
                                     <p><%=elem.substring(Integer.toString(CustomerID).length(), elem.length())%></p>
                                     <span class="time_date"> 11:01 AM    |    June 9</span></div>
@@ -125,13 +131,13 @@
 
                 if (message.data.startsWith("${sessionScope.Account.accountid}") && ${CustomerID}) {
                     var mess = message.data.substring(<%=Integer.toString(acc.getAccountid()).length()%>, message.data.length);
-                    $('#croll').append('<div class="outgoing_msg"><div class="sent_msg"> <p>' + mess + '</p> <span class="time_date"> 11:01 AM    |    June 9</span> </div></div>');
+                    $('#croll').append('<div class="outgoing_msg"><div style="width:50%; word-break:break-all;" class="sent_msg"> <p>' + mess + '</p> <span class="time_date"> 11:01 AM    |    June 9</span> </div></div>');
                 }
 
                 if (message.data.startsWith("${CustomerID}") && ${sessionScope.Account.accountid}) {
                     var mess = message.data.replace("${CustomerID}", "");
                     if (!message.data.startsWith("Hi:${sessionScope.Account.accountid}") || message.data.startsWith("${CustomerID}") && ${sessionScope.Account.accountid})
-                        $('#croll').append('<div class="incoming_msg"> <div class="incoming_msg_img"> <img src="<%=accCus.getImageURL()%>" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>' + mess + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>');
+                        $('#croll').append('<div class="incoming_msg"> <div class="incoming_msg_img"> <img src="<%=accCus.getImageURL()%>" alt="sunil"> </div><div style="width:50%; word-break:break-all;" class="received_msg"><div class="received_withd_msg"><p>' + mess + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>');
                 }
                 if (message.data.startsWith("<div") && ${sessionScope.Account.accountid}) {
                     //$('#cha').append('<div class="chat_list active_chat"><div class="chat_people"><div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="chat_ib"> <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5><p>'+message.data+'.</p></div></div></div>');
@@ -161,7 +167,7 @@
         </script>     
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            function searchByName(param,param2) {
+            function searchByName(param, param2) {
                 var keySearch = param.value.trim();
                 var CustomerID = param2;
                 var x = location.origin;
@@ -169,7 +175,7 @@
                 console.log(x);
                 console.log(s);
                 $.ajax({
-                   
+
 //                    url:" http://localhost:8080/home/chat?do=chatEm&CustomerID=8",
                     url: x + s + "/searchUserAjax",
                     type: "get", //send it through get method
