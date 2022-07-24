@@ -173,23 +173,23 @@
                             <tbody>
                                 <c:forEach items="${listProduct}" var="l">
                                     <tr>
-                                        <td>${l.productID}</td>
-                                        <td>${l.productName}</td>
+                                        <td style="text-align: right;">${l.productID}</td>
+                                        <td style="text-align: left;">${l.productName}</td>
                                         <c:forEach items="${listSup}" var="ls">
                                             <c:if test="${l.supplierID == ls.supplierID}">
-                                                <td>${ls.companyName}</td>
+                                                <td style="text-align: left;">${ls.companyName}</td>
                                             </c:if>
                                         </c:forEach>
                                         <c:forEach items="${listCate}" var="lc">
                                             <c:if test="${l.categoryID == lc.categoryID}">
-                                                <td>${lc.categoryName}</td>
+                                                <td style="text-align: left;">${lc.categoryName}</td>
                                             </c:if>
                                         </c:forEach>
-                                        <td>${l.quantity}</td>
-                                        <td>${l.unitPrice}$</td>
-                                        <td>${l.discount}</td>
-                                        <td>${l.unitInStock}</td>
-                                        <td>${l.description}</td>
+                                        <td style="text-align: right;">${l.quantity}</td>
+                                        <td style="text-align: right;">${l.unitPrice}$</td>
+                                        <td style="text-align: right;">${l.discount}</td>
+                                        <td style="text-align: right;">${l.unitInStock}</td>
+                                        <td style="text-align: left;">${l.description}</td>
                                         <td><img src="${l.imageURL}" style="width: 100px"></td>
                                         <td>
                                             <c:if test="${l.isActive == 1}">

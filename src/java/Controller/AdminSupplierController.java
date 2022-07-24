@@ -137,7 +137,7 @@ public class AdminSupplierController extends HttpServlet {
                             .email(email.trim())
                             .build();
 
-                    String mess = "Update successfull";
+                    String mess = "Update successful";
                     int updateSupplier = daoSupplier.updateSupplier(sup);
                     request.setAttribute("mess", mess);
                     request.setAttribute("supplierList", supplierList);
@@ -210,7 +210,7 @@ public class AdminSupplierController extends HttpServlet {
                     int createSupplier = daoSupplier.createSupplier(sup);
 
                     if (createSupplier > 0) {
-                        String mess = "Create successfull";
+                        String mess = "Create successful";
                         request.setAttribute("mess", mess);
                         //Clear Data after create successfull
                         request.setAttribute("companyName", "");
@@ -235,7 +235,7 @@ public class AdminSupplierController extends HttpServlet {
                 }
 
                 if (delete > 0) {//Remove Successs
-                    mess = "Delete Successfull!";
+                    mess = "Delete Successful!";
                 } else {
                     mess = "Can't delete Supplier";
                 }

@@ -117,7 +117,8 @@ public class LoginController extends HttpServlet {
                             request.setAttribute("listProductCarts", listProductCarts);
                             request.getRequestDispatcher("cart.jsp").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                            response.sendRedirect("home");
+                            //request.getRequestDispatcher("index.jsp").forward(request, response);
                         }
                     } else if (checkAccount == 2) {
                         Cookie cu = new Cookie("us", username);
@@ -146,6 +147,7 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
+                         
                         request.getRequestDispatcher("employee.jsp").forward(request, response);
                     } else if (checkAccount == 4) {
                         Cookie cu = new Cookie("us", username);

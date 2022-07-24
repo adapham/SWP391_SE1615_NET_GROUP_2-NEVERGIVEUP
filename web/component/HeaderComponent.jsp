@@ -6,26 +6,32 @@
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-lg-2">
                         <div class="logo">
-                            <a href="home"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                            <c:if test="${sessionScope.Account ==null}">
+                                <a href="home?do=home&fresh=1"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                            </c:if>
+
+                            <c:if test="${sessionScope.Account !=null}">
+                                <a href="home"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                            </c:if>
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-7">
                         <div class="main-menu main-menu-padding-1 main-menu-lh-1">
                             <nav>
                                 <ul>
-                                    
+
                                     <c:if test="${sessionScope.Account ==null}">
-                                             <li><a href="home?do=home&fresh=1">HOME </a>
-                                    </li>  
+                                        <li><a href="home?do=home&fresh=1">HOME </a>
+                                        </li>  
                                     </c:if>
-                                    
-                                     <c:if test="${sessionScope.Account !=null}">
-                                             <li><a href="home">HOME </a>
-                                    </li>  
+
+                                    <c:if test="${sessionScope.Account !=null}">
+                                        <li><a href="home">HOME </a>
+                                        </li>  
                                     </c:if>
                                     <c:if test="${sessionScope.Account !=null}">
-                                                <li><a href="MyCartController">MY CART</a> 
-                                                </li>
+                                        <li><a href="MyCartController">MY CART</a> 
+                                        </li>
                                     </c:if>
                                     <li><a href="menu">SHOP </a>
                                     </li>
@@ -34,9 +40,9 @@
                                             <li><a href="home?do=about">about us </a></li>
                                             <li><a href="cart">cart page</a></li>
                                             <li><a href="login">checkout </a></li>
-                                            <c:if test="${sessionScope.Account !=null}">
+                                                <c:if test="${sessionScope.Account !=null}">
                                                 <li><a href="login?do=updateprofile">my account</a></li>
-                                            </c:if>
+                                                </c:if>
                                         </ul>
                                     </li>
                                     <li><a href="home?do=blog">BLOG </a>
@@ -52,10 +58,10 @@
                                 <a href="cart">
                                     <c:if test="${sessionScope.size==null}">
                                         <i class="icon-basket-loaded"></i><span class="pro-count red">0</span>
-                                    </c:if>
-                                    <c:if test="${sessionScope.size!=null}">
+                                        </c:if>
+                                        <c:if test="${sessionScope.size!=null}">
                                         <i class="icon-basket-loaded"></i><span class="pro-count red">${sessionScope.size}</span>
-                                    </c:if>
+                                        </c:if>
                                 </a>
                             </div>
                             <c:if test="${sessionScope.Account ==null}">

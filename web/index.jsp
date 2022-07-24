@@ -40,10 +40,12 @@
         <link href="css/timeline.css" rel="stylesheet" type="text/css" />
             
         <style type="text/css">
-            div.b {
-                word-wrap: break-word;
+            #innerdiv {
+                width: 50%;
+                word-break: break-all;
             }
             #croll{
+                width: 100%;
                 overflow-x: hidden;
                 overflow-y: scroll;
             }
@@ -309,10 +311,6 @@
                         </div>
                         <div class="tab-style-1 nav">
                             <a class="active" href="#product-1" data-toggle="tab">Best Seller</a>
-                            <a href="#product-2" data-toggle="tab"> Trending</a>
-
-                            <a href="chat"> chat</a>
-
                         </div>
                     </div>
                 </div>

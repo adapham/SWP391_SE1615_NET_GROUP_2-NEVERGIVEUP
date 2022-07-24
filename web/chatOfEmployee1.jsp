@@ -14,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body >
 
         <div class="messaging">
             <div class="inbox_msg">
@@ -59,7 +59,7 @@
                     </div>
                     <div class="type_msg">
                          <div class="input_msg_write">
-                            <input value="${sessionScope.Account.accountid}" id="textMessage"  type="text" class="write_msg" placeholder="Type a message" />
+                            <input value="" id="textMessage"  type="text" class="write_msg" placeholder="Type a message" />
                             <button onclick="sendMessage()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -67,6 +67,7 @@
             </div>
         </div>
         <!--script chat-->
+            
         
 
     </body>
