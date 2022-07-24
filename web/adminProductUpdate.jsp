@@ -144,7 +144,7 @@
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="isActive">Is Active <span style="color: red;">(*)</span></label>
                                                         <br>
-                                                        <div style="margin-top: 20px; font-size: 20px;">
+                                                        <div style="margin-top: 30px; font-size: 15px;">
                                                             <input style="margin-left: 10px;" type="radio" value="0" ${l.isActive == 0 ? " checked":""} name="isActive">  No
                                                             <input style="margin-left: 10px;" type="radio" value="1" ${l.isActive == 1 ? " checked":""} name="isActive">  Yes
                                                         </div>

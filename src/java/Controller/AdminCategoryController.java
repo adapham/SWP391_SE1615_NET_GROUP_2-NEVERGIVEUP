@@ -97,7 +97,7 @@ public class AdminCategoryController extends HttpServlet {
                             .description(description.trim())
                             .build();
 
-                    String mess = "Update successfull";
+                    String mess = "Update successful";
                     int updateCategory = daoCategory.updateCategory(cate);
                     request.setAttribute("mess", mess);
                     request.setAttribute("categoryList", categoryList);
@@ -137,7 +137,7 @@ public class AdminCategoryController extends HttpServlet {
                     int createCategory = daoCategory.createCategory(cate);
 
                     if (createCategory > 0) {
-                        String mess = "Create successfull";
+                        String mess = "Create successful";
                         //Clear Data after create successfull
                         request.setAttribute("cateName", "");
                         request.setAttribute("description", "");
@@ -160,7 +160,7 @@ public class AdminCategoryController extends HttpServlet {
                 }
 
                 if (delete > 0) {//Remove Successs
-                    mess = "Delete Successfull";
+                    mess = "Delete Successful";
                 } else {
                     mess = "Can't delete Category";
                 }

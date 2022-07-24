@@ -55,28 +55,30 @@
                             <h3 style="text-align: center; padding-top: 15px; padding-bottom: 5%">${l.productName}</h3>
                         </div>
                     </c:forEach> 
-
-                    <div>
-                        <h1 style="margin-left: 25%">Detail feedback</h1>
-                        <table class="table table-bordered" style="border: 2px solid black; width: 50%; margin-left: 25%">                                        
-                            <tbody>
-                                <c:forEach items="${listFeedBack}" var="l">
-                                    <tr>                
-                                        <td style="color: black; font-size: 20px">Display name: </td><td style="color: black">${l.disPlayName}</td>                                          
-                                    </tr>
-                                    <tr>                
-                                        <td style="color: black; font-size: 20px">Product name: </td><td style="color: black">${l.productName}</td>                                           
-                                    </tr>
-                                    <tr>                
-                                        <td style="color: black; font-size: 20px">Content: </td><td style="color: black">${l.feedbackContent}</td>                                            
-                                    </tr>
-                                    <tr>                
-                                        <td style="color: black; font-size: 20px">Date: </td><td style="color: black">${l.timeComment}</td>                                          
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
+                    <div class="col-md-12">
+                        <h3>Detail feedback</h3>
+                        <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
+                            <c:forEach items="${listFeedBack}" var="l">
+                                <tr>
+                                    <td>Display name</td>
+                                    <td>${l.disPlayName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Product name</td>
+                                    <td>${l.productName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Content</td>
+                                    <td>${l.feedbackContent}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>${l.timeComment}</td>
+                                </tr>
+                            </c:forEach>  
                         </table>
                     </div>
+
 
                 </div>
                 <!-- End of Main Content -->

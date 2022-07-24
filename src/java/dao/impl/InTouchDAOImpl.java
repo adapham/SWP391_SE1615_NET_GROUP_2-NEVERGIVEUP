@@ -128,6 +128,7 @@ public class InTouchDAOImpl extends ConnectDB {
                         .email(rs.getString("Email"))
                         .subject(rs.getString("Subject"))
                         .message(rs.getString("Message"))
+                        .date(rs.getString("Date"))
                         .build();
                 listInTouch.add(inTouch);
             }

@@ -133,7 +133,7 @@ public class AdminProfileController extends HttpServlet {
 
                     session.setAttribute("Account", accupdate);
                     int n = daoAccount.updateAccount(accupdate);
-                    String mess = "Update Success";
+                    String mess = "Update Successful";
                     ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess", mess);
@@ -199,7 +199,7 @@ public class AdminProfileController extends HttpServlet {
                     session.setAttribute("Account", accChangePass);
                     int n = daoAccount.changePassword(accChangePass);
                     if (n > 0) {
-                        String mess1 = "Change Password Success!";
+                        String mess1 = "Change Password Successful!";
                         List ListAccount = daoAccount.getAccountByID(AccountID);
 
                         request.setAttribute("oldPass", "");

@@ -120,7 +120,7 @@ public class FeedbackManagerController extends HttpServlet {
                             .message(message.trim())
                             .build();
                     dao.replyEmail(inT);
-                    String mess = "Send success!";
+                    String mess = "Sent successful";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("reply.jsp").forward(request, response);
                     return;

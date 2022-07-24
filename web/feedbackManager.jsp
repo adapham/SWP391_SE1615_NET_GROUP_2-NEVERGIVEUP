@@ -52,7 +52,7 @@
                         </div>
                     </form>
                     <c:if test="${mess != null}"><h4>${mess}</h4></c:if>
-                        <table class="table">
+                        <table class="border table table-striped table-hover table-bordered border-primary" style="color: black">
                             <thead>
                                 <tr>
                                     <th scope="col">Feedback ID</th>
