@@ -49,7 +49,7 @@
                     </div>
                     <c:forEach items="${listFeedBack}" var="l">
                         <div>
-                            <img src="${l.imageURL}" style="margin-left: 39%; padding-top: 5%">
+                            <img src="${l.imageURL}" style="margin-left: 39%; width: 20%;; padding-top: 5%">
                         </div>
                         <div>
                             <h3 style="text-align: center; padding-top: 15px; padding-bottom: 5%">${l.productName}</h3>
