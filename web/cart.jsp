@@ -121,21 +121,21 @@
                                 <div class="col-lg-12">
                                     <div class="cart-shiping-update-wrapper">
                                         <div class="cart-shiping-update">
-                                            <a href="menu">Continue Shopping</a>
+                                            <a href="menu" style="text-transform: inherit">Continue shopping</a>
                                         </div>
                                         <div class="cart-clear">
                                             <c:if test="${sessionScope.size!=0 && sessionScope.size!=null}">
                                                 <c:if test="${sessionScope.Account !=null}">
-                                                    <a href="checkOut">Check Out</a>
+                                                    <a href="checkOut" style="text-transform: inherit">Check out</a>
                                                 </c:if>
                                                 <c:if test="${sessionScope.Account ==null}">
-                                                    <a href="login">Check Out</a>
+                                                    <a href="login" style="text-transform: inherit">Check out</a>
                                                 </c:if>
                                             </c:if>
 
 
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalall">
-                                                <a style="color: black">Clear Cart</a>
+                                                <a style="color: black" style="text-transform: inherit">Clear cart</a>
                                             </button>
 
                                             <!-- The Modal -->

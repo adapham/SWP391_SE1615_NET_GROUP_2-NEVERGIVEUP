@@ -52,7 +52,7 @@
                             <li>
                                 <a href="home">Home</a>
                             </li>
-                            <li class="active">Cart Page </li>
+                            <li class="active">Confirm</li>
                         </ul>
                     </div>
                 </div>
@@ -105,31 +105,31 @@
                                             <div class="tax-select-wrapper">
                                                 <div class="tax-select">
                                                     <label>
-                                                        * Display name of customer
+                                                        Display name of customer *
                                                     </label>
                                                     <input type="text" maxlength="50" value="${account.displayname}" name="displayName" readonly="">
                                                 </div>
                                                 <div class="tax-select">
                                                     <label>
-                                                        * Email
+                                                        Email *
                                                     </label>
                                                     <input type="text" maxlength="50" value="${order.email}" name="email" readonly="">
                                                 </div>
                                                 <div class="tax-select">
                                                     <label>
-                                                        * Address
+                                                        Address *
                                                     </label>
                                                     <input type="text" maxlength="50" value="${order.address}" id="address" name="address" readonly="">
                                                 </div>
                                                 <div class="tax-select">
                                                     <label>
-                                                        * Phone
+                                                        Phone *
                                                     </label>
                                                     <input type="text" maxlength="15" id="phone" value="${order.phone}" name="phone" readonly="">
                                                 </div>
                                                 <div class="tax-select">
                                                     <label>
-                                                        * Total
+                                                        Total
                                                     </label>
                                                     <input type="text" id="total" value="$${totalMoney}" name="total" readonly="">
                                                 </div>

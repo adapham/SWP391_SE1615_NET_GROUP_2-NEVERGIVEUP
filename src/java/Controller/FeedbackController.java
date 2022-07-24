@@ -76,7 +76,7 @@ public class FeedbackController extends HttpServlet {
                     .date(formatted)
                     .build();
             daofeedback.InsertIntouch(intouch);            
-            String mess = "Send Intouch success!";
+            String mess = "Sent in touch successful";
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("contact.jsp").forward(request, response);
         } catch (Exception ex) {

@@ -52,7 +52,7 @@
                             <li>
                                 <a href="home">Home</a>
                             </li>
-                            <li class="active">Cart Page </li>
+                            <li class="active">checkout</li>
                         </ul>
                     </div>
                 </div>
@@ -117,29 +117,29 @@
 
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Display name of customer
+                                                            Display name of customer *
                                                         </label>
                                                         <input type="text" maxlength="50" value="${account.displayname}" name="accountid" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Email
+                                                            Email *
                                                         </label>
                                                         <input type="text" maxlength="50" value="${account.email}" name="email" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Address
+                                                            Address *
                                                         </label>
                                                         <input type="text" maxlength="50" id="address" name="address">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Phone
+                                                            Phone *
                                                         </label>
                                                         <input type="text" maxlength="15" id="phone" name="phone">
                                                     </div>   
-                                                    <button type="submit" name="confirm" class="btn btn-primary"><i style="font-style: normal">Proceed to Checkout</i></button>
+                                                    <button type="submit" name="confirm" class="btn btn-primary"><i style="font-style: normal">Proceed to checkout</i></button>
                                                 </div>
                                             </form>
                                         </div>

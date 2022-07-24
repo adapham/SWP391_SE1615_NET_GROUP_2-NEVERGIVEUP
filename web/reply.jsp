@@ -57,17 +57,17 @@
                             </c:if>
 				<form action="feedbackManager?do=reply" method="post">
 					<div class="form-group">
-						<label>* To</label> 
+						<label>To *</label> 
 						<input type="text"
                                                        class="form-control" value="${email}" name="email" placeholder="Enter email..." readonly="">
 					</div>
 					<div class="form-group">
-						<label>* Subject</label> 
+						<label>Subject *</label> 
 						<input type="text"
                                                        class="form-control" name="subject" maxlength="50" placeholder="Enter subject...">
 					</div>
 					<div class="form-group">
-						<label for="message">* Message</label>
+						<label for="message">Message *</label>
                                                 <textarea class="form-control" rows="3" name="message" placeholder="Enter message..."></textarea>
 					</div>
                                         <button name="submit" type="submit" class="btn btn-primary">Send</button>
