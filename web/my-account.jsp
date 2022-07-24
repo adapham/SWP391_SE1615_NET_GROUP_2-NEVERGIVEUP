@@ -46,7 +46,7 @@
                             <li>
                                 <a href="index.jsp">Home</a>
                             </li>
-                            <li class="active">my account </li>
+                            <li class="active">Update profile </li>
                         </ul>
                     </div>
                 </div>
@@ -62,87 +62,88 @@
                                 <div class="row">
                                     <div class="col-lg-9 col-md-8">
                                         <div class="tab-content" id="myaccountContent">
-                                                <div class="myaccount-content">
-                                                    <h3 style="text-align: center">Account Update</h3>
-                                                    <div class="account-details-form">
-                                                        <form action="login?do=updateprofile" method="post">
-                                                            <c:forEach items="${list}" var="l">
-                                                                <c:if test="${mess != null}"><h3 style="color: red">${mess}</h3></c:if>
+                                            <div class="myaccount-content">
+                                                <h3 style="text-align: center">Update profile</h3>
+                                                <div class="account-details-form">
+                                                    <form action="login?do=updateprofile" method="post">
+                                                        <c:forEach items="${list}" var="l">
+                                                            <c:if test="${mess != null}"><h3 style="color: red">${mess}</h3></c:if>
                                                                 <div class="row">
-                                                                   
-                                                                        <div class="col-lg-6">
-                                                                            <div class="single-input-item">
-                                                                                <label  class="required">UserName</label>
-                                                                                <input type="text" id="first-name" value="${l.username}" readonly="" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="single-input-item">
-                                                                            <label  class="required">DisplayName</label>
-                                                                            <input maxlength="50" type="text" id="last-name" value="${l.displayname}" name="displayname" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="single-input-item">
-                                                                            <label  class="required">Address</label>
-                                                                            <input maxlength="50"  type="text" id="first-name" value="${l.address}" name="address"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="single-input-item">
-                                                                            <label  class="required">Email</label>
-                                                                            <input maxlength="50"  type="text" id="last-name" value="${l.email}" name="email" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div><div class="row">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="single-input-item">
-                                                                            <label  class="required">Phone</label>
-                                                                            <input maxlength="10"  type="number" id="first-name" value="${l.phone}" name="phone" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="single-input-item">
-                                                                            <label for="last-name" class="required">ImageURL</label>
-                                                                            <input type="text" id="last-name" value="${l.imageURL}" name="imageURL" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="single-input-item">
-                                                                    <button class="check-btn sqr-btn" type="submit" name="submit">Save Changes</button>
-                                                                </div>
-                                                            </form>
 
-                                                            <form class="form-horizontal" action="login?do=changepassword" method="post">
-                                                                <fieldset>
-                                                                    <legend style="text-align: center">Password change</legend>
-                                                                    <c:if test="${mess1 != null}"><h3 style="color: red">${mess1}</h3> </c:if>
+                                                                    <div class="col-lg-6">
                                                                         <div class="single-input-item">
-                                                                            <label for="current-pwd" class="required">Current Password</label>
-                                                                            <input maxlength="50"  type="password" id="current-pwd" name="password"/>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-6">
-                                                                                <div class="single-input-item">
-                                                                                    <label for="new-pwd" class="required">New Password</label>
-                                                                                    <input maxlength="50"  type="password" id="new-pwd" name="newpassword" />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6">
-                                                                                <div class="single-input-item">
-                                                                                    <label for="confirm-pwd" class="required">Confirm Password</label>
-                                                                                    <input maxlength="50" type="password" id="confirm-pwd" name="confirmpassword" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </fieldset>
-                                                                    <div class="single-input-item">
-                                                                        <button class="check-btn sqr-btn " type="submit" name="submit">Save Changes</button>
+                                                                            <label  class="required">UserName</label>
+                                                                            <input type="text" id="first-name" value="${l.username}" readonly="" />
                                                                     </div>
-                                                                </form>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="single-input-item">
+                                                                        <label  class="required">DisplayName</label>
+                                                                        <input maxlength="50" type="text" id="last-name" value="${l.displayname}" name="displayname" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="single-input-item">
+                                                                        <label  class="required">Address</label>
+                                                                        <input maxlength="50"  type="text" id="first-name" value="${l.address}" name="address"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="single-input-item">
+                                                                        <label  class="required">Email</label>
+                                                                        <input maxlength="50"  type="text" id="last-name" value="${l.email}" name="email" />
+                                                                    </div>
+                                                                </div>
+                                                            </div><div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="single-input-item">
+                                                                        <label  class="required">Phone</label>
+                                                                        <input maxlength="10"  type="number" id="first-name" value="${l.phone}" name="phone" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="single-input-item">
+                                                                        <label for="last-name" class="required">ImageURL</label>
+                                                                        <input type="text" id="last-name" value="${l.imageURL}" name="imageURL" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="single-input-item">
+                                                                <button class="check-btn sqr-btn" type="submit" name="submit">Save Changes</button>
+                                                            </div>
                                                         </c:forEach>
+                                                    </form>
+
+                                                    <form class="form-horizontal" action="login?do=changepassword" method="post">
+                                                        <fieldset>
+                                                            <legend style="text-align: center">Password change</legend>
+                                                            <c:if test="${mess1 != null}"><h3 style="color: red">${mess1}</h3> </c:if>
+                                                                <div class="single-input-item">
+                                                                    <label for="current-pwd" class="required">Current Password</label>
+                                                                    <input maxlength="50"  type="password" id="current-pwd" name="password"/>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="single-input-item">
+                                                                            <label for="new-pwd" class="required">New Password</label>
+                                                                            <input maxlength="50"  type="password" id="new-pwd" name="newpassword" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="single-input-item">
+                                                                            <label for="confirm-pwd" class="required">Confirm Password</label>
+                                                                            <input maxlength="50" type="password" id="confirm-pwd" name="confirmpassword" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </fieldset>
+                                                            <div class="single-input-item">
+                                                                <button class="check-btn sqr-btn " type="submit" name="submit">Save Changes</button>
+                                                            </div>
+                                                        </form>
+
                                                     </div>
                                                 </div>
                                             </div> <!-- Single Tab Content End -->
@@ -182,35 +183,35 @@
                     </div>
                 </div>
             </div>
-            <%@include file="component/FooterComponent.jsp" %>
-        </div>
+        <%@include file="component/FooterComponent.jsp" %>
+    </div>
 
-        <!-- All JS is here
-    ============================================ -->
+    <!-- All JS is here
+============================================ -->
 
-        <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
-        <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
-        <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-        <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/plugins/slick.js"></script>
-        <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
-        <script src="assets/js/plugins/jquery.instagramfeed.min.js"></script>
-        <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
-        <script src="assets/js/plugins/wow.js"></script>
-        <script src="assets/js/plugins/jquery-ui-touch-punch.js"></script>
-        <script src="assets/js/plugins/jquery-ui.js"></script>
-        <script src="assets/js/plugins/magnific-popup.js"></script>
-        <script src="assets/js/plugins/sticky-sidebar.js"></script>
-        <script src="assets/js/plugins/easyzoom.js"></script>
-        <script src="assets/js/plugins/scrollup.js"></script>
-        <script src="assets/js/plugins/ajax-mail.js"></script>
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/plugins/slick.js"></script>
+    <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="assets/js/plugins/jquery.instagramfeed.min.js"></script>
+    <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
+    <script src="assets/js/plugins/wow.js"></script>
+    <script src="assets/js/plugins/jquery-ui-touch-punch.js"></script>
+    <script src="assets/js/plugins/jquery-ui.js"></script>
+    <script src="assets/js/plugins/magnific-popup.js"></script>
+    <script src="assets/js/plugins/sticky-sidebar.js"></script>
+    <script src="assets/js/plugins/easyzoom.js"></script>
+    <script src="assets/js/plugins/scrollup.js"></script>
+    <script src="assets/js/plugins/ajax-mail.js"></script>
 
-        <!-- Use the minified version files listed below for better performance and remove the files listed above  
-    <script src="assets/js/vendor/vendor.min.js"></script>
-    <script src="assets/js/plugins/plugins.min.js"></script>  -->
-        <!-- Main JS -->
-        <script src="assets/js/main.js"></script>
+    <!-- Use the minified version files listed below for better performance and remove the files listed above  
+<script src="assets/js/vendor/vendor.min.js"></script>
+<script src="assets/js/plugins/plugins.min.js"></script>  -->
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
 
-    </body>
+</body>
 
 </html>

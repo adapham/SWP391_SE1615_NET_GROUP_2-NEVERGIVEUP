@@ -138,20 +138,20 @@
                                                                     <c:when test="${l.gender ==1}">
                                                                         <div class="form-check form-check-inline">
                                                                             <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked="">
-                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black;    font-size: 64%">Male</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
                                                                             <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0">
-                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black;    font-size: 64%">Female</label>
                                                                         </div>
                                                                     </c:when><c:otherwise>
                                                                         <div class="form-check form-check-inline">
                                                                             <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" >
-                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                                            <label class="form-check-label" for="inlineRadio1" style="color: black;    font-size: 64%">Male</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
                                                                             <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0" checked="">
-                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                                            <label class="form-check-label" for="inlineRadio2" style="color: black;    font-size: 64%">Female</label>
                                                                         </div>
                                                                     </c:otherwise>
                                                                 </c:choose>

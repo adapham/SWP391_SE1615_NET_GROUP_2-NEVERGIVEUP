@@ -51,7 +51,7 @@
                             </form>
                             <p style="color: red;margin-left: 71%"><b>Revenue: </b>$${Math.round((totalmoney*100)/100)}</p> 
 
-                            <table class="table table-bordered"  width="100%" cellspacing="0">
+                            <table class="border table table-striped table-hover table-bordered border-primary"  width="100%" cellspacing="0">
                                 <thead>
                                     <tr> 
                                         <th style="color: black">OrderID</th>

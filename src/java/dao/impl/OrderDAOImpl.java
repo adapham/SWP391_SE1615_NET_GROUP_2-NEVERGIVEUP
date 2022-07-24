@@ -132,8 +132,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
 //        } catch (Exception ex) {
 //            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
-        
+
     }
 
     public int updateStatus(int status, int orId) throws Exception {
@@ -230,6 +229,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return listOrd;
     }
+
     public List<Order> getSearchOrderPagingByDate(String keySearch, int page, int PAGE_SIZE) throws Exception {
         List<Order> listOrd = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY OrderID)\n"
@@ -261,11 +261,12 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return listOrd;
     }
+
     public int getTotalOrderByDate(String keySearch) throws Exception {
-        
+
         String sql = "select COUNT(*) from [Order] where [OrderDate] like ?";
         try {
-            
+
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, "%" + keySearch + "%");
             ResultSet rs = pre.executeQuery();
@@ -278,7 +279,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return 0;
     }
-    
+
     public int getTotalOrderByAddress(String keySearch) throws Exception {
         String sql = "select COUNT(*) from [Order] where [Address] like ?";
         try {
@@ -331,6 +332,10 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
             }
         } catch (SQLException e) {
             throw e;
+        }
+        return list;
+    }
+
     public List<Order> listAllOrdersbyID(int AccID) throws Exception {
         List<Order> list = new ArrayList<>();
         try {

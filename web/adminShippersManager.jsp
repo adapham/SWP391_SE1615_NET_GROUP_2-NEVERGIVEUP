@@ -66,7 +66,7 @@
                                     <thead>
                                         <tr>
                                             <th style="color: black">AccountID</th>
-                                            <th style="color: black">Username</th>
+                                            <th style="color: black">User name</th>
                                             <th style="color: black">Display Name</th>
                                             <th style="color: black">Address</th>
                                             <th style="color: black">Email</th>

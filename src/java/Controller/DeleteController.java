@@ -54,7 +54,7 @@ public class DeleteController extends HttpServlet {
                 size--;
                 session.setAttribute("size", size);
             } else {
-                size=0;
+               size=0;
                 session.setAttribute("size", size);
                 Enumeration em = session.getAttributeNames();
                 while (em.hasMoreElements()) {

@@ -63,11 +63,11 @@
                         </form>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered"  width="100%" cellspacing="0">
+                                <table   width="100%" cellspacing="0" class="border table table-striped table-hover table-bordered border-primary">
                                     <thead>
                                         <tr>
-                                            <th style="color: black">Username</th>
-                                            <th style="color: black">Display Name</th>
+                                            <th style="color: black">User name</th>
+                                            <th style="color: black">Displayname</th>
                                             <th style="color: black">Address</th>
                                             <th style="color: black">Email</th>
                                             <th style="color: black">Phone</th>

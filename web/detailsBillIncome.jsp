@@ -49,48 +49,69 @@
                     <!-- Begin Page Content -->
                     <main class="main-content position-relative border-radius-lg ">
                         <div class="container-fluid py-4">
-                            <div class="col-lg-4 mb-lg-0 mb-4">
+                            <div class="col-md-12">
+                                <c:if test="${mess != null}"><b style="color: red; font-size: 25px">${mess}</b></c:if>
+                                    <h3>List of purchased products</h3>
+                                    <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
+                                        <tr>
+                                            <td>Order detail</td>
+                                            <td>Information order</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Customer name</td>
+                                            <td>${info.displayname}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Order date</td>
+                                        <td>${info.orderDate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>${info.address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>${info.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>${info.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>
 
-                                <p><h3 style="color: black"><b> Information customer:  </b></h3></p> 
-                                <p style="color: black"><b>Order date: </b>${info.orderDate}</p> 
-                                <p style="color: black"><b>Customer name: </b>${info.displayname}</p> 
-                                <p style="color: black"><b>Address: </b>${info.address}</p> 
-                                <p style="color: black"><b>Email: </b>${info.email}</p> 
-                                <p style="color: black"><b>Phone: </b>${info.phone}</p>
-
-                                <form action="billManager?do=updateStatusDetails" method="POST">
-                                    <input type="hidden" name="odId" value="${orderID}">
-                                    <select name="status" onchange="this.form.submit()">
-                                        <option value="1" ${info.status == 1 ? " selected" : ""}>Wait</option>
-                                        <option value="2" ${info.status == 2 ? " selected" : ""}>Process</option>
-                                        <option value="3" ${info.status == 3 ? " selected" : ""}>Done</option>
-                                    </select>
-                                </form>
-
-                                <p><h3 style="color: black"><b>Details bill</b></h3></p>     
-
-                                <table border="1" >
-                                    <thead>
-                                        <tr>                                            
-                                            <th style="color: black">ProductName</th>
-                                            <th style="color: black">Price</th>   
-                                            <th style="color: black">Quantity</th>
-                                            <th style="color: black">Discount</th>                                          
-                                            <th style="color: black">Total</th>
+                                            <input type="hidden" name="odId" value="${orderID}">
+                                            <c:if test="${info.status ==1}"><p style="color: black"><b>Status: </b>Wait</p></c:if>
+                                            <c:if test="${info.status ==2}"><p style="color: black"><b>Status: </b>Process</p></c:if>
+                                            <c:if test="${info.status ==3}"><p style="color: black"><b>Status: </b>Done</p></c:if>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <h2 style="color: red; text-align: center; font-weight: bold;">Detail bill</h2>
+                            <!--List Bill Detail-->
+                            <div class="col-md-12">
+                                <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px">
+                                    <thead class="bg-info" style="position: -webkit-sticky; top: 0; color: black">
+                                        <tr>
+                                            <th>Product name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Discount</th>
+                                            <th>Total</th>  
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <c:forEach items="${list}" var="l">
                                             <tr>
                                                 <td style="color: black">${l.productName}</td>
-                                                <td style="color: black">$${l.price}</td>
-                                                <td style="color: black">${l.quantity}</td>
-                                                <td style="color: black">${l.discount}</td>                                                
-                                                <td style="color: black">$${Math.round(l.total*100)/100}</td>
+                                                <td style="color: black; text-align: right">$${l.price}</td>
+                                                <td style="color: black; text-align: right">${l.quantity}</td>
+                                                <td style="color: black; text-align: right">${l.discount}</td>                                                
+                                                <td style="color: black; text-align: right">$${Math.round(l.total*100)/100}</td>
                                             </tr> 
                                         </c:forEach>
-                                    </tbody>
                                 </table>
                                 <td colspan="2" ><h4>Total Amount: $${totalMoney}</h4></td>
                             </div>

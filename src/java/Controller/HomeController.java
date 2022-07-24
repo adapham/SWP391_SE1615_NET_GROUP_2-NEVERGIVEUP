@@ -31,7 +31,6 @@ public class HomeController extends HttpServlet {
                 String fresh = request.getParameter("fresh");
                 if (fresh == null) {
                     Account acc = (Account) session.getAttribute("Account");
-                    System.out.println(acc);
                     AccountDAOImpl dao = new AccountDAOImpl();
                     MessDAOImpl daoMess = new MessDAOImpl();
                     List<Integer> list = dao.ListAllAccountEmpID();

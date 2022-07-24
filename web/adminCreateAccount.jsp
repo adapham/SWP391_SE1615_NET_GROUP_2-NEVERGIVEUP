@@ -48,17 +48,17 @@
 
                     <!------------------CODE HERE-------------------------->
                     <h1 style="text-align: center" >Create Account</h1>
-                    <c:if test="${mess !=null}"><h6 style="color: red">${mess}</h6></c:if>  
-                        <!-- DataTales Example -->
-                        <div id="content">
-                            <div class="container-xl px-4 mt-4">
-                                <!-- Account page navigation-->
-                                <hr class="mt-0 mb-4">
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <!-- Account details card-->
-                                        <div class="card mb-4">
-                                            <div class="card-header"><a href="accountmanager">Account </a>/ Create Account</div>
+                    <!-- DataTales Example -->
+                    <div id="content">
+                        <div class="container-xl px-4 mt-4">
+                            <!-- Account page navigation-->
+                            <hr class="mt-0 mb-4">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <!-- Account details card-->
+                                    <div class="card mb-4">
+                                        <div class="card-header"><a href="accountmanager">Account </a>/ Create Account</div>
+                                        <c:if test="${mess !=null}"><h6 style="color: red">${mess}</h6></c:if>  
 
                                             <form action="accountmanager?do=createAccount" method="post">
                                                 <div class="row gx-3 mb-3">
@@ -100,7 +100,7 @@
                                                     <input class="form-control" placeholder="ImageURL..." type="text" name="imageURL" value="${imageURL}">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="small mb-1" for="productName">Permission </label>
+                                                    <label class="small mb-1" for="productName">Permission </label><br>
                                                     <select class="form-select" aria-label="Default select example" name="role">
                                                         <c:choose>
                                                             <c:when test="${role ==2}">
@@ -115,25 +115,25 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <h6 style="color: black">Gender:</h6>
+                                            <label class="small mb-1" for="productName">Gender: </label>
                                             <c:choose>
                                                 <c:when test="${gender ==1}">
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked="">
-                                                        <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                        <label class="form-check-label" for="inlineRadio1" style="color: black;font-size: 86%">Male</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0">
-                                                        <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                        <label class="form-check-label" for="inlineRadio2" style="color: black;font-size: 86%">Female</label>
                                                     </div>
                                                 </c:when><c:otherwise>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" >
-                                                        <label class="form-check-label" for="inlineRadio1" style="color: black">Male</label>
+                                                        <label class="form-check-label" for="inlineRadio1" style="color: black;font-size: 86%">Male</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0" checked="">
-                                                        <label class="form-check-label" for="inlineRadio2" style="color: black">Female</label>
+                                                        <label class="form-check-label" for="inlineRadio2" style="color: black;font-size: 86%">Female</label>
                                                     </div>
                                                 </c:otherwise>
                                             </c:choose>
