@@ -79,11 +79,11 @@
                             <tbody>
                                 <c:forEach items="${supplierList}" var="l">
                                     <tr>
-                                        <td>${l.supplierID}</td>
-                                        <td>${l.companyName}</td>
-                                        <td>${l.address}</td>
-                                        <td>${l.phone}</td>
-                                        <td>${l.email}</td>
+                                        <td style="text-align: right;">${l.supplierID}</td>
+                                        <td style="text-align: left;">${l.companyName}</td>
+                                        <td style="text-align: left;">${l.address}</td>
+                                        <td style="text-align: left;">${l.phone}</td>
+                                        <td style="text-align: left;">${l.email}</td>
                                         <td><a href="adminSupplier?do=updateSupplier&supID=${l.supplierID}"><i class="fas fa-edit"></i></a></td>
                                         <td>
                                             <button style="color: red; border: none;" type="button" data-toggle="modal" data-target="#myModal${l.supplierID}">

@@ -47,7 +47,12 @@
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="home">Home</a>
+                                <c:if test="${sessionScope.Account ==null}">
+                                    <a href="home?do=home&fresh=1">Home</a>
+                                </c:if>
+                                <c:if test="${sessionScope.Account !=null}">
+                                    <a href="home">Home</a>
+                                </c:if>
                             </li>
                             <li class="active">about us </li>
                         </ul>
@@ -109,7 +114,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img" style="height: 270px;">
-                                    <img src="https://scontent.fhan4-3.fna.fbcdn.net/v/t1.6435-9/65283213_452725832223607_2321629019776221184_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=oTMbMuOtRIkAX-6lCgq&_nc_ht=scontent.fhan4-3.fna&oh=00_AT--4L3nCJUrYtL0Jw68k7nqhS3b1QYQHein9q_rwobUDQ&oe=62C81961" alt="">
+                                    <img src="https://scontent.fhan4-3.fna.fbcdn.net/v/t1.6435-9/65283213_452725832223607_2321629019776221184_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=CChsmhHpVvYAX-_prCE&_nc_ht=scontent.fhan4-3.fna&oh=00_AT80uz3vbrNnFx2-kUOslUA-hqwhfuidtwb1Ul6Uael-Hg&oe=62FB83E1" alt="Imnage profile">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/khacbao07">
                                             <i class="social_facebook"></i>
@@ -131,7 +136,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img">
-                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t1.6435-9/65200617_151530962638024_6849459645744939008_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=174925&_nc_ohc=L94vf-pyahgAX-_FIaR&tn=UjtbTFtl40nTD_jt&_nc_ht=scontent.fhan3-1.fna&oh=00_AT9MloAoUeJeymsshZiI4CPVXPHbDLnBR7U_FR6y-bahdg&oe=62D11A52" alt="">
+                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t1.6435-9/65200617_151530962638024_6849459645744939008_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=174925&_nc_ohc=LUnmrAUUa6wAX9Untxl&_nc_ht=scontent.fhan3-1.fna&oh=00_AT9aWgUHE3Rk7l9aO_mepODZn38Rgvs6Bzoa-Jwi3Ya7xA&oe=63009052" alt="">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/SoftwareEngineering.khai">
                                             <i class="social_facebook"></i>
@@ -153,7 +158,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img" style="height: 270px;">
-                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/272959853_1004762727116170_3184609971225838167_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=gsJA8lXDkaAAX-4gfh2&tn=UjtbTFtl40nTD_jt&_nc_ht=scontent.fhan3-1.fna&oh=00_AT_UIh8TsbFmZxM6eWF7lmkDVOpv-Wqo4vcMsFyoUnapBQ&oe=62AE73A3" alt="">
+                                    <img src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/272959853_1004762727116170_3184609971225838167_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=Y-YG2yUS6WIAX-sCrQx&_nc_ht=scontent.fhan3-1.fna&oh=00_AT8GEa1zEkueLc1xP5wrj6SmjdqRvrYpspBfyEX3zKBwCw&oe=62E1DE23" alt="">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/phamada2803">
                                             <i class="social_facebook"></i>
@@ -175,7 +180,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-wrapper mb-30">
                                 <div class="team-img">
-                                    <img src="https://scontent.fhan3-5.fna.fbcdn.net/v/t1.6435-9/107894381_148547816872572_1543076683685639068_n.jpg?stp=c0.8.206.206a_dst-jpg_p206x206&_nc_cat=110&ccb=1-7&_nc_sid=da31f3&_nc_ohc=WLFcoAUV4VAAX_eljAf&_nc_ht=scontent.fhan3-5.fna&oh=00_AT9ifwJfOBbEZszuvWT7tvpaQGIUPbPeE-B3mToWrLcWbA&oe=62D1077C" alt="">
+                                    <img src="https://scontent.fhan3-4.fna.fbcdn.net/v/t1.6435-9/118226913_166002565127097_6037808147462936186_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=174925&_nc_ohc=u6pXrS0VawQAX9XSd79&_nc_ht=scontent.fhan3-4.fna&oh=00_AT8I_gU9wup2LSZZociFKLGJiuBMf-95JJytyZeSgV0AUQ&oe=63015CC4" alt="">
                                     <div class="team-action">
                                         <a class="facebook" href="https://www.facebook.com/tuyen.nguyenvan.46">
                                             <i class="social_facebook"></i>

@@ -80,9 +80,9 @@
                                                 </c:choose>
                                                 <c:choose>
                                                     <c:when test="${address != null}">
-                                                        <input maxlength="50" type="text" class="form-control" placeholder="Address *" value="${address}" name="address" /> 
+                                                        <input maxlength="50" type="text" class="form-control" placeholder="Address " value="${address}" name="address" /> 
                                                     </c:when><c:otherwise>
-                                                        <input maxlength="50" type="text" class="form-control" placeholder="Address *" value="" name="address" />   
+                                                        <input maxlength="50" type="text" class="form-control" placeholder="Address " value="" name="address" />   
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
@@ -101,9 +101,9 @@
                                                 </c:choose>
                                                 <c:choose>
                                                     <c:when test="${imageURL != null}">
-                                                        <input type="text" class="form-control" placeholder="ImageURL *" value="${imageURL}" name="imageURL" />
+                                                        <input type="text" class="form-control" placeholder="ImageURL " value="${imageURL}" name="imageURL" />
                                                     </c:when><c:otherwise>
-                                                        <input type="text" class="form-control" placeholder="ImageURL *" value="" name="imageURL" />
+                                                        <input type="text" class="form-control" placeholder="ImageURL " value="" name="imageURL" />
                                                     </c:otherwise>
                                                 </c:choose>
                                                 

@@ -80,6 +80,7 @@ public class CheckOut1Controller extends HttpServlet {
             int orderID = new OrderDAOImpl().insertOrderID(order);
             new OrderDetailsDAOImpl().saveCart(orderID, listProductCarts);
 
+            session.removeAttribute("size");
             while (em.hasMoreElements()) {
                 String key = em.nextElement().toString();
                 if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
@@ -87,7 +88,7 @@ public class CheckOut1Controller extends HttpServlet {
                 }
             }
             if (Integer.parseInt(temp) == 1) {
-                request.getRequestDispatcher("menu").forward(request, response);
+                request.getRequestDispatcher("delete").forward(request, response);
             }
             request.getRequestDispatcher("login?do=logout").forward(request, response);
         } catch (Exception ex) {

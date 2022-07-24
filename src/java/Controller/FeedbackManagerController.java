@@ -120,7 +120,7 @@ public class FeedbackManagerController extends HttpServlet {
                             .message(message.trim())
                             .build();
                     dao.replyEmail(inT);
-                    String mess = "Send success!";
+                    String mess = "Sent successful";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("reply.jsp").forward(request, response);
                     return;
@@ -179,7 +179,6 @@ public class FeedbackManagerController extends HttpServlet {
                 String id = request.getParameter("iD");
                 int iD = Integer.parseInt(id);
                 List<FeedBack> listFeedBack = dao.getDetailsFeedBack(iD);
-
                 request.setAttribute("listFeedBack", listFeedBack);
                 request.setAttribute("iD", iD);
                 request.getRequestDispatcher("detailFeedBack.jsp").forward(request, response);
@@ -190,6 +189,8 @@ public class FeedbackManagerController extends HttpServlet {
                 String feedbackid = request.getParameter("feedbackid");
                 String page = request.getParameter("page");
                 int n = dao.deleteFeedBackByID(feedbackid);
+                String mess = "Delete successful";
+                request.setAttribute("mess", mess);
                 if (keySearch != null) {
                     response.sendRedirect("feedbackManager?do=searchFeedbacks&page=" + page + "&keySearch=" + keySearch);
                 } else {

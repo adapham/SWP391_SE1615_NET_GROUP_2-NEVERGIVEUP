@@ -54,10 +54,7 @@
                                                 <!-- Form Row-->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (Username)-->
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="cateID">Category ID</label>
-                                                        <input name="cateID" readonly="" class="form-control" id="cateID" type="text" placeholder="" value="${l.categoryID}">
-                                                    </div>
+                                                    <input name="cateID" readonly="" class="form-control" id="cateID" type="hidden" placeholder="" value="${l.categoryID}">
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="cateName">Category Name <span style="color: red;">(*)</span></label>

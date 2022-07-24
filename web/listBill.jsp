@@ -51,81 +51,85 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Display name</th>
-                                <th scope="col">Shipper name</th>
-                                <th scope="col">Order date</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${listOrder}" var="l">
-                                <tr>
-                                    <th scope="row">${l.orderID}</th>
-                                    <td>${l.displayName}</td>
-                                    <td>${l.shipperName}</td>
-                                    <td>${l.orderDate}</td>
-                                    <td>${l.address}</td>
-                                    <td>${l.email}</td>
-                                    <td>
-                                        <form action="billManager?do=updateStatus&page=${page}&search=${keySearch}" method="POST">
-                                            <input type="hidden" name="odId" value="${l.orderID}">
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="1" ${l.status == 1 ? " selected" : ""}>Wait</option>
-                                                <option value="2" ${l.status == 2 ? " selected" : ""}>Process</option>
-                                                <option value="3" ${l.status == 3 ? " selected" : ""}>Done</option>
-                                            </select>
-                                        </form>
-                                    </td>
-                                    <td>${l.phone}</td>
-                                    <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <!-- /.container-fluid -->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination" style="display: flex; justify-content: center;">
-                            <c:choose>
-                                        <c:when test="${search!=null}">
-                                            <c:choose>
-                                                <c:when test="${listOrder ==null || listOrder.size() ==0}">
-                                                    <h2 style="color: red">NOT FOUND</h2>
-                                                </c:when> 
-                                                <c:otherwise>
-                                                    <c:if test="${page!=1}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
-                                                        </c:if>
-                                                        <c:forEach begin="1" end="${totalPage}" var="i">
-                                                        <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=searchBill&page=${i}&keySearch=${keySearch}">${i}</a></li>
-                                                        </c:forEach>
-                                                        <c:if test="${page !=totalPage}">
-                                                        <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page+1}&keySearch=${keySearch}">Next</a></li>
-                                                        </c:if>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:when>
+                    <div>
+                        <c:if test="${mess != null}"><h4>${mess}</h4></c:if>
+                        <table class="border table table-striped table-hover table-bordered border-primary" style="color: black">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Display name</th>
+                                        <th scope="col">Shipper name</th>
+                                        <th scope="col">Order date</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Detail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${listOrder}" var="l">
+                                    <tr>
+                                        <th scope="row" style="text-align: right">${l.orderID}</th>
+                                        <td>${l.displayName}</td>
+                                        <td>${l.shipperName}</td>
+                                        <td>${l.orderDate}</td>
+                                        <td>${l.address}</td>
+                                        <td>${l.email}</td>
+                                        <td>
+                                            <c:if test="${l.status == 1}">
+                                                <b>${l.status == 1 ? " Wait" : ""}</b>
+                                            </c:if>
+                                            <c:if test="${l.status == 2}">
+                                                <b>${l.status == 2 ? " Process" : ""}</b>
+                                            </c:if>
+                                            <c:if test="${l.status == 3}">
+                                                <b>${l.status == 3 ? " Done" : ""}</b>
+                                            </c:if>
+                                        </td>
+                                        <td>${l.phone}</td>
+                                        <td><a href="billManager?do=details&odID=${l.orderID}">Details</a></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                        <!-- /.container-fluid -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination" style="display: flex; justify-content: center;">
+                                <c:choose>
+                                    <c:when test="${search!=null}">
+                                        <c:choose>
+                                            <c:when test="${listOrder ==null || listOrder.size() ==0}">
+                                                <h2 style="color: red">NOT FOUND</h2>
+                                            </c:when> 
                                             <c:otherwise>
                                                 <c:if test="${page!=1}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page-1}">Previous</a></li>   
-                                                </c:if>
-                                                <c:forEach begin="1" end="${totalPage}" var="i">
-                                                <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=pageBill&page=${i}">${i}</a></li>
-                                                </c:forEach>
-                                                <c:if test="${page !=totalPage}">
-                                                <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page+1}">Next</a></li>
-                                                </c:if>
-                                            </c:otherwise>
-                                        </c:choose>
-                        </ul>
-                    </nav>
+                                                    <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page-1}&keySearch=${keySearch}">Previous</a></li>   
+                                                    </c:if>
+                                                    <c:forEach begin="1" end="${totalPage}" var="i">
+                                                    <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=searchBill&page=${i}&keySearch=${keySearch}">${i}</a></li>
+                                                    </c:forEach>
+                                                    <c:if test="${page !=totalPage}">
+                                                    <li class="page-item"><a class="page-link" href="billManager?do=searchBill&page=${page+1}&keySearch=${keySearch}">Next</a></li>
+                                                    </c:if>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:if test="${page!=1}">
+                                            <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page-1}">Previous</a></li>   
+                                            </c:if>
+                                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                            <li  class="page-item ${page==i?"active":""}"><a class="page-link"  href="billManager?do=pageBill&page=${i}">${i}</a></li>
+                                            </c:forEach>
+                                            <c:if test="${page !=totalPage}">
+                                            <li class="page-item"><a class="page-link" href="billManager?do=pageBill&page=${page+1}">Next</a></li>
+                                            </c:if>
+                                        </c:otherwise>
+                                    </c:choose>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
                 <!-- End of Main Content -->
 

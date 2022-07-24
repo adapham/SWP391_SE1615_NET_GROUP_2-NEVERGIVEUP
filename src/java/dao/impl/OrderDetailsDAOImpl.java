@@ -161,10 +161,22 @@ public class OrderDetailsDAOImpl extends ConnectDB implements OrderDetailsDAO{
         }
         return null;
     }
-    public static void main(String[] args) {
-//       OrderDetailsDao dao = new OrderDetailsDao();
-//       OrderDetails info = dao.getInfoBill(1);
-//        System.out.println(info);
+ public List<OrderDetails> listTotalByOrderID(int OrderID) throws Exception {
+        List<OrderDetails> list = new ArrayList<>();
+        try {
+            String sql = "select (Quantity * Price)'Total' from [Order Details] where OrderID = ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, OrderID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                OrderDetails ord = OrderDetails.builder()
+                        .total(rs.getDouble("total"))
+                        .build();
+                list.add(ord);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return list;
     }
-
 }

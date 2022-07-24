@@ -24,13 +24,13 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <%@include file="component/AdminSlidebarComponent.jsp" %>
+            <%@include file="component/EmployeeSlidebarComponent.jsp" %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <!-- Topbar -->
-                <%@include file="component/AdminTopbarComponent.jsp" %>
+                <%@include file="component/EmployeeTopbarComponent.jsp" %>
                 <!-- End of Topbar -->
                 <!-- Main Content -->
                 <div id="content">
@@ -42,7 +42,7 @@
                                 <div class="col-xl-4">
                                     <!-- Profile picture card-->
                                     <div class="card mb-4 mb-xl-0">
-                                        <div class="card-header">Product Picture</div>
+                                        <div class="card-header">Profile Picture</div>
                                         <div class="card-body text-center">
                                             <!-- Profile picture image-->
                                             <img class="img-account-profile rounded-circle mb-2" src="${l.imageURL}" alt="" style="min-width: 60%;">
@@ -50,19 +50,19 @@
                                             <div class="small font-italic text-muted mb-4">
                                                 <br>
                                                 <h3>
-                                                    ${l.productName}
+                                                    ${l.displayname}
                                                 </h3>
                                             </div>
-
+                                             
                                             <!-- Profile picture upload button-->
-                                            <button class="btn btn-primary" ><a href="adminProduct" style="color: white; text-decoration: none;">Back to Products Manager</a></button>
+                                            <button class="btn btn-primary" ><a href="employeeaccount?do=AccountCustomer" style="color: white; text-decoration: none;">Back to Employee Home</a></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-8">
                                     <!-- Account details card-->
                                     <div class="card mb-4">
-                                        <div class="card-header"><a href="adminProduct">Product </a>/ Update Product</div>
+                                        <div class="card-header">Update Profile</div>
                                         <c:if test="${mess != null}"> 
                                             <br>
                                             <div class="alert alert-danger" role="alert">
@@ -70,87 +70,86 @@
                                             </div> 
                                         </c:if>
                                         <div class="card-body">
-                                            <form action="adminProduct?do=updateProduct" method="POST">
+                                            <form action="employeeaccount?do=updateprofile" method="POST">
                                                 <!-- Form Row-->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (Username)-->
-                                                    <input name="pID" readonly="" class="form-control" id="pID" type="hidden" placeholder="" value="${l.productID}">
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="Username">User Name</label>
+                                                        <input readonly="" class="form-control" id="Username" type="text" placeholder="Enter your user name..." value="${l.username}">
+                                                    </div>
                                                     <!-- Form Group (last name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="productName">Product Name <span style="color: red;">(*)</span></label>
-                                                        <input maxlength="50" name="productName" class="form-control" id="productName" type="text" placeholder="Enter your new product name..." value="${l.productName}">
-                                                    </div>
-                                                    <!-- Form Group (organization name)-->
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="imageURL">Images URL <span style="color: red;">(*)</span></label>
-                                                        <input maxlength="10000" name="imageURL" class="form-control" id="imageURL" type="text" placeholder="Enter your Phone..." value="${l.imageURL}">
+                                                        <label class="small mb-1" for="DisplayName">Display Name <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="displayname" class="form-control" id="DisplayName" type="text" placeholder="Enter your new display name..." value="${l.displayname}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="supplierID">Supplier <span style="color: red;">(*)</span></label>
-                                                        <select style="width: 100%;height: 35px;border-radius: 5px;border-color: #ccc;" name="supplierID" class="form-select" aria-label="Default select example" class="form-control" id="supplierID">
-                                                            <c:forEach items="${listSup}" var="ls">
-                                                                <option value="${ls.supplierID}" ${l.supplierID == ls.supplierID ? " selected":""} >  ${ls.companyName} </option>
-                                                            </c:forEach>
-                                                        </select>
+                                                        <label class="small mb-1" for="Address">Address <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="address" class="form-control" id="Address" type="text" placeholder="Enter your Address..." value="${l.address}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="categoryID">Category <span style="color: red;">(*)</span></label>
-                                                        <select name="categoryID" style="width: 100%;height: 35px;border-radius: 5px;border-color: #ccc;" class="form-select" aria-label="Default select example" class="form-control" id="categoryID">
-                                                            <c:forEach items="${listCate}" var="lc">
-                                                                <option value="${lc.categoryID}" ${l.categoryID == lc.categoryID ? " selected":""} >  ${lc.categoryName} </option>
-                                                            </c:forEach>
-                                                        </select>
+                                                        <label class="small mb-1" for="Email">Email <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="email" class="form-control" id="Email" type="text" placeholder="Enter your Email..." value="${l.email}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="quantity">Quantity <span style="color: red;">(*)</span></label>
-                                                        <input min="0" max="10000"  name="quantity" class="form-control" id="quantity" type="number" placeholder="Enter your quantity..." value="${l.quantity}">
+                                                        <label class="small mb-1" for="Phone">Phone <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="10" name="phone" class="form-control" id="Phone" type="text" placeholder="Enter your Phone..." value="${l.phone}">
                                                     </div>
                                                     <!-- Form Group (location)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="unitPrice">Unit Price <span style="color: red;">(*)</span></label>
-                                                        <input min="0" max="10000" step=any name="unitPrice" class="form-control" id="unitPrice" type="number" placeholder="Enter your price..." value="${l.unitPrice}">
+                                                        <label class="small mb-1" for="ImageURL">ImageURL <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="10000" name="imageURL" class="form-control" id="ImageURL" type="text" placeholder="Enter your url image..." value="${l.imageURL}">
+                                                    </div>
+                                                </div>
+                                                <!-- Save changes button-->
+                                                <button name="submit" class="btn btn-primary" type="submit">Save changes</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- Change Password-->
+                                    <div class="card mb-4">
+                                        <div class="card-header">Change Password</div>
+                                        <c:if test="${mess1 != null}"> 
+                                            <br>
+                                            <div class="alert alert-danger" role="alert">
+                                                ${mess1}
+                                            </div> 
+                                        </c:if>
+                                        <div class="card-body">
+                                            <form action="employeeaccount?do=changePass" method="POST">
+                                                <!-- Form Row-->
+                                                <div class="row gx-3 mb-3">
+                                                    <!-- Form Group (first name)-->
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="oldPassword">Old Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="oldPassword" class="form-control" id="oldPassword" type="password" placeholder="Enter your old password" value="${oldPass}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="discount">Discount <span style="color: red;">(*)</span></label>
-                                                        <input step="0.01" min="0" max="1" name="discount" class="form-control" id="discount" type="number" placeholder="Enter your Phone..." value="${l.discount}">
-                                                    </div>
-                                                    <!-- Form Group (location)-->
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="unitInStock">UnitInStock <span style="color: red;">(*)</span></label>
-                                                        <input min="0" max="10000" name="unitInStock" class="form-control" id="unitInStock" type="number" placeholder="Enter your unit in stock..." value="${l.unitInStock}">
+                                                        <label class="small mb-1" for="newPassword">New Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="newPassword" class="form-control" id="newPassword" type="password" placeholder="Enter your new password" value="${newPass}">
                                                     </div>
                                                 </div>
                                                 <!-- Form Row        -->
                                                 <div class="row gx-3 mb-3">
                                                     <!-- Form Group (organization name)-->
                                                     <div class="col-md-6">
-                                                        <label class="small mb-1" for="description">Description <span style="color: red;">(*)</span></label>
-                                                        <textarea maxlength="100"  style="height: 100px;" name="description" class="form-control" id="description" type="text" placeholder="Enter your Description..." value="">${l.description}</textarea>
-                                                    </div>
-                                                    <!-- Form Group (location)-->   
-                                                    <div class="col-md-6">
-                                                        <label class="small mb-1" for="isActive">Is Active <span style="color: red;">(*)</span></label>
-                                                        <br>
-                                                        <div style="margin-top: 30px; font-size: 15px;">
-                                                            <input style="margin-left: 10px;" type="radio" value="0" ${l.isActive == 0 ? " checked":""} name="isActive">  No
-                                                            <input style="margin-left: 10px;" type="radio" value="1" ${l.isActive == 1 ? " checked":""} name="isActive">  Yes
-                                                        </div>
+                                                        <label class="small mb-1" for="comfirmPassword">Comfirm Password <span style="color: red;">(*)</span></label>
+                                                        <input maxlength="50" name="comfirmPassword" class="form-control" id="comfirmPassword" type="password" placeholder="Enter your password comfirm" value="${confirmpassword}">
                                                     </div>
                                                 </div>
-
                                                 <!-- Save changes button-->
                                                 <button name="submit" class="btn btn-primary" type="submit">Save changes</button>
                                             </form>
@@ -163,7 +162,7 @@
                 </div>
                 <!-- End of Main Content -->
                 <!-- Footer -->
-                <%@include file="component/AdminFooterComponent.jsp" %>
+                <%@include file="component/EmployeeFooterComponent.jsp" %>
                 <!-- End of Footer -->
             </div>
             <!-- End of Content Wrapper -->
@@ -186,7 +185,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
+                        <a class="btn btn-primary" href="login?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

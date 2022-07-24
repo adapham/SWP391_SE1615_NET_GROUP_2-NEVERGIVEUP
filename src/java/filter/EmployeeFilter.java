@@ -16,31 +16,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 //Nhập controller cần check vào urlPatterns: /...
-@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {""})
-//@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {"/adminProduct", "/adminSupplier","/adminHome", "/adminCategory", "/adminProfile"})
-public class AuthenticationFilter implements Filter {
+@WebFilter(filterName = "EmployeeFilter", urlPatterns = {""})
+public class EmployeeFilter implements Filter {
     
     private static final boolean debug = true;
 
     private FilterConfig filterConfig = null;
     
-    public AuthenticationFilter() {
+    public EmployeeFilter() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthenticationFilters:DoBeforeProcessing");
+            log("EmployeeFilter:DoBeforeProcessing");
         }
-
     }    
     
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthenticationFilters:DoAfterProcessing");
+            log("EmployeeFilter:DoAfterProcessing");
         }
-
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -48,7 +45,7 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("AuthenticationFilters:doFilter()");
+            log("EmployeeFilter:doFilter()");
         }
         
         doBeforeProcessing(request, response);
@@ -59,7 +56,7 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = req.getSession();
         Account acc = (Account) session.getAttribute("Account");
         
-        if(acc == null || acc.getRole() != 3){
+        if(acc == null || acc.getRole() != 2){
             request.getRequestDispatcher("error403.jsp").forward(request, response);
         }
         
@@ -115,7 +112,7 @@ public class AuthenticationFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("AuthenticationFilters:Initializing filter");
+                log("EmployeeFilter:Initializing filter");
             }
         }
     }
@@ -126,9 +123,9 @@ public class AuthenticationFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthenticationFilters()");
+            return ("EmployeeFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthenticationFilters(");
+        StringBuffer sb = new StringBuffer("EmployeeFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

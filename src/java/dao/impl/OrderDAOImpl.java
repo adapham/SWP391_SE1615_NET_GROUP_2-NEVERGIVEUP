@@ -100,6 +100,15 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
     }
 
     public static void main(String[] args) {
+//        try {
+//            OrderDAOImpl dao = new OrderDAOImpl();
+//            List list = dao.listTotalByOrderID(17);
+//            for (Object object : list) {
+//                System.out.println(object);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
         OrderDAOImpl dao = new OrderDAOImpl();
         List<Order> list = null;
         try {
@@ -123,8 +132,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
 //        } catch (Exception ex) {
 //            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
-        
+
     }
 
     public int updateStatus(int status, int orId) throws Exception {
@@ -221,6 +229,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return listOrd;
     }
+
     public List<Order> getSearchOrderPagingByDate(String keySearch, int page, int PAGE_SIZE) throws Exception {
         List<Order> listOrd = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY OrderID)\n"
@@ -252,11 +261,12 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return listOrd;
     }
+
     public int getTotalOrderByDate(String keySearch) throws Exception {
-        
+
         String sql = "select COUNT(*) from [Order] where [OrderDate] like ?";
         try {
-            
+
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, "%" + keySearch + "%");
             ResultSet rs = pre.executeQuery();
@@ -269,7 +279,7 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
         }
         return 0;
     }
-    
+
     public int getTotalOrderByAddress(String keySearch) throws Exception {
         String sql = "select COUNT(*) from [Order] where [Address] like ?";
         try {
@@ -284,6 +294,46 @@ public class OrderDAOImpl extends ConnectDB implements OrderDAO {
             throw e;
         }
         return 0;
+    }
+
+    public List<Order> listAllOrdersByOderDate(String orderDate) throws Exception {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select OrderID,OrderDate,Status from [Order] where OrderDate like ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + orderDate + "%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .orderID(rs.getInt("orderID"))
+                        .orderDate(rs.getString("orderDate"))
+                        .status(rs.getInt("status"))
+                        .build();
+                list.add(ord);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return list;
+    }
+
+    public List<Order> listTotalByOrderID(int OrderID) throws Exception {
+        List<Order> list = new ArrayList<>();
+        try {
+            String sql = "select (Quantity * Price)'Total' from [Order Details] where OrderID = ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, OrderID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Order ord = Order.builder()
+                        .total(rs.getDouble("total"))
+                        .build();
+                list.add(ord);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return list;
     }
 
     public List<Order> listAllOrdersbyID(int AccID) throws Exception {

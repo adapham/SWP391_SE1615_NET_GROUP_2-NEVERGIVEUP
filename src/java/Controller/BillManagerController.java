@@ -7,6 +7,12 @@ package Controller;
 
 import Entity.Order;
 import Entity.OrderDetails;
+import Entity.Product;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import java.io.IOException;
@@ -25,15 +31,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "managerBillController", urlPatterns = {"/billManager"})
 public class BillManagerController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -60,6 +57,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.setAttribute("page", page);
                 request.setAttribute("totalPage", totalPage);
                 response.sendRedirect("billManager?do=pageBill&page=" + page);
@@ -122,7 +121,7 @@ public class BillManagerController extends HttpServlet {
                 OrderDetails info = dao.getInfoBill(oID);
                 double totalMoney = 0;
                 for (OrderDetails list1 : list) {
-                    totalMoney += list1.getPrice()* list1.getQuantity();
+                    totalMoney += list1.getPrice() * list1.getQuantity();
                     totalMoney *= 100;
                     double total = Math.ceil(totalMoney);
                     total = (double) total / 100;
@@ -142,6 +141,8 @@ public class BillManagerController extends HttpServlet {
                 int odID = Integer.parseInt(id);
                 int Status = Integer.parseInt(request.getParameter("status"));
                 int n = dao.updateStatus(Status, odID);
+                String mess = "Update successful";
+                request.setAttribute("mess", mess);
                 request.getRequestDispatcher("billManager?do=details&odID=" + id).forward(request, response);
             }
         } catch (Exception ex) {

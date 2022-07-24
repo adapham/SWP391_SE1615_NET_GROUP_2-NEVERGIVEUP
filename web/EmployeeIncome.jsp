@@ -40,19 +40,43 @@
                     <!-- Begin Page Content -->
                     <main class="main-content position-relative border-radius-lg ">
                         <div class="container-fluid py-4">
-                            <div style="text-align: center">
-                                
-                            </div>
+                            <p><h3 style="color: black;text-align: center"><b>Income</b></h3></p> 
+                            <form action="employeeincome" method="post">
+                                <select onchange="this.form.submit()" class="form-select" aria-label="Default select example" name="bill">
+                                    <option value="0" ${bill == 0 ? " selected" : ""}>All Bill</option>
+                                    <option value="1" ${bill == 1 ? " selected" : ""}>Bill today</option>
+                                    <option value="3" ${bill == 3 ? " selected" : ""}>Bill 3 day ago </option>
+                                    <option value="7" ${bill == 7 ? " selected" : ""}>Bill 1 week ago</option>
+                                </select>
+                            </form>
+                            <p style="color: red;margin-left: 71%"><b>Revenue: </b>$${Math.round((totalmoney*100)/100)}</p> 
 
-                           
-                                    </tbody>
-                                </table>
-                                <div style="text-align: center">
-                                    
-                                    </div>
-
-                                <br><br>
+                            <table class="border table table-striped table-hover table-bordered border-primary"  width="100%" cellspacing="0">
+                                <thead>
+                                    <tr> 
+                                        <th style="color: black">OrderID</th>
+                                        <th style="color: black">Order Date</th>
+                                        <th style="color: black">Status</th>   
+                                        <th style="color: black">Total</th>
+                                        <th style="color: black">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${list}" var="l" >
+                                        <tr>
+                                            <td style="color: black">${l.orderID}</td>
+                                            <td style="color: black">${l.orderDate}</td>
+                                            <c:if test="${l.status ==1}"><td style="color: black">Wait</td></c:if>  
+                                            <c:if test="${l.status ==2}"><td style="color: black">Process</td></c:if>  
+                                            <c:if test="${l.status ==3}"><td style="color: black">Done</td></c:if>  
+                                            <td style="color: black">$${l.total}</td>
+                                            <td><a href="employeeincome?do=details&odID=${l.orderID}">Details</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                             <br>
+
                         </div>
                     </main>
                     <!-- /.container-fluid -->
@@ -81,7 +105,7 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
+      
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -95,7 +119,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="login?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

@@ -118,7 +118,7 @@ public class AdminProfileController extends HttpServlet {
                         request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     Account accupdate = Account.builder()
                             .accountid(AccountID)
                             .displayname(DisplayName.trim())
@@ -133,7 +133,7 @@ public class AdminProfileController extends HttpServlet {
 
                     session.setAttribute("Account", accupdate);
                     int n = daoAccount.updateAccount(accupdate);
-                    String mess = "Update Success";
+                    String mess = "Update Successful";
                     ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess", mess);
@@ -169,7 +169,7 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                     return;
                 } else if (confirmpassword == null || confirmpassword.isEmpty()) {
-                    String mess1 = "confirmpassword not empty";
+                    String mess1 = "Confirmpassword not empty";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess1", mess1);
@@ -177,7 +177,7 @@ public class AdminProfileController extends HttpServlet {
                     request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
                     return;
                 } else if (!newPass.equals(confirmpassword)) {
-                    String mess1 = "New Password not same ConfirmPassword";
+                    String mess1 = "New Password not same Confirm Password";
                     List ListAccount = daoAccount.getAccountByID(AccountID);
 
                     request.setAttribute("mess1", mess1);
@@ -198,13 +198,18 @@ public class AdminProfileController extends HttpServlet {
                             .build();
                     session.setAttribute("Account", accChangePass);
                     int n = daoAccount.changePassword(accChangePass);
+                    if (n > 0) {
+                        String mess1 = "Change Password Successful!";
+                        List ListAccount = daoAccount.getAccountByID(AccountID);
 
-                    String mess1 = "Change Password Success!";
-                    List ListAccount = daoAccount.getAccountByID(AccountID);
+                        request.setAttribute("oldPass", "");
+                        request.setAttribute("newPass", "");
+                        request.setAttribute("confirmpassword", "");
 
-                    request.setAttribute("mess1", mess1);
-                    request.setAttribute("list", ListAccount);
-                    request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                        request.setAttribute("mess1", mess1);
+                        request.setAttribute("list", ListAccount);
+                        request.getRequestDispatcher("adminProfile.jsp").forward(request, response);
+                    }
                 }
             }
         } catch (Exception ex) {

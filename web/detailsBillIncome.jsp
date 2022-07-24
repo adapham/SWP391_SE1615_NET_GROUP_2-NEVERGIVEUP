@@ -26,7 +26,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <%@include file="component/AdminSlidebarComponent.jsp" %>
+            <%@include file="component/EmployeeSlidebarComponent.jsp" %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -36,23 +36,22 @@
                 <div id="content">
 
                     <!-- Topbar -->
-                    <%@include file="component/AdminTopbarComponent.jsp" %>
+                    <%@include file="component/EmployeeTopbarComponent.jsp" %>
                     <!-- End of Topbar -->
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="billManager?do=pageBill"><h3>List bills</h3></a>
+                                <a href="employeeincome"><h3>Income</h3></a>
                             </li>
                             <li class="active">Detail bill</li>
                         </ul>
                     </div>
                     <!-- Begin Page Content -->
-
                     <main class="main-content position-relative border-radius-lg ">
                         <div class="container-fluid py-4">
                             <div class="col-md-12">
-                            <c:if test="${mess != null}"><b style="color: red; font-size: 25px">${mess}</b></c:if>
-                                <h3>List of purchased products</h3>
+                                <c:if test="${mess != null}"><b style="color: red; font-size: 25px">${mess}</b></c:if>
+                                    <h3>List of purchased products</h3>
                                     <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
                                         <tr>
                                             <td>Order detail</td>
@@ -81,17 +80,11 @@
                                     <tr>
                                         <td>Status</td>
                                         <td>
-                                            <form action="billManager?do=updateStatusDetails" method="POST" style="padding-bottom: 10px" class="d-flex justify-content-around">
 
-                                                <input type="hidden" name="odId" value="${orderID}">
-                                                <select style="width: 80px; border: 1px solid black; color: black; border-radius: 10px" name="status">
-                                                    <option value="1" ${info.status == 1 ? " selected" : ""}>Wait</option>
-                                                    <option value="2" ${info.status == 2 ? " selected" : ""}>Process</option>
-                                                    <option value="3" ${info.status == 3 ? " selected" : ""}>Done</option>
-                                                </select>
-
-                                                <input style="width: 90px; height: 10%; color: white; border-radius: 10px; margin-right: 70%" class="btn btn-primary" type="submit" value="Save">
-                                            </form>
+                                            <input type="hidden" name="odId" value="${orderID}">
+                                            <c:if test="${info.status ==1}"><p style="color: black"><b>Status: </b>Wait</p></c:if>
+                                            <c:if test="${info.status ==2}"><p style="color: black"><b>Status: </b>Process</p></c:if>
+                                            <c:if test="${info.status ==3}"><p style="color: black"><b>Status: </b>Done</p></c:if>
                                         </td>
                                     </tr>
                                 </table>
@@ -122,34 +115,6 @@
                                 </table>
                                 <td colspan="2" ><h4>Total Amount: $${totalMoney}</h4></td>
                             </div>
-<!--                            <div class="col-md-6">
-                                <p><h3 style="color: black"><b>Details bill</b></h3></p>     
-
-                                <table border="1" >
-                                    <thead>
-                                        <tr>                                            
-                                            <th style="color: black">Product name</th>
-                                            <th style="color: black">Price</th>   
-                                            <th style="color: black">Quantity</th>
-                                            <th style="color: black">Discount</th>                                          
-                                            <th style="color: black">Total</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <c:forEach items="${list}" var="l">
-                                            <tr>
-                                                <td style="color: black">${l.productName}</td>
-                                                <td style="color: black">$${l.price}</td>
-                                                <td style="color: black">${l.quantity}</td>
-                                                <td style="color: black">${l.discount}</td>                                                
-                                                <td style="color: black">$${Math.round(l.total*100)/100}</td>
-                                            </tr> 
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <td colspan="2" ><h4>Total Amount: $${totalMoney}</h4></td>
-                            </div>-->
                         </div>
                     </main>
                     <!-- /.container-fluid -->
@@ -192,7 +157,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="adminProfile?do=logout">Logout</a>
+                        <a class="btn btn-primary" href="login?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

@@ -52,7 +52,7 @@
                             <li>
                                 <a href="home">Home</a>
                             </li>
-                            <li class="active">Cart Page </li>
+                            <li class="active">checkout</li>
                         </ul>
                     </div>
                 </div>
@@ -63,12 +63,12 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="table-content table-responsive cart-table-content">
-                                <table>
+                                <table class="border table table-striped table-hover table-bordered border-primary" style="margin-top: 10px; color: black">
                                     <thead>
                                         <tr>                                                
-                                            <th>ProductID</th>
+                                            <th>Product ID</th>
                                             <th>Image</th>
-                                            <th>ProductName</th>
+                                            <th style="text-transform: inherit">Product name</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Total</th>                                
@@ -79,14 +79,14 @@
                                         <form method="post" action="updateQuantity">
                                             <tr>
                                             <input hidden="" value="${pro.productID}" name="pid"/>
-                                            <td>${pro.productID}</td>
+                                            <td style="text-align: right">${pro.productID}</td>
                                             <td class="product-thumbnail">
                                                 <img src="${pro.imageURL}" alt="" style="height: 150px; width: 100%">
                                             </td>
                                             <td class="product-name">${pro.productName}</td>
-                                            <td class="product-price-cart"><span class="amount">$${pro.unitPrice}</span></td>                                                       
-                                            <td>${pro.quantity}</td>   
-                                            <td class="product-subtotal">$${Math.round((pro.unitPrice * pro.quantity)*100)/100}</td>
+                                            <td class="product-price-cart" style="text-align: right"><span class="amount">$${pro.unitPrice}</span></td>                                                      
+                                            <td style="text-align: right; width: 50%">${pro.quantity}</td>   
+                                            <td style="text-align: right" class="product-subtotal">$${Math.round((pro.unitPrice * pro.quantity)*100)/100}</td>
                                             </tr>
                                         </form>
                                     </c:forEach>
@@ -112,35 +112,34 @@
                                             <h4 class="cart-bottom-title section-bg-gray">Information of Customer</h4>
                                         </div>
                                         <div class="tax-wrapper">
-                                            <p>Enter your information</p>
                                             <form method="post" action="confirm">
                                                 <div class="tax-select-wrapper">
 
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Display name of customer
+                                                            Display name of customer *
                                                         </label>
                                                         <input type="text" maxlength="50" value="${account.displayname}" name="accountid" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Email
+                                                            Email *
                                                         </label>
                                                         <input type="text" maxlength="50" value="${account.email}" name="email" readonly="">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Address
+                                                            Address *
                                                         </label>
                                                         <input type="text" maxlength="50" id="address" name="address">
                                                     </div>
                                                     <div class="tax-select">
                                                         <label>
-                                                            * Phone
+                                                            Phone *
                                                         </label>
                                                         <input type="text" maxlength="15" id="phone" name="phone">
                                                     </div>   
-                                                    <button type="submit" name="confirm" class="btn btn-primary"><i style="font-style: normal">Proceed to Checkout</i></button>
+                                                    <button type="submit" name="confirm" class="btn btn-primary"><i style="font-style: normal">Proceed to checkout</i></button>
                                                 </div>
                                             </form>
                                         </div>

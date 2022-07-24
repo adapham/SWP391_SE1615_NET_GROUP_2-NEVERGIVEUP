@@ -121,19 +121,19 @@
                                                 </ul>
                                             </c:when> <c:otherwise>
                                                 <form action="details?do=postcomment&proID=${proID}&accID=${sessionScope.Account.accountid}" method="post">
-                                                    <textarea class="form-control" name="comment" placeholder="write a comment..." rows="3" ></textarea>
+                                                    <textarea class="form-control" style="width: 152%" name="comment" placeholder="write a comment..." rows="3" ></textarea>
                                                     <br>
                                                     <button type="submit" name="submit" class="btn btn-info pull-right">Post</button>  
                                                     <div class="clearfix"></div>
-                                                    <hr>   
+                                                    <hr style="width: 152%">   
                                                 </form>
-                                                <ul class="media-list">
+                                                <ul class="media-list" style="width: 152%">
                                                     <c:forEach items="${list}" var="l">
                                                         <li class="media">
                                                             <a href="#" class="pull-left">
                                                                 <img src="${l.imageURL}" alt="" class="img-circle" height="60px">
                                                             </a>
-                                                            <div class="media-body">
+                                                            <div class="media-body" style="margin-left: 1%">
                                                                 <span class="text-muted pull-right">
                                                                     <small class="text-muted">${l.timeComment}</small>
                                                                 </span>

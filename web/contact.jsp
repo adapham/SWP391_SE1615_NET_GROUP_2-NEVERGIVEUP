@@ -44,7 +44,12 @@
                     <div class="breadcrumb-content text-center">
                         <ul>
                             <li>
-                                <a href="home">Home</a>
+                                <c:if test="${sessionScope.Account ==null}">
+                                    <a href="home?do=home&fresh=1">Home</a>
+                                </c:if>
+                                <c:if test="${sessionScope.Account !=null}">
+                                    <a href="home">Home</a>
+                                </c:if>
                             </li>
                             <li class="active">Contact us </li>
                         </ul>
@@ -88,16 +93,16 @@
                             <form action="feedback" method="post">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
-                                        <input pattern=".*\S" title="Name not empty" name="name" type="text" placeholder="Name">
+                                        <input pattern=".*\S" title="Name not empty" name="name" type="text" placeholder="Name *">
                                     </div>
                                     <div class="col-lg-6 col-md-6">
-                                        <input pattern=".*\S" title="Email not empty" name="email" type="email" placeholder="Email">
+                                        <input pattern=".*\S" title="Email not empty" name="email" type="email" placeholder="Email *">
                                     </div>
                                     <div class="col-lg-12 col-md-12">
-                                        <input pattern=".*\S" title="Subject not empty" name="subject" type="text" placeholder="Subject">
+                                        <input pattern=".*\S" title="Subject not empty" name="subject" type="text" placeholder="Subject *">
                                     </div>
                                     <div class="col-lg-12 col-md-12">
-                                        <textarea pattern=".*\S" title="Message not empty" name="message" placeholder="Your Message"></textarea>
+                                        <textarea pattern=".*\S" title="Message not empty" name="message" placeholder="Your message *"></textarea>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <button class="submit" type="submit">Send Message</button>

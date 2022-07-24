@@ -36,64 +36,57 @@
 
                     <!-- Topbar -->
                     <%@include file="component/EmployeeTopbarComponent.jsp" %>
-
+<% int i =0;%>
                     <!-- Begin Page Content -->
                     <main class="main-content position-relative border-radius-lg ">
                         <div class="container-fluid py-4">
-                            <div style="text-align: center">
-                                <c:forEach items="${list}" var="l" begin="1" end="1" >
-                                    <p><h3 style="color: black"><b> Information customer:  </b></h3></p> 
-                                    <p style="color: black"><b>Customer name: </b>${l.displayname}</p> 
-                                    <p style="color: black"><b>Email: </b>${l.email}</p> 
-                                    <p style="color: black"><b>Phone: </b>${l.phone}</p>
-                                </c:forEach>  
-                            </div>
-
-                            <c:forEach items="${listOrderId}" var="lo">    
-                            <p><h3 style="color: black;text-align: center"><b>Details bill</b></h3></p>  
-                                <table class="table table-bordered"  width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr> 
-                                            <th style="color: black">ImageURL</th>
-                                            <th style="color: black">ProductName</th>
-                                            <th style="color: black">Price</th>   
-                                            <th style="color: black">Quantity</th>
-                                            <th style="color: black">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${list}" var="l" >
-                                            <c:if test="${l.orderID eq lo}">
-                                                <tr>
-                                                    <td>
-                                                        <img src="${l.imageURL}" alt="" style="height: 90px; width: 40%">
-                                                    </td>
-                                                    <td style="color: black">${l.productName}</td>
-                                                    <td style="color: black">$${l.price}</td>
-                                                    <td style="color: black;text-align: center" >${l.quantity}</td>
-                                                    <td style="color: black">$${Math.round(l.total*100)/100}</td>
+                            <c:forEach items="${listOrderId}" var="lo">
+                                <div>
+                                    <div style="width: 60%; float: left;">
+                                        <span style="color: black"><%=i+=1%></span>
+                                        <table class="table table-bordered"  width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr> 
+                                                    <th style="color: black">ImageURL</th>
+                                                    <th style="color: black">ProductName</th>
+                                                    <th style="color: black">Price</th>   
+                                                    <th style="color: black">Quantity</th>
+                                                    <th style="color: black">Total</th>
                                                 </tr>
-                                            <input hidden="" ${Total = Total + Math.round(l.total*100)/100}> 
-                                            <input hidden="" ${address = l.address}> 
-                                            <input hidden="" ${status = l.status}>
-                                            <input hidden="" ${orderdate = l.orderDate}> 
-                                        </c:if>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                                <div style="text-align: center">
-                                    <p style="color: black"><b>Order date: </b>${orderdate}</p>
-                                    <p style="color: black"><b>Total amount: </b>$${Total}</p>
-                                    <p style="color: black"><b>Ship address: </b>${address}</p>
-                                    <c:if test="${status ==1}"><p style="color: black"><b>Status: </b>Wait</p></c:if>
-                                    <c:if test="${status ==2}"><p style="color: black"><b>Status: </b>Process</p></c:if>
-                                    <c:if test="${status ==3}"><p style="color: black"><b>Status: </b>Done</p></c:if>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${list}" var="l" >
+                                                    <c:if test="${l.orderID eq lo}">
+                                                        <tr>
+                                                            <td>
+                                                                <img src="${l.imageURL}" alt="" style="height: 90px; width: 40%">
+                                                            </td>
+                                                            <td style="color: black">${l.productName}</td>
+                                                            <td style="color: black">$${l.price}</td>
+                                                            <td style="color: black;text-align: center" >${l.quantity}</td>
+                                                            <td style="color: black">$${Math.round(l.total*100)/100}</td>
+                                                        </tr>
+                                                    <input hidden="" ${Total = Total + Math.round(l.total*100)/100}> 
+                                                    <input hidden="" ${address = l.address}> 
+                                                    <input hidden="" ${status = l.status}>
+                                                    <input hidden="" ${orderdate = l.orderDate}> 
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
-
+                                    <div style="width: 30%; float: left; margin-left: 5%;" style="text-align: center">
+                                        <br>
+                                        <p style="color: black"><b>Ship address: </b>${address}</p>
+                                        <c:if test="${status ==1}"><p style="color: black"><b>Status: </b>Wait</p></c:if>
+                                        <c:if test="${status ==2}"><p style="color: black"><b>Status: </b>Process</p></c:if>
+                                        <c:if test="${status ==3}"><p style="color: black"><b>Status: </b>Done</p></c:if>
+                                        <p style="color: black"><b>Order date: </b>${orderdate}</p>
+                                        <p style="color: black"><b>Total amount: </b>$${Total}</p>
+                                        </div>
+                                    </div>
                                     <input hidden=""  ${Total =0}>
-                                <br><br>
                             </c:forEach>
-                            <br>
                         </div>
                     </main>
                     <!-- /.container-fluid -->
@@ -136,7 +129,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="login?do=logout">Logout</a>
                     </div>
                 </div>
             </div>

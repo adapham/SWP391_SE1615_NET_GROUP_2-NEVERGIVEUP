@@ -34,6 +34,8 @@ public class DeleteController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            String pid = request.getParameter("pid");
+            int size = 0;
             HttpSession session = request.getSession();
             String sizeStr;
             try {
@@ -41,23 +43,23 @@ public class DeleteController extends HttpServlet {
             } catch (Exception e) {
                 sizeStr = null;
             }
-            int size = 0;
             if (sizeStr == null) {
                 size = 0;
             } else {
                 size = Integer.parseInt(sizeStr);
             }
-            String pid = request.getParameter("pid");
 
             if (pid != null) {
                 session.removeAttribute(pid);
                 size--;
                 session.setAttribute("size", size);
             } else {
+               size=0;
+                session.setAttribute("size", size);
                 Enumeration em = session.getAttributeNames();
                 while (em.hasMoreElements()) {
                     String key = em.nextElement().toString();
-                    if (!key.equals("Account")) {
+                    if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("listCategory") && !key.equals("Account") && !key.equals("size")) {
                         session.removeAttribute(key);
                     }
                 }

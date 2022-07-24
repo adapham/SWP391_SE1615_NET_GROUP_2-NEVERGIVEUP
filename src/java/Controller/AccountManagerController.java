@@ -96,7 +96,7 @@ public class AccountManagerController extends HttpServlet {
                     request.setAttribute("list", list);
                     //check DisplayName
                     if (DisplayName.trim() == null || DisplayName.trim().isEmpty()) {
-                        String mess = "DisplayName is not empty";
+                        String mess = "Displayname is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminUpdateAccountCustomer.jsp").forward(request, response);
                         return;
@@ -147,7 +147,7 @@ public class AccountManagerController extends HttpServlet {
                     }
                     daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
 
-                    String mess = "Update Success";
+                    String mess = "Update successful";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
                             .accountid(AccountID)
@@ -258,7 +258,7 @@ public class AccountManagerController extends HttpServlet {
                     request.setAttribute("list", list);
                     //check DisplayName
                     if (DisplayName == null || DisplayName.isEmpty()) {
-                        String mess = "DisplayName is not empty";
+                        String mess = "Displayname is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminUpdateAccountEmployee.jsp").forward(request, response);
                         return;
@@ -308,7 +308,7 @@ public class AccountManagerController extends HttpServlet {
                         }
                     }
                     daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
-                    String mess = "Update Success";
+                    String mess = "Update successful";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
                             .accountid(AccountID)
@@ -389,7 +389,7 @@ public class AccountManagerController extends HttpServlet {
                     request.setAttribute("gender", gender);
                     //- check username null
                     if (username.trim() == null || username.trim().isEmpty()) {
-                        String mess = "UserName is not empty";
+                        String mess = "User name is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
@@ -398,7 +398,7 @@ public class AccountManagerController extends HttpServlet {
                     List<String> listUserName = daoAccount.ListAllUserName();
                     for (String listusername : listUserName) {
                         if (listusername.equals(username.trim())) {
-                            String mess = "username available";
+                            String mess = "User name available";
                             request.setAttribute("mess", mess);
                             request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                             return;
@@ -414,7 +414,7 @@ public class AccountManagerController extends HttpServlet {
                     }
                     //check DisplayName
                     if (DisplayName.trim() == null || DisplayName.trim().isEmpty()) {
-                        String mess = "DisplayName is not empty";
+                        String mess = "Displayname is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
@@ -448,7 +448,7 @@ public class AccountManagerController extends HttpServlet {
                     String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email Wrong";
+                        String mess = "Email wrong";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                         return;
@@ -485,7 +485,7 @@ public class AccountManagerController extends HttpServlet {
                             .gender(Integer.parseInt(gender))
                             .build();
                     daoAccount.RegisterAccount(acc);
-                    String mess = "Create Account success";
+                    String mess = "Create account successful";
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("adminCreateAccount.jsp").forward(request, response);
                 }
@@ -547,7 +547,7 @@ public class AccountManagerController extends HttpServlet {
                     request.setAttribute("list", list);
                     //check DisplayName
                     if (DisplayName == null || DisplayName.isEmpty()) {
-                        String mess = "DisplayName is not empty";
+                        String mess = "Displayname is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("adminUpdateAccountShipper.jsp").forward(request, response);
                         return;
@@ -597,7 +597,7 @@ public class AccountManagerController extends HttpServlet {
                         }
                     }
                     daoAccount.updatePhoneOldCustomerByPhone(phoneold, accountid);
-                    String mess = "Update Success";
+                    String mess = "Update successful";
                     int AccountID = Integer.parseInt(accountid);
                     Account accoutupdate = Account.builder()
                             .accountid(AccountID)

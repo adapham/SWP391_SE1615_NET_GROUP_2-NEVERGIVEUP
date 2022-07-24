@@ -52,10 +52,6 @@
 
                     <!------------------CODE HERE-------------------------->
                     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                                                                                   href="https://datatables.net">official DataTables documentation</a>.</p>
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -71,7 +67,7 @@
                                     <thead>
                                         <tr>
                                             <th style="color: black">AccountID</th>
-                                            <th style="color: black">Username</th>
+                                            <th style="color: black">User name</th>
                                             <th style="color: black">Display Name</th>
                                             <th style="color: black">Address</th>
                                             <th style="color: black">Email</th>
@@ -232,8 +228,8 @@
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
                 <script src="js/demo/chart-bar-demo.js"></script>
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!--                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
                 </body>
                 </html>

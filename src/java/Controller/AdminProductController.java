@@ -120,6 +120,12 @@ public class AdminProductController extends HttpServlet {
                         request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
                         return;
                     }
+                    if (images == null != images.isEmpty()) {//Check Name
+                        mess = "Image url is not empty";
+                        request.setAttribute("mess", mess);
+                        request.getRequestDispatcher("adminProductUpdate.jsp").forward(request, response);
+                        return;
+                    }
                     if (des == null != des.isEmpty()) {//Check Name
                         mess = "Description is not empty";
                         request.setAttribute("mess", mess);
@@ -141,7 +147,7 @@ public class AdminProductController extends HttpServlet {
                             .isActive(isActive)
                             .build();
 
-                    mess = "Update successfull";
+                    mess = "Update successful";
                     int updateProduct = daoProduct.updateProducts(pro);
 
                     request.setAttribute("mess", mess);
@@ -222,7 +228,19 @@ public class AdminProductController extends HttpServlet {
 
                     int createProduct = daoProduct.createProduct(pro);
                     if (createProduct > 0) {
-                        mess = "Create successfull";
+                        mess = "Create successful";
+                        //Clear Data after create successfull
+                        request.setAttribute("pName", "");
+                        request.setAttribute("supID", 1);
+                        request.setAttribute("cateID", 1);
+                        request.setAttribute("quantity", 0);
+                        request.setAttribute("uPrice", 0);
+                        request.setAttribute("discount", 0);
+                        request.setAttribute("uInStock", 0);
+                        request.setAttribute("des", "");
+                        request.setAttribute("images", "");
+                        request.setAttribute("isActive", 1);
+                        
                         request.setAttribute("mess", mess);
                         request.setAttribute("listSup", listSuppliers);
                         request.setAttribute("listCate", listCategories);
@@ -243,7 +261,7 @@ public class AdminProductController extends HttpServlet {
                 }
 
                 if (delete > 0) {//Remove Successs
-                    mess = "Delete Successfull!";
+                    mess = "Delete Successful!";
                 } else {
                     mess = "Can't delete Product";
                 }
@@ -260,7 +278,7 @@ public class AdminProductController extends HttpServlet {
                 if (totalProduct % PAGE_SIZE != 0) {
                     totalPage += 1;
                 }
-                
+
                 List<Supplier> listSuppliers = daoSupplier.getAllSupplier();
                 List<Category> listCategories = daoCategory.getAllCategory();
 

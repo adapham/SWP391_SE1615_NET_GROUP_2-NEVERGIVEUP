@@ -1,21 +1,18 @@
 package Controller;
 
 import Entity.Account;
-import Entity.Order;
 import Entity.Product;
-import dao.MessDAO;
-import dao.OrderDAO;
+import Entity.Order;
 import dao.impl.AccountDAOImpl;
 import dao.impl.FeedbackDAOImpl;
 import dao.impl.CategoryDAOImpl;
-import dao.impl.MessDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ShipperDAOImpl;
 import dao.impl.SupplierDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -81,8 +78,47 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        //request.getRequestDispatcher("index.jsp").forward(request, response);
-                        response.sendRedirect("home");
+                        int size = 0;
+                        String sizeStr;
+                        try {
+                            sizeStr = session.getAttribute("size").toString();
+                        } catch (Exception e) {
+                            sizeStr = null;
+                        }
+                        if (sizeStr == null) {
+                            size = 0;
+                        } else {
+                            size = Integer.parseInt(sizeStr);
+                        }
+
+                        if (size != 0) {
+                            List<Product> listProductCarts = new ArrayList<>();
+                            Enumeration em = session.getAttributeNames();
+                            int sum = 0;
+                            while (em.hasMoreElements()) {
+                                String key = em.nextElement().toString();
+                                if (!key.equals("urlHistory") && !key.equals("backToUrl") && !key.equals("order") && !key.equals("Account") && !key.equals("size") && !key.equals("listCategory")) {
+                                    Product pro = (Product) session.getAttribute(key);
+                                    sum += pro.getQuantity();
+                                    listProductCarts.add(pro);
+                                    session.setAttribute(key, pro);
+                                }
+                            }
+                            double totalMoney = 0;
+                            for (Product list : listProductCarts) {
+                                totalMoney += list.getUnitPrice() * list.getQuantity();
+                                totalMoney *= 100;
+                                double total = Math.ceil(totalMoney);
+                                total = (double) total / 100;
+                                totalMoney = total;
+
+                            }
+                            request.setAttribute("totalMoney", totalMoney);
+                            request.setAttribute("listProductCarts", listProductCarts);
+                            request.getRequestDispatcher("cart.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("home").forward(request, response);
+                        }
                     } else if (checkAccount == 2) {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
@@ -110,7 +146,8 @@ public class LoginController extends HttpServlet {
                                 .displayname(DisplayName.getDisplayname())
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
-                        request.getRequestDispatcher("employee.jsp").forward(request, response);
+                        request.getRequestDispatcher("employeeaccount?do=AccountCustomer").forward(request, response);
+
                     } else if (checkAccount == 4) {
                         Cookie cu = new Cookie("us", username);
                         Cookie pa = new Cookie("pa", password);
@@ -139,23 +176,22 @@ public class LoginController extends HttpServlet {
                                 .imageURL(ImageURL.getImageURL())
                                 .build());
                         OrderDAOImpl dao = new OrderDAOImpl();
-                String pageStr = request.getParameter("page");
-                int page = 1;
-                final int PAGE_SIZE = 3;
-                if (pageStr != null) {
-                    page = Integer.parseInt(pageStr);
-                }
-                List<Order> list = dao.getOrderWithPaging(page, PAGE_SIZE);
-                int totalOrder = dao.getTotalOrder();
-                int totalPage = totalOrder / PAGE_SIZE;
-                if (totalOrder % PAGE_SIZE != 0) {
-                    totalPage += 1;
-                }
-                System.out.println(list);
-                request.setAttribute("page", page);
-                request.setAttribute("totalPage", totalPage);
-                request.setAttribute("list", list);
-                request.getRequestDispatcher("shipper.jsp").forward(request, response);
+                        String pageStr = request.getParameter("page");
+                        int page = 1;
+                        final int PAGE_SIZE = 3;
+                        if (pageStr != null) {
+                            page = Integer.parseInt(pageStr);
+                        }
+                        List<Order> list = dao.getOrderWithPaging(page, PAGE_SIZE);
+                        int totalOrder = dao.getTotalOrder();
+                        int totalPage = totalOrder / PAGE_SIZE;
+                        if (totalOrder % PAGE_SIZE != 0) {
+                            totalPage += 1;
+                        }
+                        request.setAttribute("page", page);
+                        request.setAttribute("totalPage", totalPage);
+                        request.setAttribute("list", list);
+                        request.getRequestDispatcher("shipper.jsp").forward(request, response);
                         request.getRequestDispatcher("shipper.jsp").forward(request, response);
                     } else {
                         Cookie cu = new Cookie("us", username);
@@ -231,7 +267,6 @@ public class LoginController extends HttpServlet {
                     HttpSession session = request.getSession();
                     Account acc = (Account) session.getAttribute("Account");
                     int AccountID = acc.getAccountid();
-                    System.out.println(acc);
                     List ListAccount = daoAccount.getAccountByID(AccountID);
                     request.setAttribute("list", ListAccount);
                     request.getRequestDispatcher("my-account.jsp").forward(request, response);
@@ -240,6 +275,7 @@ public class LoginController extends HttpServlet {
                     HttpSession session = request.getSession();
                     Account acc = (Account) session.getAttribute("Account");
                     int AccountID = acc.getAccountid();
+                    String pass = acc.getPassword();
                     String DisplayName = request.getParameter("displayname");
                     String Address = request.getParameter("address");
                     String Email = request.getParameter("email");
@@ -247,7 +283,7 @@ public class LoginController extends HttpServlet {
                     String ImageURL = request.getParameter("imageURL");
                     //check vadidate
                     if (DisplayName == null || DisplayName.isEmpty()) {
-                        String mess = "DisplayName is not null";
+                        String mess = "Displayname is not null";
                         response.sendRedirect("login?do=submitUpdate&mess=" + mess);
                         return;
                     }
@@ -289,10 +325,11 @@ public class LoginController extends HttpServlet {
                             .email(Email)
                             .phone(Phone)
                             .imageURL(ImageURL)
+                            .password(pass)
                             .build();
                     session.setAttribute("Account", accupdate);
                     int n = daoAccount.updateAccount(accupdate);
-                    String mess = "update Success";
+                    String mess = "Update successful";
                     response.sendRedirect("login?do=submitUpdate&mess=" + mess);
 
                 }
@@ -310,7 +347,7 @@ public class LoginController extends HttpServlet {
                     response.sendRedirect("login?do=submitUpdate&mess1=" + mess);
                     return;
                 } else if (newpassword == null || newpassword.isEmpty()) {
-                    String mess = "New Password not empty";
+                    String mess = "New password not empty";
                     response.sendRedirect("login?do=submitUpdate&mess1=" + mess);
                     return;
                 } else if (confirmpassword == null || confirmpassword.isEmpty()) {
@@ -318,23 +355,30 @@ public class LoginController extends HttpServlet {
                     response.sendRedirect("login?do=submitUpdate&mess1=" + mess);
                     return;
                 } else if (!newpassword.equals(confirmpassword)) {
-                    String mess = "New Password not same ConfirmPassword";
+                    String mess = "New password not same Confirm password";
                     response.sendRedirect("login?do=submitUpdate&mess1=" + mess);
                     return;
                 } else {
                     Account accChangePass = Account.builder()
                             .password(newpassword)
                             .accountid(AccountID)
+                            .displayname(acc.getDisplayname())
+                            .address(acc.getAddress())
+                            .email(acc.getEmail())
+                            .phone(acc.getPhone())
+                            .imageURL(acc.getImageURL())
                             .build();
                     int n = daoAccount.changePassword(accChangePass);
-                    String mess = "Change PassWord Success";
+                    
+                     session.setAttribute("Account", accChangePass);
+                    String mess = "Change password successful";
                     response.sendRedirect("login?do=submitUpdate&mess1=" + mess);
                 }
             }
             if (service.equals("Register")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("register.jsp");
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
                 } else {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
@@ -355,7 +399,7 @@ public class LoginController extends HttpServlet {
                     //check UserName
                     //- check username null
                     if (username == null || username.isEmpty()) {
-                        String mess = "UserName is not empty";
+                        String mess = "Username is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
@@ -364,7 +408,7 @@ public class LoginController extends HttpServlet {
                     List<String> listUserName = daoAccount.ListAllUserName();
                     for (String listusername : listUserName) {
                         if (listusername.equals(username)) {
-                            String mess = "username available";
+                            String mess = "Username available";
                             request.setAttribute("mess", mess);
                             request.getRequestDispatcher("register.jsp").forward(request, response);
                             return;
@@ -372,7 +416,7 @@ public class LoginController extends HttpServlet {
                     }
                     //check username qua 50 ky tu
                     if (username.length() > 50) {
-                        String mess = "UserName <50 varchar";
+                        String mess = "Username <50 varchar";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
@@ -381,7 +425,7 @@ public class LoginController extends HttpServlet {
                     //check password 
                     //check password null
                     if (password == null || password.isEmpty()) {
-                        String mess = "password is not empty";
+                        String mess = "Password is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
@@ -395,14 +439,14 @@ public class LoginController extends HttpServlet {
                     }
                     //check DisplayName
                     if (DisplayName == null || DisplayName.isEmpty()) {
-                        String mess = "DisplayName is not empty";
+                        String mess = "Displayname is not empty";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
                     }
                     //check DisplayName qua 50 ky tu
                     if (DisplayName.length() > 50) {
-                        String mess = "DisplayName <50 varchar";
+                        String mess = "Displayname <50 varchar";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
@@ -429,7 +473,7 @@ public class LoginController extends HttpServlet {
                     String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     if (!Email.matches(EMAIL_PATTERN)) {
-                        String mess = "Email Wrong";
+                        String mess = "Email wrong";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                         return;
@@ -466,16 +510,15 @@ public class LoginController extends HttpServlet {
                             .build();
 
                     daoAccount.RegisterAccount(acc);
-                    System.out.println(acc);
-                    String mess = "Register success";
+                    String mess = "Register successful";
                     request.setAttribute("mess", mess);
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             }
             if (service.equals("forgetpassword")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("forgetpassword.jsp");
+                    request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
                 } else {
                     String email = request.getParameter("email");
                     List list = daoAccount.ListAllEmail();
@@ -497,7 +540,7 @@ public class LoginController extends HttpServlet {
             if (service.equals("updatepassword")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    response.sendRedirect("resetpassword.jsp");
+                    request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
                 } else {
                     String email = request.getParameter("email");
                     String code = request.getParameter("code");
@@ -505,7 +548,7 @@ public class LoginController extends HttpServlet {
                     String newpassword = request.getParameter("newpassword");
                     String confirmpassword = request.getParameter("confirmpassword");
                     if (!code.equals(password)) {
-                        String mess = "Wrong Password";
+                        String mess = "Wrong password";
                         request.setAttribute("code", code);
                         request.setAttribute("email", email);
                         request.setAttribute("mess", mess);
@@ -538,7 +581,7 @@ public class LoginController extends HttpServlet {
                                 .email(email)
                                 .build();
                         daoAccount.updatePasswordByEmail(acc);
-                        String mess = "Update Success";
+                        String mess = "Update successful";
                         request.setAttribute("mess", mess);
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                     }

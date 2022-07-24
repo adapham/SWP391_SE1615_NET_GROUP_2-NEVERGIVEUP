@@ -32,8 +32,7 @@ public class HomeController extends HttpServlet {
             if (service.equals("home")) {//Chuyển đến trang home
                 String fresh = request.getParameter("fresh");
                 if (fresh == null) {
-                   
-                    System.out.println(acc);
+                    Account acc = (Account) session.getAttribute("Account");
                     AccountDAOImpl dao = new AccountDAOImpl();
                     MessDAOImpl daoMess = new MessDAOImpl();
                     List<Integer> list = dao.ListAllAccountEmpID();
