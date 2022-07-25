@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;  
 
-@WebFilter(filterName = "HomeFilter", urlPatterns = {""})
+@WebFilter(filterName = "HomeFilter", urlPatterns = {"/*"})
 public class HomeFilter implements Filter {
 
     private static final boolean debug = true;

@@ -46,7 +46,7 @@ public class AdminProductController extends HttpServlet {
                 if (pageStr != null) {
                     page = Integer.parseInt(pageStr);
                 }
-                List<Product> listProduct = daoProduct.getProductWithPaging(page, PAGE_SIZE);
+                List<Product> listProduct = daoProduct.getProductWithPagingAdmin(page, PAGE_SIZE);
                 int totalProduct = daoProduct.getTotalProduct();//Get total All Product
                 int totalPage = totalProduct / PAGE_SIZE;
                 if (totalProduct % PAGE_SIZE != 0) {
@@ -272,7 +272,7 @@ public class AdminProductController extends HttpServlet {
                 if (pageStr != null) {
                     page = Integer.parseInt(pageStr);
                 }
-                List<Product> listProduct = daoProduct.getProductWithPaging(page, PAGE_SIZE);
+                List<Product> listProduct = daoProduct.getProductWithPagingAdmin(page, PAGE_SIZE);
                 int totalProduct = daoProduct.getTotalProduct();//Get total All Product
                 int totalPage = totalProduct / PAGE_SIZE;
                 if (totalProduct % PAGE_SIZE != 0) {
@@ -310,7 +310,7 @@ public class AdminProductController extends HttpServlet {
                     page = Integer.parseInt(pageStr);
                 }
 
-                List<Product> listProduct = daoProduct.getSearchProductsPagingByName(keySearch, page, PAGE_SIZE);
+                List<Product> listProduct = daoProduct.getSearchProductsPagingByNameAdmin(keySearch, page, PAGE_SIZE);
                 int totalProduct = daoProduct.getTotalProductByPName(keySearch);
                 int totalPage = totalProduct / PAGE_SIZE;
                 if (totalProduct % PAGE_SIZE != 0) {

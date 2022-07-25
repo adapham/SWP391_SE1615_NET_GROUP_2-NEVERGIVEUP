@@ -183,6 +183,45 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO {
         }
         return listPro;
     }
+//Trả về 1 danh sách phần trang theo kích thước
+
+    public List<Product> getProductWithPagingAdmin(int page, int PAGE_SIZE) throws Exception {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT *,\n"
+                + "ROW_NUMBER() OVER (ORDER BY ProductID) AS Seq\n"
+                + "FROM Product)t\n"
+                + "WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
+        ProductDAOImpl dao = new ProductDAOImpl();
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, page);
+            pre.setInt(2, PAGE_SIZE);
+            pre.setInt(3, page);
+            pre.setInt(4, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return listPro;
+    }
 
     //Trả về 1 danh sách phân trang theo tăng dần, giảm dần
     public List<Product> getPagingSortProduct(int page, int PAGE_SIZE, String col, String type) throws Exception {
@@ -392,6 +431,47 @@ public class ProductDAOImpl extends ConnectDB implements ProductDAO {
 
     //Trả về danh sách phần trang theo Search Key
     public List<Product> getSearchProductsPagingByName(String keySearch, int page, int PAGE_SIZE) throws Exception {
+        List<Product> listPro = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
+                + "                OVER (ORDER BY ProductID) AS Seq FROM Product \n"
+                + "                where ProductName like ? and IsActive = 1\n"
+                + "                )t \n"
+                + "                WHERE Seq BETWEEN  (?-1)*?+1 AND ?*?";
+        ProductDAOImpl dao = new ProductDAOImpl();
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, "%" + keySearch + "%");
+            pre.setInt(2, page);
+            pre.setInt(3, PAGE_SIZE);
+            pre.setInt(4, page);
+            pre.setInt(5, PAGE_SIZE);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                double price = dao.PriceArterDiscount(rs.getInt(1));
+                Product pro = Product.builder()
+                        .productID(rs.getInt(1))
+                        .productName(rs.getString(2))
+                        .supplierID(rs.getInt(3))
+                        .categoryID(rs.getInt(4))
+                        .quantity(rs.getInt(5))
+                        .unitPrice(rs.getDouble(6))
+                        .discount(rs.getDouble(7))
+                        .unitInStock(rs.getInt(8))
+                        .description(rs.getString(9))
+                        .imageURL(rs.getString(10))
+                        .isActive(rs.getInt(11))
+                        .priceAferDiscount(price)
+                        .build();
+                listPro.add(pro);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return listPro;
+    }
+
+//Trả về danh sách phần trang theo Search Key
+    public List<Product> getSearchProductsPagingByNameAdmin(String keySearch, int page, int PAGE_SIZE) throws Exception {
         List<Product> listPro = new ArrayList<>();
         String sql = "SELECT * FROM ( SELECT *, ROW_NUMBER() \n"
                 + "                OVER (ORDER BY ProductID) AS Seq FROM Product \n"
