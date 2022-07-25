@@ -56,7 +56,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">View List Account of Shipper</h6>
                         </div>
-                        <form  action="accountmanager?do=searchShipper" style="margin: auto" method="post">
+                        <form  action="accountmanager?do=searchShipper"  method="post">
                             <input type="text" placeholder="Search.." name="search" value="${search}">
                             <button type="submit" ><i class="fa fa-search"></i></button>
                         </form>

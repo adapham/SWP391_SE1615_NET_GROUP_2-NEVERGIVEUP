@@ -92,7 +92,8 @@ public class CheckOut1Controller extends HttpServlet {
             }
             request.getRequestDispatcher("login?do=logout").forward(request, response);
         } catch (Exception ex) {
-            request.getRequestDispatcher("error500.jsp").forward(request, response);
+ex.printStackTrace();
+//request.getRequestDispatcher("error500.jsp").forward(request, response);
         }
     }
 

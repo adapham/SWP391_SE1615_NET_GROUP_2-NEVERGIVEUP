@@ -48,7 +48,9 @@ public interface ProductDAO {
     public int createProduct(Product pro) throws Exception;
 
     public int deleteProduct(int pID) throws Exception;
-    
+
     public List<Product> searchProductByNameAndCategoryId(String searchKey, int cateId, int pId) throws Exception;
 
+    public List<Product> getProductWithPagingAdmin(int page, int PAGE_SIZE) throws Exception;
+    public List<Product> getSearchProductsPagingByNameAdmin(String keySearch, int page, int PAGE_SIZE) throws Exception;
 }

@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 //Nhập controller cần check vào urlPatterns: /...
-@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {""})
-//@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {"/adminProduct", "/adminSupplier","/adminHome", "/adminCategory", "/adminProfile"})
+//@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {""})
+@WebFilter(filterName = "AuthenticationFilters", urlPatterns = {"/adminProduct", "/adminSupplier","/adminHome", "/adminCategory", "/adminProfile", "/accountmanager"})
 public class AuthenticationFilter implements Filter {
     
     private static final boolean debug = true;
