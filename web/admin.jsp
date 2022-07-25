@@ -64,7 +64,7 @@
                                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="adminCategory" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="accountmanager" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="accountmanager?do=listAccountEmployee" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="adminSupplier" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="billManager?do=pageBill" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="accountmanager?do=listAccountShipper" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
-                                        <a href="#" type="button" class="btn btn-primary btn-sm">View Details</a>
+                                        <a href="feedbackManager?do=listFeedback" type="button" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
                                 </div>
                             </div>
