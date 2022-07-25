@@ -117,7 +117,8 @@ public class LoginController extends HttpServlet {
                             request.setAttribute("listProductCarts", listProductCarts);
                             request.getRequestDispatcher("cart.jsp").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("home").forward(request, response);
+                            //request.getRequestDispatcher("home").forward(request, response);
+                            response.sendRedirect("home");
                         }
                     } else if (checkAccount == 2) {
                         Cookie cu = new Cookie("us", username);

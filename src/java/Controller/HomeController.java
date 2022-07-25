@@ -22,21 +22,22 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         int employeeID = 0;
-         Account acc = (Account) session.getAttribute("Account");
+        Account acc = (Account) session.getAttribute("Account");
+        String service = request.getParameter("do");
+        String fresh = request.getParameter("fresh");
         try {
-            String service = request.getParameter("do");
             ProductDAOImpl daoProduct = new ProductDAOImpl();
             if (service == null) {
                 service = "home";
             }
             if (service.equals("home")) {//Chuyển đến trang home
-                String fresh = request.getParameter("fresh");
+
                 if (fresh == null) {
-                    
+
                     AccountDAOImpl dao = new AccountDAOImpl();
                     MessDAOImpl daoMess = new MessDAOImpl();
                     List<Integer> list = dao.ListAllAccountEmpID();
-                    
+
                     ///
                     List<Integer> listIdCusCheck = daoMess.getIdCus();
                     boolean check = false;
@@ -62,20 +63,23 @@ public class HomeController extends HttpServlet {
                     System.out.println(listMess.size());
                     request.setAttribute("employeeID", employeeID);
                     System.out.println(employeeID);
+                    List<Product> listProduct = daoProduct.getTopNumberProduct(4);
+                    request.setAttribute("listProduct", listProduct);
+                    int lengthcus = Integer.toString(acc.getAccountid()).length();
+                    int lengthemployee = (String.valueOf(employeeID).toString()).length();
+                    System.out.println(lengthcus+" cus");
+                    System.out.println(lengthemployee + " emp");
+                    request.setAttribute("lengthcus", lengthcus);
+                    request.setAttribute("lengthemployee", lengthemployee);
+                } else {
+                    List<Product> listProduct = daoProduct.getTopNumberProduct(4);
+                    request.setAttribute("listProduct", listProduct);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
-                request.setAttribute("listProduct", listProduct);
-                int lengthcus =  Integer.toString(acc.getAccountid()).length();
-                int lengthemployee= Integer.toString(acc.getAccountid()).length();
-                request.setAttribute("lengthcus", lengthcus);
-                request.setAttribute("lengthemployee", lengthemployee);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-             if (service.equals("fresh")) {
-                List<Product> listProduct = daoProduct.getTopNumberProduct(4);
+            if (service.equals(fresh)) {
 
-                request.setAttribute("listProduct", listProduct);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
             if (service.equals("about")) {//Chuyển đến trang about
                 List<Product> listProduct = daoProduct.getTopNumberProduct(2);
