@@ -140,7 +140,7 @@
                         $('#croll').append('<div class="outgoing_msg"><div style="width:50%; word-break:break-all;" class="sent_msg"> <p>' + mess + '</p> <span class="time_date"> 11:01 AM    |    June 9</span> </div></div>');
                     }
                 }
-
+                    
                 if (message.data.startsWith("${CustomerID}") && message.data.endsWith("${sessionScope.Account.accountid}")) {
                     //var mess = message.data.replace("${CustomerID}", "");
                     var mess = message.data.substr(1, message.data.length - 2);

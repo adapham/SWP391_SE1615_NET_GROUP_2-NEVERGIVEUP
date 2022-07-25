@@ -81,6 +81,7 @@ public class ChatRoomServerEndpoint {
             } else {
                 //co roi
                 String[] arrOfStr = message.split("~");
+                String idstr="";
 //            char[] charID = message.toCharArray();
                 int idCustomer = Integer.parseInt(String.valueOf(arrOfStr[0]));// and employee
                 int idEmployee = Integer.parseInt( arrOfStr[arrOfStr.length-1]); //daoMess.getIdEmByIdCus(idCustomer); // customer
@@ -88,6 +89,9 @@ public class ChatRoomServerEndpoint {
                 for (Integer integer : listAcc) {
                     if (integer == idCustomer) {
                         checkEmployee = true;
+                         idstr= idEmployee+"";
+                    }else{
+                          idstr= idCustomer+"";
                     }
                 }
                 int tempbox = idCustomer;
@@ -111,10 +115,12 @@ public class ChatRoomServerEndpoint {
                 for (Integer in : listBefor) {
                     if (idEmployee == in) {
                         checkBefor = true;
+                        
                     }
                 }
+                
                 System.out.println(checkBefor);
-
+                 
                 if (!checkBefor) {
                     try {
                         String temp = "*" + tempStringbox;
@@ -128,9 +134,9 @@ public class ChatRoomServerEndpoint {
                                 + "                                </div>\n"
                                 + "                            </div>\n"
                                 + "                        </div>" + "~"
-                                + "<div id=\"innerdiv\" class=\"chat-bubble me\">"+tempStringbox+"</div>"
+                                + "<div id=\"innerdiv\" class=\"chat-bubble me\">"+tempStringbox+"</div>"+ idstr 
                                 ;
-
+                                System.out.println("ID EMP: "+ idstr);
                        
                     } catch (Exception ex) {
                         ex.printStackTrace();

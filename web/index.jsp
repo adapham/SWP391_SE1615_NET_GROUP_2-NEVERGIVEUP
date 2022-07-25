@@ -527,7 +527,7 @@
 
                 if (message.data.startsWith("${sessionScope.Account.accountid}") && message.data.endsWith("${employeeID}")) {
                     //var mess = message.data.replace("${CustomerID}", "");
-                    var mess = message.data.substr(${lengthcus}, message.data.length-${lengthemployee}-1);
+                    var mess = message.data.substr(${lengthcus}, message.data.length-${lengthemployee}-${lengthemployee});
                     //if (message.data.startsWith("${CustomerID}") && ${sessionScope.Account.accountid})
                        $('#croll').append('<div id="innerdiv" class="chat-bubble me">' + mess + '</div>');
                 }
@@ -538,11 +538,13 @@
                      $('#croll').append('<div id="innerdiv" class="chat-bubble you">' + mess + '</div>');
                 }
                
-		if (message.data.startsWith("<div") && ${sessionScope.Account.accountid}) {
+		if (message.data.startsWith("<div") && message.data.endsWith("${sessionScope.Account.accountid}") ) {
                     
                     const myArray = message.data.split("~");
+                    let result = String(myArray[1]);
+                    var mess = result.substr(0,result.length-1);
 //$('#cha').append('<div class="chat_list active_chat"><div class="chat_people"><div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="chat_ib"> <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5><p>'+message.data+'.</p></div></div></div>');
-                    document.getElementById("croll").insertAdjacentHTML('beforeend', myArray[1]);
+                    document.getElementById("croll").insertAdjacentHTML('beforeend', mess);
                 }
                
                 
